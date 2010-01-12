@@ -1,0 +1,16 @@
+
+Flyby
+
+Goal: Experience with viewing.
+
+The program cube_view.c draws a simple cube.
+
+Task 1: Each face has a primary color, unlike the program cube.c. Where are the colors assigned? Currently several faces of the cube are black. Why are multiple faces colored with the same color? Change the program so that each face has a different color, and a color that will show up against a black background.
+
+Task 2: The program lets the user type in the letters 'x', 'y', 'z', and 'X', 'Y', 'Z'. What is the effect of these characters? (Hint: it is not rotation). Find where this is implemented.
+
+Add the ability to read 'r' or 'R', and to restore the cube, camera, and view to the original setting.
+
+Task 3: Add the ability to change the perspective. What form of perspective is currently used? Add the handling of keystrokes 'o' and 'p' to change from orthographic to perspective and back.
+
+Task 4: Currently, the program uses a call to gluLookAt() to point the camera at the origin, which is the center of the cube. Add handling for the left and right arrow keys to turn the camera to the right and left. Be sure your restore command resets the view to point at the origin.

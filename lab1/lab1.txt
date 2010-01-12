@@ -1,0 +1,27 @@
+CS 234 Lab 1
+
+Goal
+
+The primary purpose of this lab is to get experience with selection and drawing. These programs use two different ways to decide what a user has selected: look at the raw mouse coordinates, or using a technique called picking, that is harder to follow, but much more powerful, as it lets you have OpenGL decide what the user touched.
+
+You may not get all the way through this lab in the time provided. Read about the two program, and decide how you want to spend your time. You may wish to spend all the time on one program, or to split the time equally between the two.
+Connect Dots
+
+The first project uses a header file. Load the following program: ConnectDots.c and ConnectDots.h. In Visual Studion you need to create an empty project and add the two files to it. Using the makefile on a Unix system, you only need to have the the header file in the same directory.
+
+The program draws a sequence of points, and connects them with a line.
+
+What happens when you resize the window while running this program? Where is the logic for that? What does it do if the aspect ration (ht vs width) has changed?
+
+Modify the program so that it only stores 16 points, rather than 64. Run the program, and add more than 16 points. What happens?
+
+The program has a keyboard handler. What does it do? Modify the handler so that the user can use upper or lower case letters to remove dots. Then add the ability to exit the program by typing 'Q' or 'q', as well as the escape key.
+
+Currently the program draws a sequence of lines. Modify it so that the program draws a polygon. That is, connect up the original point with the current last point.
+
+If you have time, experiment with more line and dot attributes.
+Picking
+
+Load the program pick.c. This draws a red and a blue square. When you click the mouse, the program tells you which object you selected. What happens when you click on the intersection of the two figures?
+
+Add a green rectangle to the display, and have it recognize that as well. You may wish to borrow ideas from this program in doing your project.

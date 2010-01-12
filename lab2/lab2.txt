@@ -1,0 +1,32 @@
+
+Goal
+
+The primary purpose of this lab is to become comfortable with transformations.
+Shapes
+
+Download the trans.c program and get it to work. It draws a coordinate axes in yellow, and three shapes: two discs and an ellipsoid. The key routine, drawDisc, draws a disc centered at the origin. The program uses the glTranslated() function to move where the origin appears, and uses the glScaled() function to alter the aspect ratio before drawing a circle. You can use scaling to make objects bigger, and use the floating point version glScalef() version to make them smaller.
+Task 1
+
+Make the red disk a fat ellipsoid. What happens to the position of the green shape? Why?
+Version 2
+
+The version we were playing appended translations: two steps forward, one step back. Download the trans2.c and run it. I have tried to create the same shape as I did in the first version, but don't quite have it. Fix it.
+Task 3
+
+Using the new starting point, make the red disk a fat ellipsoid. What happens now?
+Version 3
+
+Now we introduct rotations. Download the trans3.c and run it. I have introduce a rotation of the green shape. What has changed?
+
+Consider the code below. I have suggested four places to put the call to glRotated(): where we put it, and three other places. Try each, and explain what you see.
+
+setColorGreen();
+glLoadIdentity(); /* Return to origin */
+// Try here
+glTranslated(5,2,0);
+// Try here
+glScaled(1,4,0);
+glRotated(45, 0, 0, 1);
+drawDisc();
+// Try here
+glFlush();

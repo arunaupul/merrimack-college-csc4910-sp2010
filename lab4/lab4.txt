@@ -1,0 +1,27 @@
+
+CS 234 Lab 4: The Orrery
+Goal
+
+Get comfortable with multiple transformations.
+Solar
+
+An Orrery is a mechanical device reprsenting the motion of the planets in the Solar System. Creating a virtual orrery is a common OpenGL example. Here is an example: planet.c from the Red Book.
+
+http://www.opengl.org/documentation/red_book/
+
+We will be using a version written by Sam Buss. Dr. Buss does a great job of documenting his examples. Load and run the program Solar.h and Solar.c from the course website. Answer the following questions.
+
+http://math.ucsd.edu/~sbuss/
+
+   1. What keys does the program recognize? What do they do?
+   2. Why is there spinMode and singleStep, since spinMode == !singleStep?
+   3. Look up glutWireSphere. What does it do?
+   4. Why does the program push and pop matrices?
+
+Perform the following tasks
+
+   1. Make the object solids rather than wireframe models.
+   2. Make the moon rounder.
+   3. Write a routine to draw a coordinate frame - perhaps the vectors (10, 0, 0), (0, 10, 0) and (0, 0, 10) in yellow at the origin. Add axis to each of the three solar objects to track their rotation.
+   4. Add a second moon rotating around the planet.
+   5. Add a second planet rotating around the sun. Find out how long Mars takes to orbit the sun. Note that the current application is pegged to a 365 day year.
