@@ -1,0 +1,19 @@
+
+
+Goal The primary purpose of this lab is to play with lighting
+
+Light Position We are going to look at another pair of programs by Nate Robins. You can download the source and Windows Executables from Nate's website.
+
+http://www.xmission.com/~nate/tutors.html
+
+Run the program LightPosition. You will find the source the the program on our website, but there are datafiles and library files that are needed as well.
+
+Light Material Experiment with Nate Robins' LightMaterial program. You will find the source to the program on our website, but there are datafiles and library files that are needed as well.
+
+Light Torus Take a look at Sam Buss' Light Torus example. LightTorus.c and LightTorus.h.
+
+Compile and run the program. The top of the file includes keystrokes to modify a number of parameters. Try them all and observe the changes.  
+
+Task: Add a third light, on the left, and get it to work.
+
+Task: Replace the Torus with a Utah Teapot, and rerun the program.

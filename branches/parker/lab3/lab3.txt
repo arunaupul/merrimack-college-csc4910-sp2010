@@ -1,0 +1,30 @@
+
+CS 234 Lab 3
+
+Goal The primary purpose of this lab is to experiment with 3 dimensional geometry. If you do not have time to finish the lab, do as much as you have time for.
+Cube
+
+Download and run the program cube.c. This creates a 3 dimensional cube that rotates.
+
+Task 1: The cube is defined as a list of corners. Where are those points defined? Where are they used to define a polygon?
+
+There are three arrays: points, colors, and normals. What do you think is the purpose of each array?
+
+Task 2: The edges of the cube do not stand out. After drawing the face, use GL_LINE_STRIP to add black edges to the cube. You may wish to review how Sam Buss made his lines thick in ConnectDots.c.
+
+Task 3: If you have a post 1990 PC, the cube spins fast enough to make it impossible to make out. Your next task will be to slow the rotation down.
+
+Currently, the routine spinCube() is called by the idle function when the system has spare cycles. You will find the registration in the main program. Remove this registration, and replace it with a registration of a timer callback, such as the one illustrated below. You can experiment with the time, which is measured in milliseconds. I have set it up to call it every 50/1000 of a second, or 20 times a second. The parameter value is required by the OpenGL framework, but is not used in this example.
+
+   static void timerCallback (int value) 
+    { 
+        spinCube();
+        /* call back again after elapsedUSecs have passed */ 
+        glutTimerFunc (50, timerCallback, value); 
+    } 
+    
+    
+    int main(int argc, char **argv)
+    {
+        ...
+        glutTimerFunc (50, timerCallback, 1); 
