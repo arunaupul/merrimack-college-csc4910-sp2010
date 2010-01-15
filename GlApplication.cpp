@@ -15,7 +15,8 @@ LRESULT CALLBACK WindowProc( HWND hWnd , UINT uMsg , WPARAM wParam , LPARAM lPar
 GlApplication::GlApplication()
 :	m_isActive( true ),
 	m_applicationRunning( true ),
-	m_circleSize( 10 )
+	m_circleSize( 10 ),
+	m_lastTickCount( 0 )
 {
 	m_color.red = 1.0;
 	m_color.green = 1.0;
@@ -86,6 +87,7 @@ int GlApplication::Main( HINSTANCE hInstance , HINSTANCE prevInstance , LPSTR lp
 		{
 			if( m_isActive )
 			{
+				Update();
 				Draw();
 				m_window.SwapBuffers();
 			}
@@ -122,6 +124,12 @@ LRESULT GlApplication::MessageHandler( HWND hWnd , UINT uMsg , WPARAM wParam , L
 			{
 				m_isActive = false;
 			}
+			return 0;
+		}
+		case WM_EXITMENULOOP:
+		case WM_EXITSIZEMOVE:
+		{
+			m_lastTickCount = GetTickCount();
 			return 0;
 		}
 		case WM_SYSCOMMAND:										// Grab system commands
@@ -175,6 +183,7 @@ LRESULT GlApplication::MessageHandler( HWND hWnd , UINT uMsg , WPARAM wParam , L
 					// If we removed the last node, we need to stop searching
 					if( iter == m_drawList.end() )
 						break;
+
 				}
 			}
 			break;
@@ -264,6 +273,17 @@ bool GlApplication::Init()
 	glEnable( GL_DEPTH_TEST );							// Enables Depth Testing
 	glDepthFunc( GL_LEQUAL );							// The Type Of Depth Testing To Do
 	glHint( GL_PERSPECTIVE_CORRECTION_HINT , GL_NICEST );	// Really Nice Perspective Calculations
+	glHint( GL_LINE_SMOOTH_HINT , GL_NICEST );	// Really Nice Perspective Calculations
 
 	return true;										// Return true (Initialization Successful)
+}
+
+void GlApplication::Update()
+{
+	int currentTick = GetTickCount();
+	for( std::list<GlCircle *>::iterator iter = m_drawList.begin() ; iter != m_drawList.end() ; ++iter )
+	{
+		(*iter)->Update( currentTick - m_lastTickCount );
+	}
+	m_lastTickCount = currentTick;
 }

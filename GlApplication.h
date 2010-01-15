@@ -20,13 +20,18 @@ public:
 	// Message Handler
 	LRESULT MessageHandler( HWND hWnd , UINT uMsg , WPARAM wParam , LPARAM lParam );
 
-	// Draw the scene
-	void Draw();
 
 	Point GetPointAtCursor( LPARAM lParam );
 
 protected:
+	// Draw the scene
+	void Draw();
+
+	// Set up the gl window
 	bool Init();
+
+	// Update all object
+	void Update();
 
 private:
 	HINSTANCE hInstance; // Application Instance
@@ -39,6 +44,8 @@ private:
 	std::list<GlCircle *> m_drawList;
 	RgbaColor m_color;
 	double m_circleSize;
+
+	int m_lastTickCount;
 };
 
 #endif /* _GL_APPLICATION_H_ */
