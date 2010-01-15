@@ -7,14 +7,18 @@
 class GlCircle
 {
 public:
-	GlCircle( float radius , Point center , RgbaColor color );
+	GlCircle( double radius , Point center , RgbaColor color );
 	~GlCircle();
 	void Draw();
+	void Update( int ticks );
 	bool ContainsPoint( Point point );
 private:
-	float m_radius;
+	int m_tickCount;
+	double m_radius;
+	double m_startingRadius;
 	Point m_center;
 	RgbaColor m_color;
+	bool m_direction;
 };
 
 #endif /* _GL_CIRCLE_H_ */

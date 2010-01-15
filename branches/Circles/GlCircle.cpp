@@ -8,10 +8,13 @@
 #include "RgbaColor.h"
 
 
-GlCircle::GlCircle( float radius , Point center , RgbaColor color )
+GlCircle::GlCircle( double radius , Point center , RgbaColor color )
 :	m_radius( radius ),
 	m_center( center ),
-	m_color( color )
+	m_color( color ),
+	m_startingRadius( radius ),
+	m_tickCount( 0 ),
+	m_direction( false )
 {
 }
 
@@ -24,9 +27,9 @@ void GlCircle::Draw()
 	glColor4d( m_color.red , m_color.green , m_color.blue , m_color.alpha );
 	glTranslated(0.0 , 0.0 , -1*m_center.z );						// Move Left 1.5 Units And Into The Screen 6.0
 	glBegin( GL_POLYGON );
-		for( float i = 0 ; i < 72 ; i++ )
+		for( double i = 0 ; i < 72 ; i++ )
 		{
-			float theta = (float)(i*3.14159*2)/72;
+			double theta = (double)(i*3.14159*2)/72;
 			glVertex2d( ( m_radius * sin(theta) ) + m_center.x , ( m_radius * cos(theta) + m_center.y ) );
 		}
 	glEnd();
@@ -41,4 +44,24 @@ bool GlCircle::ContainsPoint( Point point )
 		return true;
 	}
 	return false;
+}
+
+void GlCircle::Update( int ticks )
+{
+	m_tickCount += ticks;
+	if( m_tickCount > 100 )
+	{
+		m_tickCount = 0;
+	}
+	m_radius += ( m_direction ? 1 : -1 ) * .1f;
+	if( m_radius < 0 )
+	{
+		m_radius = 0;
+		m_direction = true;
+	}
+	if( m_radius > m_startingRadius )
+	{
+		m_radius = m_startingRadius;
+		m_direction = false;
+	}
 }
