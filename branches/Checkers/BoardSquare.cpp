@@ -26,11 +26,46 @@ BoardSquare::~BoardSquare()
 void BoardSquare::Draw()
 {
 	glColor4d( m_color.red , m_color.green , m_color.blue , m_color.alpha );
+		glBegin( GL_QUAD_STRIP );
+		// Front
+		glNormal3f( 0.0 , 0.0 , 1.0 );
+		glVertex3d( m_point.x - 1.0 , m_point.y - 1.0 , m_point.z + .25 );		// Bottom Left
+		glVertex3d( m_point.x - 1.0 , m_point.y + 1.0 , m_point.z + .25 );		// Top Left
+		glVertex3d( m_point.x + 1.0 , m_point.y - 1.0 , m_point.z + .25 );		// Bottom Right
+		glVertex3d( m_point.x + 1.0 , m_point.y + 1.0 , m_point.z + .25 );		// Top Right
+		
+		// Right
+		glNormal3f( 1.0 , 0.0 , 0.0 );
+		glVertex3d( m_point.x + 1.0 , m_point.y - 1.0 , m_point.z - .25 );
+		glVertex3d( m_point.x + 1.0 , m_point.y + 1.0 , m_point.z - .25 );
+		
+		// Back
+		glNormal3f( 0.0 , 0.0 , -1.0 );
+		glVertex3d( m_point.x - 1.0 , m_point.y - 1.0 , m_point.z - .25 );		// Bottom Left
+		glVertex3d( m_point.x - 1.0 , m_point.y + 1.0 , m_point.z - .25 );		// Top Left
+
+		// Left
+		glNormal3f( -1.0 , 0.0 , 0.0 );
+		glVertex3d( m_point.x - 1.0 , m_point.y - 1.0 , m_point.z + .25 );
+		glVertex3d( m_point.x - 1.0 , m_point.y + 1.0 , m_point.z + .25 );
+
+	glEnd();
+
 	glBegin( GL_QUADS );
-		glVertex3d( m_point.x + 1 , m_point.y + 1 , m_point.z );
-		glVertex3d( m_point.x + 1 , m_point.y - 1 , m_point.z );
-		glVertex3d( m_point.x - 1 , m_point.y - 1 , m_point.z );
-		glVertex3d( m_point.x - 1 , m_point.y + 1 , m_point.z );
+		// Bottom
+		glNormal3f( 0.0 , -1.0 , 0.0 );
+		glVertex3d( m_point.x - 1.0 , m_point.y - 1.0 , m_point.z + .25 );
+		glVertex3d( m_point.x + 1.0 , m_point.y - 1.0 , m_point.z + .25 );
+		glVertex3d( m_point.x + 1.0 , m_point.y - 1.0 , m_point.z - .25 );
+		glVertex3d( m_point.x - 1.0 , m_point.y - 1.0 , m_point.z - .25 );
+
+		// Top
+		glNormal3f( 0.0 , 1.0 , 0.0 );
+		glVertex3d( m_point.x - 1.0 , m_point.y + 1.0 , m_point.z + .25 );
+		glVertex3d( m_point.x + 1.0 , m_point.y + 1.0 , m_point.z + .25 );
+		glVertex3d( m_point.x + 1.0 , m_point.y + 1.0 , m_point.z - .25 );
+		glVertex3d( m_point.x - 1.0 , m_point.y + 1.0 , m_point.z - .25 );
+
 	glEnd();
 	if( m_gamePiece )
 	{
@@ -43,7 +78,10 @@ void BoardSquare::SetGamePiece( GamePiece * piece )
 	m_gamePiece = piece;
 	if( m_gamePiece )
 	{
-		m_gamePiece->SetPoint( m_point );
+		// Raise the piece above the game board
+		Point newPoint = m_point;
+		newPoint.z += 0.26;
+		m_gamePiece->SetPoint( newPoint );
 	}
 }
 

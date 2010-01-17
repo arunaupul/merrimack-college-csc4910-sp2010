@@ -26,7 +26,7 @@ GlApplication::GlApplication()
 
 	// Build the game board
 	bool color = false;
-	RgbaColor black = { 0.0 , 0.0 , 0.0 , 0.0 };
+	RgbaColor black = { 0.2 , 0.2 , 0.2 , 0.2 };
 	RgbaColor white = { 1.0 , 1.0 , 1.0 , 1.0 };
 	for( int row = 0 ; row < NUM_ROWS ; row++ )
 	{
@@ -250,7 +250,8 @@ void GlApplication::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();									// Reset The Current Modelview Matrix
-	glTranslated( -7.0 , -7.0 , -20.0 );				// Move Left 1.5 Units And Into The Screen 6.0
+	glTranslated( -7.0 , -5.0 , -20.0 );				// Move Left 1.5 Units And Into The Screen 6.0
+	glRotated( -60.0 , 1.0 , 0.0 , 0.0 );
 
 	for( int pos = 0 ; pos < NUM_BOARD_SQUARES ; pos++ )
 	{
@@ -259,18 +260,29 @@ void GlApplication::Draw()
 			m_board[pos]->Draw();
 		}
 	}
-
 }
 
 bool GlApplication::Init()
 {
 	glShadeModel( GL_SMOOTH );							// Enable Smooth Shading
-	glClearColor( 0.0f , 0.0f , 0.0f , 0.0f );			// Black Background
+	glClearColor( 0.5f , 0.5f , 0.5f , 0.5f );			// Black Background
 	glClearDepth( 1.0f );								// Depth Buffer Setup
 	glEnable( GL_DEPTH_TEST );							// Enables Depth Testing
 	glDepthFunc( GL_LEQUAL );							// The Type Of Depth Testing To Do
 	glHint( GL_PERSPECTIVE_CORRECTION_HINT , GL_NICEST );	// Really Nice Perspective Calculations
 	glHint( GL_LINE_SMOOTH_HINT , GL_NICEST );			// Really Nice Perspective Calculations
+	
+	// Config lighting
+	GLfloat LightAmbient[]= { 0.0f, 0.0f, 0.0f, 1.0f };				// Ambient Light Values 
+	GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
+	GLfloat LightPosition[]= { 7.0f, 8.0f, 2.0f, 1.0f };			// Light Position
+
+	glLightfv( GL_LIGHT1 , GL_AMBIENT , LightAmbient );
+	glLightfv( GL_LIGHT1 , GL_DIFFUSE , LightDiffuse );
+	glLightfv( GL_LIGHT1 , GL_POSITION , LightPosition );
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
+	glEnable( GL_LIGHT1 );
 
 	return true;										// Return true (Initialization Successful)
 }
