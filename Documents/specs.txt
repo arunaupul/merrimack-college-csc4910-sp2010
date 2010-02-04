@@ -1,0 +1,2 @@
+transparent color:  RGB  255 15 200
+openGL screen size: 120w 84h
