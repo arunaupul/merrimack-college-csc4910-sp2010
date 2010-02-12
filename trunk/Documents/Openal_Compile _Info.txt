@@ -1,0 +1,36 @@
+Jonathan Caron
+Software Engineering 
+Prof. Zhang
+Februrary 12, 2010
+--------------------------------------------------------------------------------
+In order to make your own classes using OpenAL(On VS2008), you will need to do 
+the following:
+_________________________________________________________________________________
+
+1) Pull down the three zip folders for OpenAL (OpenAL SDK, ALUT, and ALUT bin) and
+   uncompress and save them preferably in the same location.
+_________________________________________________________________________________
+
+2) Open up Visual Studio and create a new project
+_________________________________________________________________________________
+
+3) Give VS2008 the folders for the headers (OpenAL SDK >> inc, ALUT >> inc). This
+   requires that you need to right click on the project, go to Properties -> 
+   Configuration Properties -> C/C++ -> General -> Additional include directories. 
+   Now you can include the proper headers.
+_________________________________________________________________________________
+
+4) Give VS2008 the folders and the names of the two library files (OpenAL32, ALUT). 
+   This requires that you need to right click on the project, go to Properties -> 
+   Configuration Properties -> Linker -> General -> Additional Library Directories. 
+   After that go down one level to Input, please type in the names of the two 
+   library files under "Additional Dependencies". Now the librarys are all set.
+_________________________________________________________________________________
+
+5) Finally, you need to put the .dll file called ALUT (located in the ALUT bin 
+   folder) in the DEBUG folder that VS2008 creates in your project directory.
+_________________________________________________________________________________
+Now that you have completed these steps, you are ready to compile and run openal!
+
+ENJOY!
+	
