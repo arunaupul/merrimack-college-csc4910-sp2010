@@ -64,7 +64,7 @@ int GlApplication::Main( HINSTANCE hInstance , HINSTANCE prevInstance , LPSTR lp
 	}
 
 	// Create the window
-	if( !m_window.CreateGlWindow( CLASS_NAME , L"Test Window" , hInstance , 0 , 60 , 1600 , 900 , false , 32 , this ) )
+	if( !m_window.CreateGlWindow( CLASS_NAME , L"Test Window" , hInstance , 0 , 60 , 800 , 600 , false , 32 , this ) )
 	{
 		return -1;
 	}
@@ -200,8 +200,7 @@ Point GlApplication::GetPointAtCursor( LPARAM lParam )
 
 	gluUnProject( winX , winY , winZ , modelView , projection , viewport , &posX , &posY , &posZ );
 
-	Point returnPoint = { posX , posY , -1.0 * posZ };
-	return returnPoint;
+	return Point( posX , posY , -1.0 * posZ );
 }
 
 // Set up the gl window
@@ -242,7 +241,7 @@ void GlApplication::Draw()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );		// Clear Screen And Depth Buffer
 	glLoadIdentity();											// Reset The Current Modelview Matrix
-	glTranslated( -60.0 , -40.0 , -100.0 );
+	glTranslated( -60.0 , -42.0 , -100.0 );
 
 	// Iterate through the objectList and call draw on each one
 	for( std::list< GlFrameworkObject * >::iterator iter = m_objectList.begin() ; iter != m_objectList.end() ; ++iter )
