@@ -9,7 +9,7 @@ BackGroundManager::BackGroundManager( const std::wstring & backgroundPath , doub
 	m_screenHeight( screenHeight ),
 	m_cameraPercent( backgroundCameraPercent )
 {
-	GraphicLoaders::LoadNewBitmap( backgroundPath , m_background );
+	GraphicLoaders::LoadTga( backgroundPath , m_background );
 }
 
 BackGroundManager::~BackGroundManager()
@@ -21,7 +21,7 @@ void BackGroundManager::Draw( double xOffset )
 	double start = xOffset / ( m_screenWidth / m_cameraPercent );
 	glColor3d( 1.0 , 1.0 , 1.0 );
 	glBindTexture( GL_TEXTURE_2D , m_background );
-	glBegin( GL_POLYGON );
+	glBegin( GL_QUADS );
 		glTexCoord2d( start , 1.0 );
 		glVertex3d( 0 , m_screenHeight , 0 );
 		glTexCoord2d( start + m_cameraPercent , 1.0 );

@@ -8,6 +8,7 @@ public:
 	~LevelEndObject();
 	virtual bool CheckCollision( CollisionObject * object );
 	bool LevelDone();
+	virtual void Draw();
 private:
 	bool m_levelDone;
 };

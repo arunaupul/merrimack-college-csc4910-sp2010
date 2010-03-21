@@ -15,7 +15,7 @@ LevelObject::LevelObject( const std::wstring & levelName)
 	m_screenWidth( 800 ),
 	m_levelEndObject( NULL )
 {
-	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg.bmp", 120, 84 , .50 );
+	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.tga", 120, 84 , 0.20 );
 	m_screenStartIter = m_levelObjects.begin();
 	m_screenEndIter = m_levelObjects.end();
 }

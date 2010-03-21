@@ -7,7 +7,7 @@
 class GamePiece : public CollisionObject {
 public:
 	GamePiece( const Square & startingPos , unsigned int textureId );
-	void Draw();
+	virtual void Draw();
 	Square GetCurrentPosition();
 	virtual bool Collide( CollisionSideEnum side , int damage );
 	virtual bool CheckCollision( CollisionObject * object );

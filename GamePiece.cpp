@@ -12,7 +12,7 @@ GamePiece::GamePiece( const Square & startingPos , unsigned int textureId )
 
 void GamePiece::Draw()
 {
-	glColor4d( 1.0 , 1.0 , 1.0 , 0.5);
+	glColor4d( 1.0 , 1.0 , 1.0 , 1.0);
 	glBindTexture( GL_TEXTURE_2D , m_textureId );
 	glBegin( GL_POLYGON );
 		glTexCoord2d( 0 , 1 );
