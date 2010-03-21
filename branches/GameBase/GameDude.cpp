@@ -165,6 +165,8 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 
 void GameDude::Draw()
 {
+	glEnable( GL_BLEND );
+	glDisable( GL_DEPTH_TEST );
 	if( m_xOffset > 0 )
 	{
 		glTranslated( -1 * m_xOffset , 0.0 , 0.0 );
@@ -174,6 +176,8 @@ void GameDude::Draw()
 	{
 		glTranslated( m_xOffset , 0.0 , 0.0 );
 	}
+	glDisable( GL_BLEND );
+	glEnable( GL_DEPTH_TEST );
 }
 
 void GameDude::SetLeftBound( double newLeftX )
