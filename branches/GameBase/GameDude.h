@@ -22,6 +22,7 @@ public:
 	virtual void Draw();
 	void GetOffset();
 	void SetLeftBound( double newLeftX );
+	void Reset();
 private:
 	double m_xOffset;
 	double m_jumpHeight;
@@ -29,6 +30,7 @@ private:
 	HoriztonalStatus m_hStatus;
 	VerticalStatus m_vStatus;
 	double m_gameFloor;
+	Square m_startingPos;
 };
 
 #endif /* _GAME_DUDE_H_ */

@@ -8,6 +8,7 @@
 #include "GamePiece.h"
 #include "BackGroundManager.h"
 #include "GameDude.h"
+#include "LevelEndObject.h"
 
 class LevelObject
 {
@@ -20,6 +21,7 @@ public:
 	void AddGamePiece( GamePiece * piece );
 	void AddAIObject( AIObject * object );
 	void Start();
+	void SetLevelEndObject( LevelEndObject * object );
 protected:
 	std::list<GamePiece *> m_levelObjects;
 	std::list<AIObject *> m_passiveAIList;
@@ -32,7 +34,7 @@ private:
 	std::list<AIObject *> m_activeAIList;
 	std::list<GamePiece *>::iterator m_screenEndIter;
 	std::list<GamePiece *>::iterator m_screenStartIter;
-	bool m_levelDone;
+	LevelEndObject * m_levelEndObject;
 };
 
 #endif /* _LEVL_OBJECT_H_ */

@@ -12,8 +12,8 @@ LevelObject::LevelObject( const std::wstring & levelName)
 :	m_levelName( levelName ),
 	m_xOffset( 0.0 ),
 	m_maxXOffset( 260.0 ),
-	m_levelDone( false ),
-	m_screenWidth( 800 )
+	m_screenWidth( 800 ),
+	m_levelEndObject( NULL )
 {
 	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg.bmp", 120, 84 , .50 );
 	m_screenStartIter = m_levelObjects.begin();
@@ -64,6 +64,13 @@ double LevelObject::Move( double distance )
 		{
 			++m_screenEndIter;
 		}
+		for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+		{
+			if( ( *iter )->Trigger( m_xOffset +  m_screenWidth ) )
+			{
+				m_activeAIList.push_back( *iter );
+			}
+		}
 	}
 	// Left movement
 	else
@@ -105,6 +112,15 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 	{
 		(*current)->CheckCollision( gameDude );
 	}
+	for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI )
+	{
+		( *currentAI )->SetVerticalStatus( VS_FALLING );
+		for( std::list<GamePiece *>::iterator current = m_screenStartIter ; current != m_screenEndIter && current != m_levelObjects.end(); ++current )
+		{
+			(*current)->CheckCollision( ( *currentAI ) );
+		}
+	}
+	// TODO: Clean up the active AI list
 	if( gameDude->GetHorizontalStatus() == HS_RIGHT )
 	{
 		if( gameDude->Move( ticks * RIGHT_MOVE_DISTANCE ) >= 0.0 )
@@ -123,7 +139,7 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 	{
 		(*current)->Update( ticks );
 	}
-	return m_levelDone;
+	return m_levelEndObject->LevelDone();
 }
 
 void LevelObject::AddGamePiece( GamePiece * piece )
@@ -144,6 +160,30 @@ void LevelObject::AddAIObject( AIObject * object )
 
 void LevelObject::Start()
 {
+	if( !m_levelEndObject )
+	{
+		m_levelEndObject = new LevelEndObject( Square( -1 , -1 , -1 , -1 ) , -1 );
+	}
 	m_screenStartIter = m_levelObjects.begin();
-	m_screenEndIter = m_levelObjects.end();
+	m_screenEndIter = m_screenStartIter;
+	while( m_screenStartIter != m_levelObjects.end() && !(*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
+	{
+		++m_screenStartIter;
+	}
+	while( m_screenEndIter != m_levelObjects.end() && (*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
+	{
+		++m_screenEndIter;
+	}
+	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+	{
+		if( ( *iter )->Trigger( m_xOffset +  m_screenWidth ) )
+		{
+			m_activeAIList.push_back( *iter );
+		}
+	}
+}
+
+void LevelObject::SetLevelEndObject( LevelEndObject * object )
+{
+	m_levelEndObject = object;
 }
