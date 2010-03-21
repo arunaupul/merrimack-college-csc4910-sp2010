@@ -19,7 +19,7 @@ bool GameBase::PerformInit()
 {
 	glEnable( GL_TEXTURE_2D );
 	glColor4d( 1.0 , 1.0 , 1.0 , 1.0 );			// Full Brightness, 50% Alpha ( NEW )
-	glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
 	return true;
 }
 
