@@ -18,7 +18,7 @@ GameBase::~GameBase()
 bool GameBase::PerformInit()
 {
 	glEnable( GL_TEXTURE_2D );
-	glColor4d( 1.0 , 1.0 , 1.0 , 0.5 );			// Full Brightness, 50% Alpha ( NEW )
+	glColor4d( 1.0 , 1.0 , 1.0 , 1.0 );			// Full Brightness, 50% Alpha ( NEW )
 	glBlendFunc( GL_SRC_ALPHA , GL_ONE );
 	return true;
 }

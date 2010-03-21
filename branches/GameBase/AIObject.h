@@ -9,6 +9,7 @@ public:
 	void SetVerticalStatus( VerticalStatus status );
 	virtual bool Trigger( double xOffset ) = 0;
 	virtual void Update( int ticks ) = 0;
+	virtual void Draw();
 protected:
 	VerticalStatus m_vStatus;
 	double m_gameFloor;

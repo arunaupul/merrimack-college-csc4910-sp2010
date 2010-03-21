@@ -1,6 +1,9 @@
 #include "LevelEndObject.h"
 #include "GameDude.h"
 
+#include <windows.h>
+#include <gl\gl.h>
+
 LevelEndObject::LevelEndObject( Square startingPos , unsigned int textureId )
 :	GamePiece( startingPos , textureId ),
 	m_levelDone( false )
@@ -32,4 +35,13 @@ bool LevelEndObject::CheckCollision( CollisionObject * object )
 		}
 	}
 	return false;
+}
+
+void LevelEndObject::Draw()
+{
+	glEnable( GL_BLEND );
+	glDisable( GL_DEPTH_TEST );
+	GamePiece::Draw();
+	glDisable( GL_BLEND );
+	glEnable( GL_DEPTH_TEST );
 }

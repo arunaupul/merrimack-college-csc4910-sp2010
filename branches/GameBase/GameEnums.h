@@ -32,7 +32,8 @@ enum GameObjects {
 	GO_AI_TYPE1 = 1,
 	GO_AI_TYPE2 = 2,
 	GO_PIPE = 3,
-	GO_LEVEL_END = 4
+	GO_LEVEL_END = 4,
+	GO_SPECIAL_BLOCK = 5
 };
 
 enum GameState {

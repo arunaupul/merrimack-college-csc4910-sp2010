@@ -83,7 +83,7 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\GroundBlock.tga" , brickTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\flag.tga" , levelEndTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1.tga" , ai1TextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Left.tga" , ai1TextureId );
 
 	while( !levelFile.eof() )
 	{
@@ -149,6 +149,10 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 				LevelEndObject * piece = new LevelEndObject( pos , levelEndTextureId );
 				level->AddGamePiece( piece );
 				level->SetLevelEndObject( piece );
+				break;
+			}
+			case GO_SPECIAL_BLOCK:
+			{
 				break;
 			}
 		};
