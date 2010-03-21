@@ -38,10 +38,11 @@ bool GraphicLoaders::LoadNewBitmap( const std::wstring & fileName , TextureIdent
 #include <sstream>
 bool GraphicLoaders::LoadTga( const std::wstring & fileName , TextureIdentifier & textureId )
 {
-	std::stringstream converter;
-	converter << fileName.c_str();
-	return LoadTga( converter.str().c_str() , textureId );
+	std::string convertedString;
+	convertedString.assign( fileName.begin() , fileName.end() );
+	return LoadTga( convertedString , textureId );
 }
+
 bool GraphicLoaders::LoadTga( const std::string & fileName , TextureIdentifier & textureId )
 {
 	if( ( textureId = SOIL_load_OGL_texture
