@@ -11,12 +11,14 @@
 class WorldObject : public GlFrameworkObject {
 public:
 	WorldObject( const std::wstring & name , GameDude * dude );
+	void SetWorldName( const std::wstring & name );
 	virtual ~WorldObject();
 	void Draw();
 	void Update( int ticks );
 	void Start();
 	double Move( double distance );
 	void AddLevel( LevelObject * level );
+	bool WorldDone();
 protected:
 	std::wstring m_worldName;
 	std::list<LevelObject *> m_levelList;

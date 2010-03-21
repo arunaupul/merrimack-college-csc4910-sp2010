@@ -31,7 +31,15 @@ enum GameObjects {
 	GO_BRICK_BLOCK = 0,
 	GO_AI_TYPE1 = 1,
 	GO_AI_TYPE2 = 2,
-	GO_PIPE = 3
+	GO_PIPE = 3,
+	GO_LEVEL_END = 4
+};
+
+enum GameState {
+	GS_STARTING_MENU = 0,
+	GS_PAUSE_MENU = 1,
+	GS_GAME_PLAYING = 2,
+	GS_GAME_CREDITS = 3
 };
 
 #endif /* _GAME_ENUMS_H_ */

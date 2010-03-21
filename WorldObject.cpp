@@ -22,6 +22,11 @@ void WorldObject::Update( int ticks )
 	if( (*m_currentLevel)->Update( ticks , m_gameDude ) )
 	{
 		++m_currentLevel;
+		if( m_currentLevel != m_levelList.end() )
+		{
+			( *m_currentLevel )->Start();
+			m_gameDude->Reset();
+		}
 	}
 }
 
@@ -42,4 +47,14 @@ void WorldObject::Start()
 {
 	m_currentLevel = m_levelList.begin();
 	(*m_currentLevel)->Start();
+}
+
+bool WorldObject::WorldDone()
+{
+	return m_currentLevel == m_levelList.end();
+}
+
+void WorldObject::SetWorldName( const std::wstring & name )
+{
+	m_worldName = name;
 }

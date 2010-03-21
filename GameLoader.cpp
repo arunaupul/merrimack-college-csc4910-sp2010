@@ -13,14 +13,58 @@
 #include "GameEnums.h"
 #include "GraphicLoaders.h"
 #include "GameDude.h"
+#include "LevelEndObject.h"
+#include "AIType1.h"
 
-bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<WorldObject *> & list , GameDude * dude )
+bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<WorldObject *> & worldList , GameDude * dude )
 {
-	WorldObject * newWorld = new WorldObject( L"TestWorld" , dude );
-	LevelObject * newLevel = new LevelObject( L"TestLevel" );
-	LoadLevel( L"GamePackFiles\\level1.ini" , newLevel );
-	newWorld->AddLevel( newLevel );
-	list.push_back( newWorld );
+	std::ifstream worldFile( worldsFileName.c_str() );
+	if( !worldFile.is_open() )
+	{
+		return false;
+	}
+	std::string readline;
+	WorldObject * currentLoadingWorld = NULL;
+	LevelObject * levelToLoad = NULL;
+	while( !worldFile.eof() )
+	{
+		getline( worldFile , readline );
+		readline = readline.substr( 0 , readline.find( "#" ) );
+		readline = UtilFunctions::TrimWhiteSpace( readline );
+		if( readline == "" )
+		{
+			continue ;
+		}
+		if( !currentLoadingWorld && readline.compare( "[WORLD]" ) )
+		{
+			continue;
+		}
+		if( !readline.compare( "[WORLD]" ) )
+		{
+			currentLoadingWorld = new WorldObject( L"" , dude );
+			worldList.push_back( currentLoadingWorld );
+			continue;
+		}
+		UtilFunctions::StringTokens tokens = UtilFunctions::StringTokenizer( readline , "=" );
+		if( tokens->size() != 2 )
+		{
+			UtilFunctions::DestroyStringTokens( tokens );
+			continue;
+		}
+
+		if( !tokens->at(0)->compare( "NAME" ) )
+		{
+			currentLoadingWorld->SetWorldName( Converter::StringToWString( *( tokens->at(1) ) ) );
+		}
+		else
+		{
+			levelToLoad = new LevelObject( Converter::StringToWString( *( tokens->at(0) ) ) );
+			currentLoadingWorld->AddLevel( levelToLoad );
+			GameLoader::LoadLevel( Converter::StringToWString( *( tokens->at(1) ) ) , levelToLoad );
+		}
+
+		UtilFunctions::DestroyStringTokens( tokens );
+	}
 	return true;
 }
 
@@ -35,18 +79,17 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::TextureIdentifier brickTextureId = -1;
 	GraphicLoaders::TextureIdentifier ai1TextureId = -1;
 	GraphicLoaders::TextureIdentifier ai2TextureId = -1;
+	GraphicLoaders::TextureIdentifier levelEndTextureId = -1;
 
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\GroundBlock.tga" , brickTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\flag.tga" , levelEndTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1.tga" , ai1TextureId );
 
 	while( !levelFile.eof() )
 	{
 		getline( levelFile , readline );
 		readline = readline.substr( 0 , readline.find( "#" ) );
-		int end = readline.find_last_not_of( " " );
-		int start = readline.find_first_not_of( " " );
-		start = ( start == std::string::npos ? 0 : start );
-		end = ( end == std::string::npos ? readline.length() : end ) - start + 1;
-		readline = readline.substr( start , end );
+		readline = UtilFunctions::TrimWhiteSpace( readline );
 		if( readline == "" )
 		{
 			continue ;
@@ -69,7 +112,7 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 			xLocation = Converter::StringToDouble( *( objectTokens->at( 1 ) ) );
 			yLocation = Converter::StringToDouble( *( objectTokens->at( 2 ) ) );
 		}
-		catch( Converter::ConverterException & ex )
+		catch( Converter::ConverterException & )
 		{
 			UtilFunctions::DestroyStringTokens( objectTokens );
 			return false;
@@ -91,10 +134,21 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 			}
 			case GO_AI_TYPE1:
 			{
+				AIType1 * newAi = new AIType1( GameLoader::GameGridToCoords( xLocation , yLocation ) , ai1TextureId );
+				level->AddAIObject( newAi );
 				break;
 			}
 			case GO_AI_TYPE2:
 			{
+				break;
+			}
+			case GO_LEVEL_END:
+			{
+				Square pos( GameLoader::GameGridToCoords( xLocation , yLocation ) );
+				pos.top += 7 * SQUARE_SIZE;
+				LevelEndObject * piece = new LevelEndObject( pos , levelEndTextureId );
+				level->AddGamePiece( piece );
+				level->SetLevelEndObject( piece );
 				break;
 			}
 		};

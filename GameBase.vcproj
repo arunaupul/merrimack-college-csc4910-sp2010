@@ -173,6 +173,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AIObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\AIType1.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\BackGroundManager.cpp"
 				>
 			</File>
@@ -240,6 +248,10 @@
 			>
 			<File
 				RelativePath=".\AIObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AIType1.h"
 				>
 			</File>
 			<File

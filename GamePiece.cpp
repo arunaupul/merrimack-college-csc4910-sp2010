@@ -37,8 +37,8 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 	if( currentPiece = dynamic_cast<GamePiece *>( object ) )
 	{
 		Square objectPos = currentPiece->GetCurrentPosition();
-		if( m_currentLocation.top - objectPos.bottom <= 0.3 &&
-			m_currentLocation.top - objectPos.bottom >= -0.5 &&
+		if( m_currentLocation.top - objectPos.bottom <= 0.1 &&
+			m_currentLocation.top - objectPos.bottom >= -0.2 &&
 			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
 			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
 			)
@@ -46,8 +46,8 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			currentPiece->Collide( CS_BOTTOM , -1 );
 			return true;
 		}
-		if( m_currentLocation.bottom - objectPos.top <= 0.3 &&
-			m_currentLocation.bottom - objectPos.top >= -0.5 &&
+		if( m_currentLocation.bottom - objectPos.top <= 0.1 &&
+			m_currentLocation.bottom - objectPos.top >= -0.2 &&
 			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
 			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
 			)
@@ -56,25 +56,25 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			return true;
 		}
 		// Right collision
-		/*if( m_currentLocation.left - objectPos.right <= 1 &&
-			m_currentLocation.left - objectPos.right >= -1 &&
+		if( m_currentLocation.left - objectPos.right <= 0.1 &&
+			m_currentLocation.left - objectPos.right >= -0.1 &&
 			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
 			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
 			)
 		{
-			currentPiece->Collide( CS_RIGHT , -1 );
+			//currentPiece->Collide( CS_RIGHT , -1 );
 			return true;
 		}
 		// Left collision
-		if( m_currentLocation.right - objectPos.left <= 1 &&
-			m_currentLocation.right - objectPos.left >= -1 &&
+		if( m_currentLocation.right - objectPos.left <= 0.1 &&
+			m_currentLocation.right - objectPos.left >= -0.1 &&
 			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
 			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
 			)
 		{
-			currentPiece->Collide( CS_LEFT , -1 );
+			//currentPiece->Collide( CS_LEFT , -1 );
 			return true;
-		}*/
+		}
 	}
 	return false;
 }
@@ -88,4 +88,9 @@ bool GamePiece::OnScreen( double leftX , double rightX )
 {
 	return( ( leftX < m_currentLocation.left && rightX > m_currentLocation.left ) ||
 		( leftX < m_currentLocation.right && rightX > m_currentLocation.right ) );
+}
+
+void GamePiece::SetPosition( const Square & newPos )
+{
+	m_currentLocation = newPos;
 }

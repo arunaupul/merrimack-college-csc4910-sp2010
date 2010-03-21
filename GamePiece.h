@@ -13,6 +13,7 @@ public:
 	virtual bool CheckCollision( CollisionObject * object );
 	virtual bool OnScreen( double leftX , double rightX );
 	void SetLeftBound( double newLeftX );
+	void SetPosition( const Square & newPos );
 protected:
 	Square m_currentLocation;
 	unsigned int m_textureId;

@@ -3,17 +3,18 @@
 #include <windows.h>
 #include <gl\gl.h>
 
-#define JUMP_HEIGHT 10.0
-#define JUMP_RATE	0.03
+#define JUMP_HEIGHT SQUARE_SIZE * 1.5
+#define JUMP_RATE	0.02
 
 GameDude::GameDude( Square startingPos , unsigned int textureId )
 :	GamePiece( startingPos , textureId ),
 	m_gameDudeStatus( GDS_SMALL ),
 	m_hStatus( HS_NONE ),
-	m_vStatus( VS_JUMPING ),
+	m_vStatus( VS_NONE ),
 	m_gameFloor( 0.0 ),
 	m_xOffset( 0.0 ),
-	m_jumpHeight( 0.0 )
+	m_jumpHeight( 0.0 ),
+	m_startingPos( startingPos )
 {
 }
 
@@ -93,7 +94,6 @@ void GameDude::SetHoriztonalStatus( HoriztonalStatus newStatus )
 
 void GameDude::Update( int ticks )
 {
-	ticks /= 1.5;
 	switch( m_vStatus )
 	{
 		case VS_FALLING:
@@ -139,28 +139,28 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 			// m_gameDudeStatus -= damage;
 		}
 	}
-	if( side == CS_LEFT )
+	else if( side == CS_LEFT )
 	{
 		if( damage == -1 && m_hStatus == HS_LEFT )
 		{
 			m_hStatus = HS_NONE;
 		}
 	}
-	if( side == CS_RIGHT && m_hStatus == HS_RIGHT  )
+	else if( side == CS_RIGHT && m_hStatus == HS_RIGHT  )
 	{
 		if( damage == -1 )
 		{
 			m_hStatus = HS_NONE;
 		}
 	}
-	if( side == CS_TOP )
+	else if( side == CS_TOP )
 	{
 		if( damage == -1 && m_vStatus == VS_JUMPING )
 		{
 			m_vStatus = VS_NONE;
 		}
 	}
-	return false;
+	return true;
 }
 
 void GameDude::Draw()
@@ -179,5 +179,14 @@ void GameDude::Draw()
 void GameDude::SetLeftBound( double newLeftX )
 {
 	m_currentLocation.right = newLeftX + m_currentLocation.right - m_currentLocation.left;
-	m_currentLocation.right = newLeftX;
+	m_currentLocation.left = newLeftX;
+}
+
+void GameDude::Reset()
+{
+	m_currentLocation = m_startingPos;
+	m_vStatus = VS_NONE;
+	m_hStatus = HS_NONE;
+	m_xOffset = 0.0;
+	m_jumpHeight = 0.0;
 }

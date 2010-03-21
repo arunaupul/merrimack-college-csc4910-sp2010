@@ -58,3 +58,17 @@ double Converter::StringToDouble( const std::string & value )
 		throw ConverterException("Unable to convert");
 	}
 }
+
+std::wstring Converter::StringToWString( const std::string & stringToConvert )
+{
+	std::wstring convertedString;
+	convertedString.assign( stringToConvert.begin() , stringToConvert.end() );
+	return convertedString;
+}
+
+std::string Converter::WStringToString( const std::wstring & stringToConvert )
+{
+	std::string convertedString;
+	convertedString.assign( stringToConvert.begin() , stringToConvert.end() );
+	return convertedString;
+}
