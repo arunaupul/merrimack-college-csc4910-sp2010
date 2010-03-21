@@ -40,7 +40,7 @@ bool GraphicLoaders::LoadTga( const std::wstring & fileName , TextureIdentifier 
 {
 	std::string convertedString;
 	convertedString.assign( fileName.begin() , fileName.end() );
-	return LoadTgaBg( convertedString , textureId );
+	return LoadTga( convertedString , textureId );
 }
 
 bool GraphicLoaders::LoadTga( const std::string & fileName , TextureIdentifier & textureId )
@@ -48,7 +48,7 @@ bool GraphicLoaders::LoadTga( const std::string & fileName , TextureIdentifier &
 	if( ( textureId = SOIL_load_OGL_texture
 	(
 		fileName.c_str(),
-		SOIL_LOAD_AUTO,
+		SOIL_LOAD_RGBA,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MULTIPLY_ALPHA | SOIL_FLAG_INVERT_Y //| SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	) ) == 0 )
@@ -58,14 +58,14 @@ bool GraphicLoaders::LoadTga( const std::string & fileName , TextureIdentifier &
 	return true;
 }
 
-bool GraphicLoaders::LoadTgaBg( const std::string & fileName , TextureIdentifier & textureId )
+bool GraphicLoaders::LoadImageFile( const std::string & fileName , TextureIdentifier & textureId )
 {
 	if( ( textureId = SOIL_load_OGL_texture
 	(
 		fileName.c_str(),
-		SOIL_LOAD_RGB,
+		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
+		SOIL_FLAG_MULTIPLY_ALPHA | SOIL_FLAG_INVERT_Y //| SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	) ) == 0 )
 	{
 		return false;
