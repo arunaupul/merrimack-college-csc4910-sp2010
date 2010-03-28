@@ -1,5 +1,6 @@
 #include "LevelObject.h"
 #include "GameDude.h"
+#include "GameLoader.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -13,15 +14,29 @@ LevelObject::LevelObject( const std::wstring & levelName)
 	m_xOffset( 0.0 ),
 	m_maxXOffset( 260.0 ),
 	m_screenWidth( 800 ),
-	m_levelEndObject( NULL )
+	m_levelEndObject( NULL ),
+	m_levelFileName( L"" ),
+	m_backGroundManager( NULL ),
+	m_timer( 0 )
 {
-	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.tga", 120, 84 , 0.20 );
 	m_screenStartIter = m_levelObjects.begin();
 	m_screenEndIter = m_levelObjects.end();
 }
 
 LevelObject::~LevelObject()
 {
+	delete m_backGroundManager;
+	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	m_levelObjects.clear();
+	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	m_passiveAIList.clear();
+	m_activeAIList.clear();
 }
 
 void LevelObject::Draw()
@@ -64,11 +79,16 @@ double LevelObject::Move( double distance )
 		{
 			++m_screenEndIter;
 		}
-		for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+		for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; )
 		{
 			if( ( *iter )->Trigger( m_xOffset +  m_screenWidth ) )
 			{
 				m_activeAIList.push_back( *iter );
+				iter = m_passiveAIList.erase( iter );
+			}
+			else
+			{
+				++iter;
 			}
 		}
 	}
@@ -104,7 +124,12 @@ double LevelObject::Move( double distance )
 
 bool LevelObject::Update( int ticks , GameDude * gameDude )
 {
-	if( gameDude->GetVerticalstatus() == VS_NONE )
+	m_timer -= ticks;
+	if( m_timer <= 0 )
+	{
+		gameDude->SetDudeStatus( GDS_DEAD );
+	}
+	if( gameDude->GetVerticalStatus() == VS_NONE )
 	{
 		gameDude->SetVerticalStatus( VS_FALLING );
 	}
@@ -121,6 +146,10 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 		}
 	}
 	// TODO: Clean up the active AI list
+	for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI)
+	{
+		(*currentAI)->CheckCollision( gameDude );
+	}
 	if( gameDude->GetHorizontalStatus() == HS_RIGHT )
 	{
 		if( gameDude->Move( ticks * RIGHT_MOVE_DISTANCE ) >= 0.0 )
@@ -181,9 +210,52 @@ void LevelObject::Start()
 			m_activeAIList.push_back( *iter );
 		}
 	}
+	m_timer = 1000 * 5 * 60;
 }
 
 void LevelObject::SetLevelEndObject( LevelEndObject * object )
 {
 	m_levelEndObject = object;
+}
+
+void LevelObject::SetLevelFileName( const std::wstring & levelFileName )
+{
+	m_levelFileName = levelFileName;
+}
+
+bool LevelObject::Load()
+{
+	if( m_backGroundManager )
+	{
+		delete m_backGroundManager;
+		m_backGroundManager = NULL;
+	}
+	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.bmp", 120, 84 , 0.20 );
+	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	m_levelObjects.clear();
+	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	m_passiveAIList.clear();
+	m_activeAIList.clear();
+	m_screenStartIter = m_levelObjects.begin();
+	m_screenEndIter = m_levelObjects.end();
+	m_xOffset = 0.0;
+	return GameLoader::LoadLevel( m_levelFileName , this );
+}
+
+// Once upon a time this did something more than just the load method
+// That was when men were men and a t-rex still scared the crap out of ya
+// It cleared out all the existing level setup information, were load
+// did not. It was found that Load would be best off using the code from
+// Reload and reload was made no more. Think of reload now as the Red Headed
+// Step child
+// ToDo: Refactor to remove calls to this method
+bool LevelObject::Reload()
+{
+	return Load();
 }

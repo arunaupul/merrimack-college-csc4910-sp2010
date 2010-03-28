@@ -40,7 +40,8 @@ enum GameState {
 	GS_STARTING_MENU = 0,
 	GS_PAUSE_MENU = 1,
 	GS_GAME_PLAYING = 2,
-	GS_GAME_CREDITS = 3
+	GS_PLAYER_DEAD = 3,
+	GS_GAME_CREDITS = 4
 };
 
 #endif /* _GAME_ENUMS_H_ */

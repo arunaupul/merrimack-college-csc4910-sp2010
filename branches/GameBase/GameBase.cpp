@@ -7,7 +7,8 @@
 #include <gl\gl.h>
 
 GameBase::GameBase()
-:	m_currentGameState( GS_STARTING_MENU )
+:	m_currentGameState( GS_STARTING_MENU ),
+	m_gameDude( NULL )
 {
 }
 
@@ -77,6 +78,11 @@ void GameBase::PerformUpdate( int currentTick )
 		{
 			m_gameDude->Update( currentTick - m_lastTickCount );
 			( *m_currentWorld )->Update( currentTick - m_lastTickCount );
+			if( m_gameDude->GetDudeStatus() == GDS_DEAD )
+			{
+				m_currentGameState = GS_PLAYER_DEAD;
+				break;
+			}
 			if( ( *m_currentWorld )->WorldDone() )
 			{
 				++m_currentWorld;
@@ -84,6 +90,7 @@ void GameBase::PerformUpdate( int currentTick )
 				{
 					m_currentGameState = GS_GAME_CREDITS;
 					delete m_gameDude;
+					m_gameDude = NULL;
 					for( std::list<WorldObject *>::iterator iter = m_worldList.begin() ; iter != m_worldList.end() ; ++iter )
 					{
 						delete ( *iter );
@@ -91,9 +98,15 @@ void GameBase::PerformUpdate( int currentTick )
 					m_worldList.clear();
 					m_currentWorld = m_worldList.begin();
 					m_objectList.clear();
-					m_gameDude = NULL;
 				}
 			}
+			break;
+		}
+		case GS_PLAYER_DEAD:
+		{
+			( *m_currentWorld )->RestartCurrentLevel();
+			m_gameDude->Reset( true );
+			m_currentGameState = GS_GAME_PLAYING;
 			break;
 		}
 		case GS_GAME_CREDITS:
@@ -109,11 +122,26 @@ void GameBase::PerformUpdate( int currentTick )
 void GameBase::PlayGame()
 {
 	unsigned int dudeTextureId = -1;
-	if( !GraphicLoaders::LoadTga( "GamePackFiles\\Images\\dude.tga" , dudeTextureId ) )
+	unsigned int bigDudeTextureId = -1;
+
+	/* Clean up current game if needed */
+	if( m_gameDude )
 	{
-		return ;
+		delete m_gameDude;
+		m_gameDude = NULL;
 	}
-	m_gameDude = new GameDude( Square( SQUARE_SIZE * 3 , SQUARE_SIZE * 2 , 58.0 , 62.0 ) , dudeTextureId );
+	for( std::list<WorldObject *>::iterator iter = m_worldList.begin() ; iter != m_worldList.end() ; ++iter )
+	{
+		delete ( *iter );
+	}
+	m_worldList.clear();
+	m_currentWorld = m_worldList.begin();
+	m_objectList.clear();
+
+	/* Start Game Setup */
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\dude.tga" , dudeTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\BigDude.tga" , bigDudeTextureId );
+	m_gameDude = new GameDude( Square( SQUARE_SIZE * 3 , SQUARE_SIZE * 2 , 58.0 , 62.0 ) , dudeTextureId , bigDudeTextureId , -1 );
 	GameLoader::RunLoader( L"GamePackFiles\\worlds.ini" , m_worldList , m_gameDude );
 	m_currentWorld = m_worldList.begin();
 	( *m_currentWorld )->Start();

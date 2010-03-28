@@ -6,16 +6,19 @@
 #define JUMP_HEIGHT SQUARE_SIZE * 1.5
 #define JUMP_RATE	0.02
 
-GameDude::GameDude( Square startingPos , unsigned int textureId )
-:	GamePiece( startingPos , textureId ),
+GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned int largeTextureId , unsigned int specialTextureId )
+:	GamePiece( startingPos , smallTextureId ),
 	m_gameDudeStatus( GDS_SMALL ),
 	m_hStatus( HS_NONE ),
 	m_vStatus( VS_NONE ),
-	m_gameFloor( 0.0 ),
+	m_gameFloor( -8.0 ),
 	m_xOffset( 0.0 ),
 	m_jumpHeight( 0.0 ),
 	m_startingPos( startingPos )
 {
+	m_textureIds[0] = smallTextureId;
+	m_textureIds[1] = largeTextureId;
+	m_textureIds[2] = specialTextureId;
 }
 
 GameDude::~GameDude()
@@ -32,7 +35,7 @@ HoriztonalStatus GameDude::GetHorizontalStatus()
 	return m_hStatus;
 }
 
-VerticalStatus GameDude::GetVerticalstatus()
+VerticalStatus GameDude::GetVerticalStatus()
 {
 	return m_vStatus;
 }
@@ -56,14 +59,20 @@ void GameDude::SetDudeStatus( GameDudeStatus newStatus )
 		}
 		case GDS_SMALL:
 		{
+			m_currentLocation.top = m_currentLocation.bottom + SQUARE_SIZE;
+			m_textureId = m_textureIds[0];
 			break;
 		}
 		case GDS_BIG:
 		{
+			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * 2 );
+			m_textureId = m_textureIds[1];
 			break;
 		}
 		case GDS_SPECIAL:
 		{
+			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * 2 );
+			m_textureId = m_textureIds[2];
 			break;
 		}
 		default:
@@ -134,9 +143,9 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 		{
 			m_vStatus = VS_NONE;
 		}
-		else
+		else if( damage == 0 )
 		{
-			// m_gameDudeStatus -= damage;
+			m_vStatus = VS_JUMPING;
 		}
 	}
 	else if( side == CS_LEFT )
@@ -186,11 +195,17 @@ void GameDude::SetLeftBound( double newLeftX )
 	m_currentLocation.left = newLeftX;
 }
 
-void GameDude::Reset()
+void GameDude::Reset( bool resetDudeStatus )
 {
 	m_currentLocation = m_startingPos;
 	m_vStatus = VS_NONE;
 	m_hStatus = HS_NONE;
 	m_xOffset = 0.0;
 	m_jumpHeight = 0.0;
+	m_textureId = m_textureIds[0];
+	if( resetDudeStatus )
+	{
+		m_gameDudeStatus = GDS_SMALL;
+	}
+	SetDudeStatus( m_gameDudeStatus );
 }

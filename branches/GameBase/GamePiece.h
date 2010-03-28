@@ -17,6 +17,7 @@ public:
 protected:
 	Square m_currentLocation;
 	unsigned int m_textureId;
+	bool m_broken;
 };
 
 #endif /* _GAME_PIECE_H_ */
