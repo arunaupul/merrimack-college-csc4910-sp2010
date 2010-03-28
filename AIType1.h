@@ -11,6 +11,7 @@ public:
 	virtual void Update( int ticks );
 	virtual bool Trigger( double xOffset );
 	virtual bool Collide( CollisionSideEnum side , int damage );
+	virtual bool CheckCollision( CollisionObject * object );
 private:
 	bool m_direction;
 };

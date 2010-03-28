@@ -4,26 +4,32 @@
 #include <windows.h>
 #include <gl/gl.h>
 
+//#define _ENABLE_BREAKABLE_BLOCKS_
+
 GamePiece::GamePiece( const Square & startingPos , unsigned int textureId )
 :	m_currentLocation( startingPos ),
-	m_textureId( textureId )
+	m_textureId( textureId ),
+	m_broken( false )
 {
 }
 
 void GamePiece::Draw()
 {
-	glColor4d( 1.0 , 1.0 , 1.0 , 1.0);
-	glBindTexture( GL_TEXTURE_2D , m_textureId );
-	glBegin( GL_POLYGON );
-		glTexCoord2d( 0 , 1 );
-		glVertex3d( m_currentLocation.left , m_currentLocation.top , 0.0 );
-		glTexCoord2d( 1 , 1 );
-		glVertex3d( m_currentLocation.right , m_currentLocation.top , 0.0 );
-		glTexCoord2d( 1 , 0 );
-		glVertex3d( m_currentLocation.right , m_currentLocation.bottom , 0.0 );
-		glTexCoord2d( 0 , 0 );
-		glVertex3d( m_currentLocation.left , m_currentLocation.bottom , 0.0 );
-	glEnd();
+	if( !m_broken )
+	{
+		glColor4d( 1.0 , 1.0 , 1.0 , 1.0);
+		glBindTexture( GL_TEXTURE_2D , m_textureId );
+		glBegin( GL_POLYGON );
+			glTexCoord2d( 0 , 1 );
+			glVertex3d( m_currentLocation.left , m_currentLocation.top , 0.0 );
+			glTexCoord2d( 1 , 1 );
+			glVertex3d( m_currentLocation.right , m_currentLocation.top , 0.0 );
+			glTexCoord2d( 1 , 0 );
+			glVertex3d( m_currentLocation.right , m_currentLocation.bottom , 0.0 );
+			glTexCoord2d( 0 , 0 );
+			glVertex3d( m_currentLocation.left , m_currentLocation.bottom , 0.0 );
+		glEnd();
+	}
 }
 
 Square GamePiece::GetCurrentPosition()
@@ -33,6 +39,10 @@ Square GamePiece::GetCurrentPosition()
 
 bool GamePiece::CheckCollision( CollisionObject * object )
 {
+	if( m_broken )
+	{
+		return false;
+	}
 	GamePiece * currentPiece = NULL;
 	if( currentPiece = dynamic_cast<GamePiece *>( object ) )
 	{
@@ -44,6 +54,7 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			)
 		{
 			currentPiece->Collide( CS_BOTTOM , -1 );
+			Collide( CS_TOP , 1 );
 			return true;
 		}
 		if( m_currentLocation.bottom - objectPos.top <= 0.1 &&
@@ -53,6 +64,7 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			)
 		{
 			currentPiece->Collide( CS_TOP , -1 );
+			Collide( CS_BOTTOM , 1 );
 			return true;
 		}
 		// Right collision
@@ -63,6 +75,7 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			)
 		{
 			//currentPiece->Collide( CS_RIGHT , -1 );
+			//Collide( CS_LEFT , 1 );
 			return true;
 		}
 		// Left collision
@@ -73,6 +86,7 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 			)
 		{
 			//currentPiece->Collide( CS_LEFT , -1 );
+			//Collide( CS_RIGHT , 1 );
 			return true;
 		}
 	}
@@ -81,6 +95,12 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 
 bool GamePiece::Collide( CollisionSideEnum side , int damage )
 {
+#ifdef _ENABLE_BREAKABLE_BLOCKS_
+	if( side == CS_BOTTOM && damage >= 1 )
+	{
+		m_broken = true;
+	}
+#endif
 	return false;
 }
 

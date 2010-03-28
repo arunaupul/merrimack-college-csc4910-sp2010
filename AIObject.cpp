@@ -7,7 +7,8 @@ AIObject::AIObject( const Square & startingPos , unsigned int textureId )
 :	GamePiece( startingPos , textureId ),
  	m_active( false ),
 	m_vStatus( VS_NONE ),
-	m_gameFloor( 0.0 )
+	m_gameFloor( -8.0 ),
+	m_killed( false )
 {
 }
 
@@ -18,9 +19,17 @@ void AIObject::SetVerticalStatus( VerticalStatus status )
 
 void AIObject::Draw()
 {
-	glEnable( GL_BLEND );
-	glDisable( GL_DEPTH_TEST );
-	GamePiece::Draw();
-	glDisable( GL_BLEND );
-	glEnable( GL_DEPTH_TEST );
+	if( m_active && !m_killed )
+	{
+		glEnable( GL_BLEND );
+		glDisable( GL_DEPTH_TEST );
+		GamePiece::Draw();
+		glDisable( GL_BLEND );
+		glEnable( GL_DEPTH_TEST );
+	}
+}
+
+bool AIObject::GetActiveStatus()
+{
+	return m_active && !m_killed;
 }

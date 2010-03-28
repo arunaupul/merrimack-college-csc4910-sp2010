@@ -22,6 +22,9 @@ public:
 	void AddAIObject( AIObject * object );
 	void Start();
 	void SetLevelEndObject( LevelEndObject * object );
+	void SetLevelFileName( const std::wstring & levelFileName );
+	bool Load();
+	bool Reload();
 protected:
 	std::list<GamePiece *> m_levelObjects;
 	std::list<AIObject *> m_passiveAIList;
@@ -35,6 +38,8 @@ private:
 	std::list<GamePiece *>::iterator m_screenEndIter;
 	std::list<GamePiece *>::iterator m_screenStartIter;
 	LevelEndObject * m_levelEndObject;
+	std::wstring m_levelFileName;
+	int m_timer;
 };
 
 #endif /* _LEVL_OBJECT_H_ */

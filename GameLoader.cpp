@@ -15,6 +15,8 @@
 #include "GameDude.h"
 #include "LevelEndObject.h"
 #include "AIType1.h"
+#include "PowerUpBlock.h"
+#include "PowerUpItem.h"
 
 bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<WorldObject *> & worldList , GameDude * dude )
 {
@@ -59,8 +61,9 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 		else
 		{
 			levelToLoad = new LevelObject( Converter::StringToWString( *( tokens->at(0) ) ) );
+			levelToLoad->SetLevelFileName( Converter::StringToWString( *( tokens->at(1) ) ) );
 			currentLoadingWorld->AddLevel( levelToLoad );
-			GameLoader::LoadLevel( Converter::StringToWString( *( tokens->at(1) ) ) , levelToLoad );
+			//GameLoader::LoadLevel( Converter::StringToWString( *( tokens->at(1) ) ) , levelToLoad );
 		}
 
 		UtilFunctions::DestroyStringTokens( tokens );
@@ -80,10 +83,16 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::TextureIdentifier ai1TextureId = -1;
 	GraphicLoaders::TextureIdentifier ai2TextureId = -1;
 	GraphicLoaders::TextureIdentifier levelEndTextureId = -1;
+	GraphicLoaders::TextureIdentifier powerUpBlockTexture1 = -1;
+	GraphicLoaders::TextureIdentifier powerUpBlockUsedTexture = -1;
+	GraphicLoaders::TextureIdentifier powerUpTexture = -1;
 
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\GroundBlock.tga" , brickTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\flag.tga" , levelEndTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Left.tga" , ai1TextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlock.tga" , powerUpBlockTexture1 );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlockUsed.tga" , powerUpBlockUsedTexture );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\PowerUp1.tga" , powerUpTexture );
 
 	while( !levelFile.eof() )
 	{
@@ -153,6 +162,10 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 			}
 			case GO_SPECIAL_BLOCK:
 			{
+				PowerUpItem * newPowerUp = new PowerUpItem( GameLoader::GameGridToCoords( xLocation , yLocation ) , powerUpTexture );
+				PowerUpBlock * newBlock = new PowerUpBlock( GameLoader::GameGridToCoords( xLocation , yLocation ) , newPowerUp , powerUpBlockTexture1 , powerUpBlockUsedTexture );
+				level->AddGamePiece( newBlock );
+				level->AddAIObject( newPowerUp );
 				break;
 			}
 		};
@@ -165,5 +178,5 @@ Square GameLoader::GameGridToCoords( double x , double y )
 {
 	x *= SQUARE_SIZE;
 	y *= SQUARE_SIZE;
-	return Square( y + SQUARE_SIZE , y , x , x + SQUARE_SIZE );
+	return Square( y + SQUARE_SIZE , y + 0.01 , x , x + SQUARE_SIZE );
 }

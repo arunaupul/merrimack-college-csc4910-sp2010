@@ -19,6 +19,7 @@ public:
 	double Move( double distance );
 	void AddLevel( LevelObject * level );
 	bool WorldDone();
+	bool RestartCurrentLevel();
 protected:
 	std::wstring m_worldName;
 	std::list<LevelObject *> m_levelList;

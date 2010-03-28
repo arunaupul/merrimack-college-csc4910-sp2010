@@ -229,6 +229,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PowerUpBlock.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PowerUpItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Singleton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\UtilFunctions.cpp"
 				>
 			</File>
@@ -323,7 +335,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PowerUpBlock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PowerUpItem.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RgbaColor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Singleton.h"
 				>
 			</File>
 			<File

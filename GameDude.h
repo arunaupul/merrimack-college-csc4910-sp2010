@@ -8,11 +8,11 @@
 
 class GameDude : public GamePiece, public GlFrameworkObject {
 public:
-	GameDude( Square startingPos , unsigned int textureId );
+	GameDude( Square startingPos , unsigned int smallTextureId , unsigned int largeTextureId , unsigned int specialTextureId );
 	virtual ~GameDude();
 	GameDudeStatus GetDudeStatus();
 	HoriztonalStatus GetHorizontalStatus();
-	VerticalStatus GetVerticalstatus();
+	VerticalStatus GetVerticalStatus();
 	double Move( double x );
 	void Update( int ticks );
 	void SetDudeStatus( GameDudeStatus newStatus );
@@ -22,7 +22,7 @@ public:
 	virtual void Draw();
 	void GetOffset();
 	void SetLeftBound( double newLeftX );
-	void Reset();
+	void Reset( bool resetDudeStatus = true );
 private:
 	double m_xOffset;
 	double m_jumpHeight;
@@ -31,6 +31,7 @@ private:
 	VerticalStatus m_vStatus;
 	double m_gameFloor;
 	Square m_startingPos;
+	unsigned int m_textureIds[3];
 };
 
 #endif /* _GAME_DUDE_H_ */
