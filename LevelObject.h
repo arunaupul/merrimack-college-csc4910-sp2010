@@ -25,6 +25,7 @@ public:
 	void SetLevelFileName( const std::wstring & levelFileName );
 	bool Load();
 	bool Reload();
+	std::wstring GetTimerString();
 protected:
 	std::list<GamePiece *> m_levelObjects;
 	std::list<AIObject *> m_passiveAIList;

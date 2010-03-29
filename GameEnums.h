@@ -44,4 +44,10 @@ enum GameState {
 	GS_GAME_CREDITS = 4
 };
 
+enum ScoreObject {
+	SO_AI_TYPE_1 = 0,
+	SO_AI_TYPE_2 = 1,
+	SO_LEVEL_END = 2
+};
+
 #endif /* _GAME_ENUMS_H_ */

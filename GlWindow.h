@@ -33,6 +33,7 @@ public:
 	int GetWindowHeight();							// Get The Window Height
 	int GetWindowWidth();							// Get The Window Width
 	operator HWND() { return m_hWnd; }				// Overload to allow the GlWindow to act as a HWND
+	operator HDC() { return m_hDc; }
 
 protected:
 

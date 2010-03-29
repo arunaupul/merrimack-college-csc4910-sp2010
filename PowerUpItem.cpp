@@ -47,9 +47,12 @@ bool PowerUpItem::Trigger( double xOffset )
 
 void PowerUpItem::Activate()
 {
-	m_active = true;
-	m_triggered = true;
-	m_vStatus = VS_JUMPING;
+	if( !m_killed )
+	{
+		m_active = true;
+		m_triggered = true;
+		m_vStatus = VS_JUMPING;
+	}
 }
 
 

@@ -20,6 +20,7 @@ public:
 	void AddLevel( LevelObject * level );
 	bool WorldDone();
 	bool RestartCurrentLevel();
+	std::wstring GetTimerString();
 protected:
 	std::wstring m_worldName;
 	std::list<LevelObject *> m_levelList;
