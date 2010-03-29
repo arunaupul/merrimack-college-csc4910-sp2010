@@ -1,6 +1,7 @@
 #include "AIType1.h"
 #include "GameEnums.h"
 #include "GameDude.h"
+#include "ScoreManager.h"
 
 #define TRIGGER_DISTANCE	50
 #define LEFT				true
@@ -66,9 +67,10 @@ bool AIType1::Collide( CollisionSideEnum side , int damage )
 	{
 		m_direction = RIGHT;
 	}
-	else if( side == CS_TOP && damage > 0 )
+	else if( side == CS_TOP && damage > 0 && !m_killed )
 	{
 		m_killed = true;
+		ScoreManager::Instance()->AddToScore( 15 , SO_AI_TYPE_1 );
 	}
 	return false;
 }

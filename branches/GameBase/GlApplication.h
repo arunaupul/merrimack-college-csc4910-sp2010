@@ -80,9 +80,10 @@ protected:
 
 	int m_lastTickCount;			// Last tick count that was run on update
 
+	GlWindow m_window;
+
 private:
 	HINSTANCE hInstance;			// Application Instance
-	GlWindow m_window;
 
 	bool m_isActive;				// Boolean to monitor if the app is active
 };

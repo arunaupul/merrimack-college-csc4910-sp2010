@@ -1,5 +1,7 @@
 #include "LevelEndObject.h"
 #include "GameDude.h"
+#include "ScoreManager.h"
+#include "GameEnums.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -22,7 +24,7 @@ bool LevelEndObject::LevelDone()
 bool LevelEndObject::CheckCollision( CollisionObject * object )
 {
 	GameDude * dude = dynamic_cast<GameDude *>( object );
-	if( dude )
+	if( dude && !m_levelDone )
 	{
 		Square dudePos = dude->GetCurrentPosition();
 		if( ( ( dudePos.bottom >= m_currentLocation.bottom && dudePos.bottom <= m_currentLocation.top ) ||
@@ -31,6 +33,7 @@ bool LevelEndObject::CheckCollision( CollisionObject * object )
 			( dudePos.right >= m_currentLocation.left && dudePos.right <= m_currentLocation.right ) ) )
 		{
 			m_levelDone = true;
+			ScoreManager::Instance()->AddToScore( 100 , SO_LEVEL_END );
 			return true;
 		}
 	}

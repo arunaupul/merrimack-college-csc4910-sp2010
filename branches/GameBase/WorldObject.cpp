@@ -70,3 +70,8 @@ bool WorldObject::RestartCurrentLevel()
 	( *m_currentLevel )->Start();
 	return true;
 }
+
+std::wstring WorldObject::GetTimerString()
+{
+	return ( *m_currentLevel )->GetTimerString();
+}

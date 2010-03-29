@@ -23,6 +23,7 @@ public:
 	void GetOffset();
 	void SetLeftBound( double newLeftX );
 	void Reset( bool resetDudeStatus = true );
+	void SetCrouching( bool status );
 private:
 	double m_xOffset;
 	double m_jumpHeight;
@@ -32,6 +33,7 @@ private:
 	double m_gameFloor;
 	Square m_startingPos;
 	unsigned int m_textureIds[3];
+	bool m_crouching;
 };
 
 #endif /* _GAME_DUDE_H_ */

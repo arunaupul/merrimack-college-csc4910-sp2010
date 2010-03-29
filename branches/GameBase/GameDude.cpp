@@ -14,7 +14,8 @@ GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned 
 	m_gameFloor( -8.0 ),
 	m_xOffset( 0.0 ),
 	m_jumpHeight( 0.0 ),
-	m_startingPos( startingPos )
+	m_startingPos( startingPos ),
+	m_crouching( false )
 {
 	m_textureIds[0] = smallTextureId;
 	m_textureIds[1] = largeTextureId;
@@ -65,13 +66,13 @@ void GameDude::SetDudeStatus( GameDudeStatus newStatus )
 		}
 		case GDS_BIG:
 		{
-			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * 2 );
+			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
 			m_textureId = m_textureIds[1];
 			break;
 		}
 		case GDS_SPECIAL:
 		{
-			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * 2 );
+			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
 			m_textureId = m_textureIds[2];
 			break;
 		}
@@ -208,4 +209,13 @@ void GameDude::Reset( bool resetDudeStatus )
 		m_gameDudeStatus = GDS_SMALL;
 	}
 	SetDudeStatus( m_gameDudeStatus );
+}
+
+void GameDude::SetCrouching( bool status )
+{
+	m_crouching = status;
+	if( m_gameDudeStatus != GDS_SMALL )
+	{
+		m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
+	}
 }

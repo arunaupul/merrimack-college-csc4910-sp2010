@@ -1,6 +1,8 @@
 #include "LevelObject.h"
 #include "GameDude.h"
 #include "GameLoader.h"
+#include "ScoreManager.h"
+#include "Converter.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -211,6 +213,7 @@ void LevelObject::Start()
 		}
 	}
 	m_timer = 1000 * 5 * 60;
+	ScoreManager::Instance()->NewLevel();
 }
 
 void LevelObject::SetLevelEndObject( LevelEndObject * object )
@@ -257,5 +260,14 @@ bool LevelObject::Load()
 // ToDo: Refactor to remove calls to this method
 bool LevelObject::Reload()
 {
+	ScoreManager::Instance()->ResetLevel();
 	return Load();
+}
+
+std::wstring LevelObject::GetTimerString()
+{
+	int seconds = m_timer / 1000;
+	int minutes = seconds / 60;
+	seconds = seconds % 60;
+	return Converter::StringToWString( Converter::IntToString( minutes ) + ":" + ( seconds < 10 ? "0" : "" ) + Converter::IntToString( seconds ) );
 }
