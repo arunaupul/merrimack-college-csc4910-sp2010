@@ -20,7 +20,6 @@ public:
 	virtual void PerformUpdate( int currentTick );
 	void PlayGame();
 	void BuildHUDFont();
-	void GlPrintText( char * text );
 	void KillHudFont();
 	void Draw();
 private:

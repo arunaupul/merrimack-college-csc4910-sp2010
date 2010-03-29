@@ -3,11 +3,11 @@
 #include "GameDude.h"
 #include "ScoreManager.h"
 
-#define TRIGGER_DISTANCE	50
+#define TRIGGER_DISTANCE	2
 #define LEFT				true
 #define RIGHT				false
 #define MOVE_DISTANCE		0.005
-#define FALL_SPEED			0.02
+#define FALL_SPEED			0.03
 
 AIType1::AIType1( const Square & startingPos , unsigned int textureId )
 :	AIObject( startingPos , textureId ),
@@ -85,8 +85,8 @@ bool AIType1::CheckCollision( CollisionObject * object )
 	if( gameDude = dynamic_cast<GameDude *>( object ) )
 	{
 		Square objectPos = gameDude->GetCurrentPosition();
-		if( m_currentLocation.top - objectPos.bottom <= 0.1 &&
-			m_currentLocation.top - objectPos.bottom >= -0.2 &&
+		if( m_currentLocation.top - objectPos.bottom <= 0.5 &&
+			m_currentLocation.top - objectPos.bottom >= -0.5 &&
 			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
 			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
 			)
@@ -103,37 +103,12 @@ bool AIType1::CheckCollision( CollisionObject * object )
 			}
 			return true;
 		}
-		if( m_currentLocation.bottom - objectPos.top <= 0.1 &&
-			m_currentLocation.bottom - objectPos.top >= -0.2 &&
-			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
-			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
-			)
+		else if( ( ( objectPos.bottom >= m_currentLocation.bottom && objectPos.bottom <= m_currentLocation.top ) ||
+			( objectPos.top >= m_currentLocation.bottom && objectPos.top <= m_currentLocation.top ) ) &&
+			( ( objectPos.left >= m_currentLocation.left && objectPos.left <= m_currentLocation.right ) ||
+			( objectPos.right >= m_currentLocation.left && objectPos.right <= m_currentLocation.right ) ) )
 		{
 			gameDude->Collide( CS_TOP , 1 );
-			Collide( CS_BOTTOM , 0 );
-			return true;
-		}
-		// Right collision
-		if( m_currentLocation.left - objectPos.right <= 0.1 &&
-			m_currentLocation.left - objectPos.right >= -0.1 &&
-			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
-			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
-			)
-		{
-			//gameDude->Collide( CS_RIGHT , 1 );
-			//Collide( CS_LEFT , 0 );
-			return true;
-		}
-		// Left collision
-		if( m_currentLocation.right - objectPos.left <= 0.1 &&
-			m_currentLocation.right - objectPos.left >= -0.1 &&
-			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
-			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
-			)
-		{
-			//gameDude->Collide( CS_LEFT , 1 );
-			//Collide( CS_RIGHT , 0 );
-			return true;
 		}
 	}
 	return false;

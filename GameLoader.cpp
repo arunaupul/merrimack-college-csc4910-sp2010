@@ -33,7 +33,7 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 		getline( worldFile , readline );
 		readline = readline.substr( 0 , readline.find( "#" ) );
 		readline = UtilFunctions::TrimWhiteSpace( readline );
-		if( readline == "" )
+		if( readline == "" )\
 		{
 			continue ;
 		}
@@ -162,8 +162,13 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 			}
 			case GO_SPECIAL_BLOCK:
 			{
-				PowerUpItem * newPowerUp = new PowerUpItem( GameLoader::GameGridToCoords( xLocation , yLocation ) , powerUpTexture );
-				PowerUpBlock * newBlock = new PowerUpBlock( GameLoader::GameGridToCoords( xLocation , yLocation ) , newPowerUp , powerUpBlockTexture1 , powerUpBlockUsedTexture );
+				Square blockPos = GameLoader::GameGridToCoords( xLocation , yLocation );
+				Square powerUpPos = blockPos;
+				powerUpPos.bottom = powerUpPos.top - ( powerUpPos.top - powerUpPos.bottom ) * 0.8;
+				powerUpPos.right = powerUpPos.left + ( powerUpPos.right - powerUpPos.left ) * 0.9;
+				powerUpPos.left += ( powerUpPos.right - powerUpPos.left ) / 9;
+				PowerUpItem * newPowerUp = new PowerUpItem( powerUpPos , powerUpTexture );
+				PowerUpBlock * newBlock = new PowerUpBlock( blockPos , newPowerUp , powerUpBlockTexture1 , powerUpBlockUsedTexture );
 				level->AddGamePiece( newBlock );
 				level->AddAIObject( newPowerUp );
 				break;

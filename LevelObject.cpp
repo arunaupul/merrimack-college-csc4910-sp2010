@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <gl\gl.h>
 
-#define RIGHT_MOVE_DISTANCE		0.02
+#define RIGHT_MOVE_DISTANCE		0.035
 #define LEFT_MOVE_DISTANCE		-RIGHT_MOVE_DISTANCE
 #define CLIP_DISTANCE			5.0
 
@@ -233,7 +233,7 @@ bool LevelObject::Load()
 		delete m_backGroundManager;
 		m_backGroundManager = NULL;
 	}
-	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.bmp", 120, 84 , 0.20 );
+	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.bmp", 240, 168 , 0.20 );
 	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
 	{
 		delete (*iter);

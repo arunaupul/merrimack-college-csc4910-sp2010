@@ -117,6 +117,7 @@ void GameBase::PerformUpdate( int currentTick )
 		}
 		case GS_GAME_CREDITS:
 		case GS_STARTING_MENU:
+		case GS_PAUSE_MENU:
 		{
 			m_currentGameState = GS_GAME_PLAYING;
 			PlayGame();
@@ -149,7 +150,7 @@ void GameBase::PlayGame()
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\dude.tga" , dudeTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\BigDude.tga" , bigDudeTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\BigDude2.tga" , specialDudeTextureId );
-	m_gameDude = new GameDude( Square( SQUARE_SIZE * 3 , SQUARE_SIZE * 2 , 58.0 , 62.0 ) , dudeTextureId , bigDudeTextureId , specialDudeTextureId );
+	m_gameDude = new GameDude( Square( SQUARE_SIZE * 2.8 , SQUARE_SIZE * 2 , 120 - ( SQUARE_SIZE * .4 ) , 120.0 + SQUARE_SIZE * .4 ) , dudeTextureId , bigDudeTextureId , specialDudeTextureId );
 	GameLoader::RunLoader( L"GamePackFiles\\worlds.ini" , m_worldList , m_gameDude );
 	m_currentWorld = m_worldList.begin();
 	( *m_currentWorld )->Start();
@@ -176,7 +177,7 @@ void GameBase::BuildHUDFont()
 						CLIP_DEFAULT_PRECIS,
 						ANTIALIASED_QUALITY,
 						FF_DONTCARE | DEFAULT_PITCH,
-						L"Times New Roman MS");
+						L"Digital-7");
 	SelectObject( m_window , font );
 	wglUseFontOutlines( m_window,
 						0,
@@ -187,7 +188,6 @@ void GameBase::BuildHUDFont()
 						WGL_FONT_POLYGONS,
 						m_hudTextGmf);
 }
-
 void GameBase::KillHudFont()
 {
 	glDeleteLists( m_hudTextBase , 256 );
@@ -196,11 +196,12 @@ void GameBase::KillHudFont()
 void GameBase::Draw()
 {
 	GlApplication::Draw();
+
 	if( m_currentGameState == GS_GAME_PLAYING )
 	{
 		glDisable( GL_TEXTURE_2D );
 		std::string score = Converter::IntToString( ScoreManager::Instance()->GetCurrentScore() );
-		std::string timerString = Converter::WStringToString( ( *m_currentWorld )->GetTimerString() );
+		std::wstring timerString = ( *m_currentWorld )->GetTimerString();
 		glLoadIdentity();
 		glColor3d( 1.0 , 0.0 , 0.0 );
 		glTranslated( -10 , 7 , -20 );
@@ -212,7 +213,7 @@ void GameBase::Draw()
 		glTranslated( 8 , 7 , -20 );
 		glPushAttrib( GL_LIST_BIT );
 		glListBase( m_hudTextBase );
-		glCallLists( timerString.length() , GL_UNSIGNED_BYTE , timerString.c_str() );
+		glCallLists( timerString.length() , GL_UNSIGNED_SHORT , timerString.c_str() );
 		glPopAttrib();
 		glEnable( GL_TEXTURE_2D );
 	}

@@ -1,7 +1,8 @@
 #ifndef _GAME_STRUCTS_H_
 #define _GAME_STRUCTS_H_
 
-#define SQUARE_SIZE		5.0
+//#define SQUARE_SIZE		5.0
+#define SQUARE_SIZE		10.0
 
 struct Square
 {

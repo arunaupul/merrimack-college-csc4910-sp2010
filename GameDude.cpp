@@ -4,7 +4,7 @@
 #include <gl\gl.h>
 
 #define JUMP_HEIGHT SQUARE_SIZE * 1.5
-#define JUMP_RATE	0.02
+#define JUMP_RATE	0.03
 
 GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned int largeTextureId , unsigned int specialTextureId )
 :	GamePiece( startingPos , smallTextureId ),
@@ -15,7 +15,8 @@ GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned 
 	m_xOffset( 0.0 ),
 	m_jumpHeight( 0.0 ),
 	m_startingPos( startingPos ),
-	m_crouching( false )
+	m_crouching( false ),
+	m_invincible( 0.0 )
 {
 	m_textureIds[0] = smallTextureId;
 	m_textureIds[1] = largeTextureId;
@@ -60,19 +61,19 @@ void GameDude::SetDudeStatus( GameDudeStatus newStatus )
 		}
 		case GDS_SMALL:
 		{
-			m_currentLocation.top = m_currentLocation.bottom + SQUARE_SIZE;
+			m_currentLocation.top = m_currentLocation.bottom + m_startingPos.top - m_startingPos.bottom;
 			m_textureId = m_textureIds[0];
 			break;
 		}
 		case GDS_BIG:
 		{
-			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
+			m_currentLocation.top = m_currentLocation.bottom + ( ( m_startingPos.top - m_startingPos.bottom )* ( m_crouching ? 1 : 2 ) );
 			m_textureId = m_textureIds[1];
 			break;
 		}
 		case GDS_SPECIAL:
 		{
-			m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
+			m_currentLocation.top = m_currentLocation.bottom + ( ( m_startingPos.top - m_startingPos.bottom ) * ( m_crouching ? 1 : 2 ) );
 			m_textureId = m_textureIds[2];
 			break;
 		}
@@ -104,6 +105,14 @@ void GameDude::SetHoriztonalStatus( HoriztonalStatus newStatus )
 
 void GameDude::Update( int ticks )
 {
+	if( m_invincible > 0 )
+	{
+		m_invincible += ticks;
+		if( m_invincible >= 5000 )
+		{
+			m_invincible = 0.0;
+		}
+	}
 	switch( m_vStatus )
 	{
 		case VS_FALLING:
@@ -138,36 +147,37 @@ void GameDude::Update( int ticks )
 
 bool GameDude::Collide( CollisionSideEnum side , int damage )
 {
-	if( CS_BOTTOM == side )
+	if( CS_BOTTOM == side && damage == -1 && m_vStatus != VS_JUMPING )
 	{
-		if( damage == -1 && m_vStatus != VS_JUMPING )
-		{
-			m_vStatus = VS_NONE;
-		}
-		else if( damage == 0 )
-		{
-			m_vStatus = VS_JUMPING;
-		}
+		m_vStatus = VS_NONE;
 	}
-	else if( side == CS_LEFT )
+	else if( CS_BOTTOM == side && damage == 0 )
 	{
-		if( damage == -1 && m_hStatus == HS_LEFT )
-		{
-			m_hStatus = HS_NONE;
-		}
+		m_vStatus = VS_JUMPING;
 	}
-	else if( side == CS_RIGHT && m_hStatus == HS_RIGHT  )
+	else if( side == CS_LEFT && damage == -1 && m_hStatus == HS_LEFT )
 	{
-		if( damage == -1 )
-		{
-			m_hStatus = HS_NONE;
-		}
+		m_hStatus = HS_NONE;
 	}
-	else if( side == CS_TOP )
+	else if( side == CS_RIGHT && m_hStatus == HS_RIGHT && damage == -1 )
 	{
-		if( damage == -1 && m_vStatus == VS_JUMPING )
+		m_hStatus = HS_NONE;
+	}
+	else if( side == CS_TOP && damage == -1 && m_vStatus == VS_JUMPING )
+	{
+		m_vStatus = VS_NONE;
+	}
+	else if( damage > 0 && m_invincible == 0.0 )
+	{
+		if( m_gameDudeStatus - damage < 0 )
 		{
-			m_vStatus = VS_NONE;
+			m_gameDudeStatus = GDS_DEAD;
+		}
+		else
+		{
+			m_gameDudeStatus = (GameDudeStatus)( m_gameDudeStatus - damage );
+			m_invincible += 1.0;
+			SetDudeStatus( m_gameDudeStatus );
 		}
 	}
 	return true;
@@ -216,6 +226,6 @@ void GameDude::SetCrouching( bool status )
 	m_crouching = status;
 	if( m_gameDudeStatus != GDS_SMALL )
 	{
-		m_currentLocation.top = m_currentLocation.bottom + ( SQUARE_SIZE * ( m_crouching ? 1 : 2 ) );
+		m_currentLocation.top = m_currentLocation.bottom + ( ( m_startingPos.top - m_startingPos.bottom ) * ( m_crouching ? 1 : 2 ) );
 	}
 }
