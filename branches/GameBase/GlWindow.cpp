@@ -269,7 +269,7 @@ void GlWindow::ResizeGlScene( int width , int height )
 	glLoadIdentity();											// Reset the matrix
 
 	// Calc the aspect ration
-	gluPerspective( 45.0 , (float)m_windowWidth / (float)m_windowHeight , 0.1 , 100.0 );
+	gluPerspective( 45.0 , (float)m_windowWidth / (float)m_windowHeight , 0.1 , 201.0 );
 
 	glMatrixMode( GL_MODELVIEW );								// Select the matrix model view
 	glLoadIdentity();											// Reset the modelview matrix

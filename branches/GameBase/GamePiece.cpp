@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 
-//#define _ENABLE_BREAKABLE_BLOCKS_
+#define _ENABLE_BREAKABLE_BLOCKS_
 
 GamePiece::GamePiece( const Square & startingPos , unsigned int textureId )
 :	m_currentLocation( startingPos ),
@@ -47,46 +47,52 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 	if( currentPiece = dynamic_cast<GamePiece *>( object ) )
 	{
 		Square objectPos = currentPiece->GetCurrentPosition();
-		if( m_currentLocation.top - objectPos.bottom <= 0.1 &&
-			m_currentLocation.top - objectPos.bottom >= -0.2 &&
+		if( m_currentLocation.top - objectPos.bottom <= 0.4 &&
+			m_currentLocation.top - objectPos.bottom >= -0.4 &&
 			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
 			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
 			)
 		{
 			currentPiece->Collide( CS_BOTTOM , -1 );
-			Collide( CS_TOP , 1 );
+			Collide( CS_TOP , 0 );
 			return true;
 		}
-		if( m_currentLocation.bottom - objectPos.top <= 0.1 &&
-			m_currentLocation.bottom - objectPos.top >= -0.2 &&
+		if( m_currentLocation.bottom - objectPos.top <= 0.4 &&
+			m_currentLocation.bottom - objectPos.top >= -0.4 &&
 			( ( m_currentLocation.left <= objectPos.left && m_currentLocation.right >= objectPos.left ) ||
 			( m_currentLocation.right >= objectPos.right && m_currentLocation.left <= objectPos.right ) )
 			)
 		{
-			currentPiece->Collide( CS_TOP , -1 );
-			Collide( CS_BOTTOM , 1 );
+			if( currentPiece->Collide( CS_TOP , -1 ) )
+			{
+				Collide( CS_BOTTOM , 1 );
+			}
+			else
+			{
+				Collide( CS_BOTTOM , 0 );
+			}
 			return true;
 		}
 		// Right collision
-		if( m_currentLocation.left - objectPos.right <= 0.1 &&
-			m_currentLocation.left - objectPos.right >= -0.1 &&
+		if( m_currentLocation.left - objectPos.right <= 0.4 &&
+			m_currentLocation.left - objectPos.right >= -0.4 &&
 			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
 			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
 			)
 		{
-			//currentPiece->Collide( CS_RIGHT , -1 );
-			//Collide( CS_LEFT , 1 );
+			currentPiece->Collide( CS_RIGHT , -1 );
+			Collide( CS_LEFT , 0 );
 			return true;
 		}
 		// Left collision
-		if( m_currentLocation.right - objectPos.left <= 0.1 &&
-			m_currentLocation.right - objectPos.left >= -0.1 &&
+		if( m_currentLocation.right - objectPos.left <= 0.4 &&
+			m_currentLocation.right - objectPos.left >= -0.4 &&
 			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
 			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
 			)
 		{
-			//currentPiece->Collide( CS_LEFT , -1 );
-			//Collide( CS_RIGHT , 1 );
+			currentPiece->Collide( CS_LEFT , -1 );
+			Collide( CS_RIGHT , 0 );
 			return true;
 		}
 	}

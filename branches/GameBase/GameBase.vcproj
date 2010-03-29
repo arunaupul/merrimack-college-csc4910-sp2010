@@ -233,6 +233,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Menu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MenuItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PowerUpBlock.cpp"
 				>
 			</File>
@@ -340,6 +348,14 @@
 			</File>
 			<File
 				RelativePath=".\LevelObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Menu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MenuItem.h"
 				>
 			</File>
 			<File

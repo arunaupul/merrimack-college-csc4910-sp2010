@@ -34,6 +34,7 @@ private:
 	Square m_startingPos;
 	unsigned int m_textureIds[3];
 	bool m_crouching;
+	int m_invincible;
 };
 
 #endif /* _GAME_DUDE_H_ */
