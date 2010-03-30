@@ -26,14 +26,14 @@
 * enum to use to play the appropriate sound
 */
 enum SoundLookup{
-	Song1 = 0,
-	Song2 = 1,
-	Song3 = 2,
-	Song4 = 3,
-	PwrUp = 4,
-	ChckPt = 5,
-	Coins = 6,
-	HitBrick = 7
+	SL_SONG1 = 0,
+	SL_SONG2 = 1,
+	SL_SONG3 = 2,
+	SL_SONG4 = 3,
+	SL_PWRUP = 4,
+	SL_CHCKPT = 5,
+	SL_COINS = 6,
+	SL_HITBRICK = 7
 }; //end enum
 
 
@@ -43,8 +43,8 @@ class AudioManager
 //public methods
 public:
 	/**
-	 * Constructor that loads all of the sounds and
-	 * attatches them to the specified sources.
+	 * Constructor that sets up all the components
+	 * for the LoadSound method to work
 	 * @param None
 	 * @return None
 	 */
@@ -65,6 +65,13 @@ public:
 	 * @return None
 	 */
 	void SetListenerValues();
+
+	/**
+	 * LoadSound method that loads a specific sound on demmand
+	 * @param enum SoundLookup, bool isLoop
+	 * @return none
+	 */
+	void LoadSound(SoundLookup loadSound, bool isLoop);
 
 	/**
 	 * PlayALSource method that will play an imputted source

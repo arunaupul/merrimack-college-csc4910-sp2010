@@ -20,14 +20,26 @@ int main(int argc, char *argv[])
 	std::cout << "CheckPt:	d = play, f = stop, 5 = pause\n" << std::endl;
 	std::cout << "Coin:		g = play, h = stop, 6 = pause\n" << std::endl;
 	std::cout << "HitBrick:	z = play, x = stop, 7 = pause\n" << std::endl;
+	std::cout << "QUIT:		p\n" << std::endl;
 	std::cout << "---------------------------------------\n\n" <<std::endl;
 	std::cout << "Input:\n" << std::endl;
 
 	//make a new constructor that loads all of the files
 	AudioManager *mySoundManager = new AudioManager();
 
+	//load three files
+	mySoundManager->LoadSound(SL_SONG1, true);
+	mySoundManager->LoadSound(SL_SONG2, true);
+	mySoundManager->LoadSound(SL_SONG3, true);
+	mySoundManager->LoadSound(SL_PWRUP, false);
+	mySoundManager->LoadSound(SL_CHCKPT, false);
+	mySoundManager->LoadSound(SL_COINS, false);
+	mySoundManager->LoadSound(SL_HITBRICK, false);
+	
+
 	//set the listener properties
 	mySoundManager->SetListenerValues();
+
 
 	char key = 'z';
 	while( key != 'p' )
@@ -36,67 +48,67 @@ int main(int argc, char *argv[])
 		switch( key )
 		{
 		case 'q':
-			mySoundManager->PlayALSource(Song1);
+			mySoundManager->PlayALSource(SL_SONG1);
 			break;
 		case 'w':
-			mySoundManager->StopALSource(Song1);
+			mySoundManager->StopALSource(SL_SONG1);
 			break;
 		case '1':
-			mySoundManager->HoldALSource(Song1);
+			mySoundManager->HoldALSource(SL_SONG1);
 			break;
 		case 'e':
-			mySoundManager->PlayALSource(Song2);
+			mySoundManager->PlayALSource(SL_SONG2);
 			break;
 		case 'r':
-			mySoundManager->StopALSource(Song2);
+			mySoundManager->StopALSource(SL_SONG2);
 			break;
 		case '2':
-			mySoundManager->HoldALSource(Song2);
+			mySoundManager->HoldALSource(SL_SONG2);
 			break;
 		case 't':
-			mySoundManager->PlayALSource(Song3);
+			mySoundManager->PlayALSource(SL_SONG3);
 			break;
 		case 'y':
-			mySoundManager->StopALSource(Song3);
+			mySoundManager->StopALSource(SL_SONG3);
 			break;
 		case '3':
-			mySoundManager->HoldALSource(Song3);
+			mySoundManager->HoldALSource(SL_SONG3);
 			break;
 		case 'a':
-			mySoundManager->PlayALSource(PwrUp);
+			mySoundManager->PlayALSource(SL_PWRUP);
 			break;
 		case 's':
-			mySoundManager->StopALSource(PwrUp);
+			mySoundManager->StopALSource(SL_PWRUP);
 			break;
 		case '4':
-			mySoundManager->HoldALSource(PwrUp);
+			mySoundManager->HoldALSource(SL_PWRUP);
 			break;
 		case 'd':
-			mySoundManager->PlayALSource(ChckPt);
+			mySoundManager->PlayALSource(SL_CHCKPT);
 			break;
 		case 'f':
-			mySoundManager->StopALSource(ChckPt);
+			mySoundManager->StopALSource(SL_CHCKPT);
 			break;
 		case '5':
-			mySoundManager->HoldALSource(ChckPt);
+			mySoundManager->HoldALSource(SL_CHCKPT);
 			break;
 		case 'g':
-			mySoundManager->PlayALSource(Coins);
+			mySoundManager->PlayALSource(SL_COINS);
 			break;
 		case 'h':
-			mySoundManager->StopALSource(Coins);
+			mySoundManager->StopALSource(SL_COINS);
 			break;
 		case '6':
-			mySoundManager->HoldALSource(Coins);
+			mySoundManager->HoldALSource(SL_COINS);
 			break;
 		case 'z':
-			mySoundManager->PlayALSource(HitBrick);
+			mySoundManager->PlayALSource(SL_HITBRICK);
 			break;
 		case 'x':
-			mySoundManager->StopALSource(HitBrick);
+			mySoundManager->StopALSource(SL_HITBRICK);
 			break;
 		case '7':
-			mySoundManager->HoldALSource(HitBrick);
+			mySoundManager->HoldALSource(SL_HITBRICK);
 		case 'p':
 			break;
 		};
