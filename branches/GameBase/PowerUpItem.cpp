@@ -7,7 +7,7 @@
 #define MOVE_RATE		0.01
 
 PowerUpItem::PowerUpItem( const Square & startingPos , unsigned int textureId )
-:	AIType1( startingPos , textureId ),
+:	AIType1( startingPos , textureId , textureId ),
 	m_jumpHeight( 0.0001 )
 {
 }
