@@ -4,15 +4,17 @@
 #include "ScoreManager.h"
 
 #define TRIGGER_DISTANCE	2
-#define LEFT				true
-#define RIGHT				false
+#define LEFT				false
+#define RIGHT				true
 #define MOVE_DISTANCE		0.005
 #define FALL_SPEED			0.03
 
-AIType1::AIType1( const Square & startingPos , unsigned int textureId )
-:	AIObject( startingPos , textureId ),
+AIType1::AIType1( const Square & startingPos , unsigned int leftTextureId , unsigned int rightTextureId )
+:	AIObject( startingPos , leftTextureId ),
 	m_direction( LEFT )
 {
+	m_textureIds[0] = leftTextureId;
+	m_textureIds[1] = rightTextureId;
 }
 
 AIType1::~AIType1()
@@ -25,8 +27,8 @@ void AIType1::Update( int ticks )
 	{
 		if( m_vStatus == VS_NONE )
 		{
-			m_currentLocation.left += (double)ticks * MOVE_DISTANCE * ( m_direction ? -1.0 : 1.0 );
-			m_currentLocation.right += (double)ticks * MOVE_DISTANCE * ( m_direction ? -1.0 : 1.0 );
+			m_currentLocation.left += (double)ticks * MOVE_DISTANCE * ( m_direction ? 1.0 : -1.0 );
+			m_currentLocation.right += (double)ticks * MOVE_DISTANCE * ( m_direction ? 1.0 : -1.0 );
 		}
 		if( m_vStatus == VS_FALLING )
 		{
@@ -61,11 +63,11 @@ bool AIType1::Collide( CollisionSideEnum side , int damage )
 	}
 	else if( side == CS_RIGHT && m_direction == RIGHT && damage == -1 )
 	{
-		m_direction = LEFT;
+		SwitchDirections( LEFT );
 	}
 	else if( side == CS_LEFT && m_direction == LEFT && damage == -1 )
 	{
-		m_direction = RIGHT;
+		SwitchDirections( RIGHT );
 	}
 	else if( side == CS_TOP && damage > 0 && !m_killed )
 	{
@@ -109,7 +111,14 @@ bool AIType1::CheckCollision( CollisionObject * object )
 			( objectPos.right >= m_currentLocation.left && objectPos.right <= m_currentLocation.right ) ) )
 		{
 			gameDude->Collide( CS_TOP , 1 );
+			Collide( CS_TOP , 0 );
 		}
 	}
 	return false;
+}
+
+void AIType1::SwitchDirections( bool direction )
+{
+	m_direction = direction;
+	m_textureId = m_textureIds[direction];
 }

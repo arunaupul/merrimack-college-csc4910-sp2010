@@ -15,6 +15,7 @@
 #include "GameDude.h"
 #include "LevelEndObject.h"
 #include "AIType1.h"
+#include "AIType2.h"
 #include "PowerUpBlock.h"
 #include "PowerUpItem.h"
 
@@ -80,8 +81,10 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	}
 	std::string readline;
 	GraphicLoaders::TextureIdentifier brickTextureId = -1;
-	GraphicLoaders::TextureIdentifier ai1TextureId = -1;
-	GraphicLoaders::TextureIdentifier ai2TextureId = -1;
+	GraphicLoaders::TextureIdentifier ai1LeftTextureId = -1;
+	GraphicLoaders::TextureIdentifier ai1RightTextureId = -1;
+	GraphicLoaders::TextureIdentifier ai2LeftTextureId = -1;
+	GraphicLoaders::TextureIdentifier ai2RightTextureId = -1;
 	GraphicLoaders::TextureIdentifier levelEndTextureId = -1;
 	GraphicLoaders::TextureIdentifier powerUpBlockTexture1 = -1;
 	GraphicLoaders::TextureIdentifier powerUpBlockUsedTexture = -1;
@@ -89,7 +92,10 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\GroundBlock.tga" , brickTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\flag.tga" , levelEndTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Left.tga" , ai1TextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Left.tga" , ai1LeftTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Right.tga" , ai1RightTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType2Left.tga" , ai2LeftTextureId );
+	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType2Right.tga" , ai2RightTextureId );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlock.tga" , powerUpBlockTexture1 );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlockUsed.tga" , powerUpBlockUsedTexture );
 	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\PowerUp1.tga" , powerUpTexture );
@@ -143,12 +149,14 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 			}
 			case GO_AI_TYPE1:
 			{
-				AIType1 * newAi = new AIType1( GameLoader::GameGridToCoords( xLocation , yLocation ) , ai1TextureId );
+				AIType1 * newAi = new AIType1( GameLoader::GameGridToCoords( xLocation , yLocation ) , ai1LeftTextureId , ai1RightTextureId );
 				level->AddAIObject( newAi );
 				break;
 			}
 			case GO_AI_TYPE2:
 			{
+				AIType2 * newAi = new AIType2( GameLoader::GameGridToCoords( xLocation , yLocation ) , ai2LeftTextureId , ai2RightTextureId );
+				level->AddAIObject( newAi );
 				break;
 			}
 			case GO_LEVEL_END:

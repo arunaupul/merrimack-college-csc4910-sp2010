@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 
-#define _ENABLE_BREAKABLE_BLOCKS_
+//#define _ENABLE_BREAKABLE_BLOCKS_
 
 GamePiece::GamePiece( const Square & startingPos , unsigned int textureId )
 :	m_currentLocation( startingPos ),

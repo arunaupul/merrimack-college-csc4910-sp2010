@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AIType2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\BackGroundManager.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\AIType1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AIType2.h"
 				>
 			</File>
 			<File
