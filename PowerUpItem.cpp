@@ -3,7 +3,7 @@
 #include "GameDude.h"
 #include "GameEnums.h"
 
-#define VERTICAL_RATE	0.003
+#define VERTICAL_RATE	0.01
 #define MOVE_RATE		0.01
 
 PowerUpItem::PowerUpItem( const Square & startingPos , unsigned int textureId )

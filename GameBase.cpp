@@ -15,6 +15,7 @@ GameBase::GameBase()
 	m_menu( NULL )
 {
 	m_controls = new ControlObject();
+	m_controls->LoadControls( L"GamePackFiles\\controls.ini" );
 }
 
 GameBase::~GameBase()

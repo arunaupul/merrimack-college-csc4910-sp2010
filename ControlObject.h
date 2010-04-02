@@ -8,6 +8,7 @@ enum Controls {
 	CO_LEFT = 1,
 	CO_JUMP = 2,
 	CO_CROUCH = 3,
+	CO_PAUSE = 4,
 	CO_MAX_CONTROL
 };
 
@@ -18,6 +19,7 @@ public:
 	unsigned int GetControlKey( Controls control );
 	void SetControlKey( Controls control , unsigned int key );
 	void LoadControls( const std::wstring & fileName );
+	unsigned int StringToKey( const std::string * keyString );
 private:
 	unsigned int m_controlKeys[CO_MAX_CONTROL];
 };
