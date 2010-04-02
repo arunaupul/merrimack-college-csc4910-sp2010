@@ -23,6 +23,8 @@ public:
 	void Start();
 	void SetLevelEndObject( LevelEndObject * object );
 	void SetLevelFileName( const std::wstring & levelFileName );
+	void SetImageFolder( const std::wstring & imageFolder );
+	std::wstring GetImageFolder();
 	bool Load();
 	bool Reload();
 	std::wstring GetTimerString();
@@ -40,6 +42,7 @@ private:
 	std::list<GamePiece *>::iterator m_screenStartIter;
 	LevelEndObject * m_levelEndObject;
 	std::wstring m_levelFileName;
+	std::wstring m_imageFolder;
 	int m_timer;
 };
 

@@ -27,8 +27,9 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 		return false;
 	}
 	std::string readline;
-	WorldObject * currentLoadingWorld = NULL;
-	LevelObject * levelToLoad = NULL;
+	std::wstring currentImageFolder( L"" );
+	WorldObject * currentLoadingWorld( NULL );
+	LevelObject * levelToLoad( NULL );
 	while( !worldFile.eof() )
 	{
 		getline( worldFile , readline );
@@ -59,12 +60,16 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 		{
 			currentLoadingWorld->SetWorldName( Converter::StringToWString( *( tokens->at(1) ) ) );
 		}
+		else if( !tokens->at(0)->compare( "IMAGE_FOLDER" ) )
+		{
+			currentImageFolder = Converter::StringToWString( *( tokens->at(1) ) );
+		}
 		else
 		{
 			levelToLoad = new LevelObject( Converter::StringToWString( *( tokens->at(0) ) ) );
 			levelToLoad->SetLevelFileName( Converter::StringToWString( *( tokens->at(1) ) ) );
+			levelToLoad->SetImageFolder( currentImageFolder );
 			currentLoadingWorld->AddLevel( levelToLoad );
-			//GameLoader::LoadLevel( Converter::StringToWString( *( tokens->at(1) ) ) , levelToLoad );
 		}
 
 		UtilFunctions::DestroyStringTokens( tokens );
@@ -79,6 +84,7 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	{
 		return false;
 	}
+	std::wstring imageFolder( level->GetImageFolder() );
 	std::string readline;
 	GraphicLoaders::TextureIdentifier brickTextureId = -1;
 	GraphicLoaders::TextureIdentifier ai1LeftTextureId = -1;
@@ -90,15 +96,15 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::TextureIdentifier powerUpBlockUsedTexture = -1;
 	GraphicLoaders::TextureIdentifier powerUpTexture = -1;
 
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\GroundBlock.tga" , brickTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\flag.tga" , levelEndTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Left.tga" , ai1LeftTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType1Right.tga" , ai1RightTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType2Left.tga" , ai2LeftTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\AIType2Right.tga" , ai2RightTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlock.tga" , powerUpBlockTexture1 );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\SpecialBlockUsed.tga" , powerUpBlockUsedTexture );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\PowerUp1.tga" , powerUpTexture );
+	GraphicLoaders::LoadTga( imageFolder + L"\\GroundBlock.tga" , brickTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\flag.tga" , levelEndTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\AIType1Left.tga" , ai1LeftTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\AIType1Right.tga" , ai1RightTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\AIType2Left.tga" , ai2LeftTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\AIType2Right.tga" , ai2RightTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\SpecialBlock.tga" , powerUpBlockTexture1 );
+	GraphicLoaders::LoadTga( imageFolder + L"\\SpecialBlockUsed.tga" , powerUpBlockUsedTexture );
+	GraphicLoaders::LoadTga( imageFolder + L"\\PowerUp1.tga" , powerUpTexture );
 
 	while( !levelFile.eof() )
 	{

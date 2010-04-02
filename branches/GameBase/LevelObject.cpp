@@ -19,7 +19,8 @@ LevelObject::LevelObject( const std::wstring & levelName)
 	m_levelEndObject( NULL ),
 	m_levelFileName( L"" ),
 	m_backGroundManager( NULL ),
-	m_timer( 0 )
+	m_timer( 0 ),
+	m_imageFolder( L"Images" )
 {
 	m_screenStartIter = m_levelObjects.begin();
 	m_screenEndIter = m_levelObjects.end();
@@ -233,7 +234,7 @@ bool LevelObject::Load()
 		delete m_backGroundManager;
 		m_backGroundManager = NULL;
 	}
-	m_backGroundManager = new BackGroundManager( L"GamePackFiles\\Images\\bg1.bmp", 240, 168 , 0.20 );
+	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.bmp", 240, 168 , 0.20 );
 	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
 	{
 		delete (*iter);
@@ -270,4 +271,14 @@ std::wstring LevelObject::GetTimerString()
 	int minutes = seconds / 60;
 	seconds = seconds % 60;
 	return Converter::StringToWString( Converter::IntToString( minutes ) + ":" + ( seconds < 10 ? "0" : "" ) + Converter::IntToString( seconds ) );
+}
+
+void LevelObject::SetImageFolder( const std::wstring & imageFolder )
+{
+	m_imageFolder = imageFolder;
+}
+
+std::wstring LevelObject::GetImageFolder()
+{
+	return m_imageFolder;
 }
