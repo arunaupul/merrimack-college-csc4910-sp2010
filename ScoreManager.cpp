@@ -22,19 +22,19 @@ unsigned int ScoreManager::GetCurrentScore()
 
 void ScoreManager::Reset()
 {
-	m_levelScore = 0.0;
-	m_score = 0.0;
+	m_levelScore = 0;
+	m_score = 0;
 }
 
 void ScoreManager::ResetLevel()
 {
 	m_score -= m_levelScore;
-	m_levelScore = 0.0;
+	m_levelScore = 0;
 }
 
 void ScoreManager::NewLevel()
 {
-	m_levelScore = 0.0;
+	m_levelScore = 0;
 }
 
 ScoreManager * ScoreManager::Instance()

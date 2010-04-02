@@ -16,7 +16,7 @@ GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned 
 	m_jumpHeight( 0.0 ),
 	m_startingPos( startingPos ),
 	m_crouching( false ),
-	m_invincible( 0.0 )
+	m_invincible( 0 )
 {
 	m_textureIds[0] = smallTextureId;
 	m_textureIds[1] = largeTextureId;
@@ -110,7 +110,7 @@ void GameDude::Update( int ticks )
 		m_invincible += ticks;
 		if( m_invincible >= 5000 )
 		{
-			m_invincible = 0.0;
+			m_invincible = 0;
 		}
 	}
 	switch( m_vStatus )
@@ -176,7 +176,7 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 		else
 		{
 			m_gameDudeStatus = (GameDudeStatus)( m_gameDudeStatus - damage );
-			m_invincible += 1.0;
+			m_invincible += 1;
 			SetDudeStatus( m_gameDudeStatus );
 		}
 	}

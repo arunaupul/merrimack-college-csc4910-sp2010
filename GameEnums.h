@@ -38,16 +38,26 @@ enum GameObjects {
 
 enum GameState {
 	GS_STARTING_MENU = 0,
-	GS_PAUSE_MENU = 1,
-	GS_GAME_PLAYING = 2,
-	GS_PLAYER_DEAD = 3,
-	GS_GAME_CREDITS = 4
+	GS_OPTIONS_MENU = 1,
+	GS_PAUSE_MENU = 2,
+	GS_GAME_PLAYING = 3,
+	GS_PLAYER_DEAD = 4,
+	GS_GAME_CREDITS = 5,
+	GS_QUITING = 6
 };
 
 enum ScoreObject {
 	SO_AI_TYPE_1 = 0,
 	SO_AI_TYPE_2 = 1,
 	SO_LEVEL_END = 2
+};
+
+enum StartMenuItem {
+	SMI_NEW_GAME = 0,
+	SMI_LOAD_GAME = 1,
+	SMI_OPTIONS = 2,
+	SMI_QUIT = 3,
+	SMI_INVALID = -1
 };
 
 #endif /* _GAME_ENUMS_H_ */

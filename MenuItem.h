@@ -5,8 +5,7 @@
 #include "GameStructs.h"
 #include "Point.h"
 
-class MenuItem
-{
+class MenuItem {
 public:
 	MenuItem( const std::wstring & text , Square pos , int id , unsigned int textBase );
 	virtual ~MenuItem();

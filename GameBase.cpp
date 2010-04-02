@@ -7,10 +7,12 @@
 #include <gl\gl.h>
 #include "Converter.h"
 #include "ScoreManager.h"
+#include "Menu.h"
 
 GameBase::GameBase()
 :	m_currentGameState( GS_STARTING_MENU ),
-	m_gameDude( NULL )
+	m_gameDude( NULL ),
+	m_menu( NULL )
 {
 	m_controls = new ControlObject();
 }
@@ -32,43 +34,47 @@ bool GameBase::PerformInit()
 
 void GameBase::KeyPressed( unsigned int key )
 {
-	if( key == m_controls->GetControlKey( CO_RIGHT ) )
+	if( m_currentGameState == GS_GAME_PLAYING )
 	{
-		m_gameDude->SetHoriztonalStatus( HS_RIGHT );
-	}
-	else if( key == m_controls->GetControlKey( CO_LEFT ) )
-	{
-		m_gameDude->SetHoriztonalStatus( HS_LEFT );
-	}
-	else if( key == m_controls->GetControlKey( CO_JUMP ) )
-	{
-		m_gameDude->SetVerticalStatus( VS_JUMPING );
-	}
-	else if( key == m_controls->GetControlKey( CO_CROUCH ) )
-	{
-		m_gameDude->SetCrouching( true );
+		if( key == m_controls->GetControlKey( CO_RIGHT ) )
+		{
+			m_gameDude->SetHoriztonalStatus( HS_RIGHT );
+		}
+		else if( key == m_controls->GetControlKey( CO_LEFT ) )
+		{
+			m_gameDude->SetHoriztonalStatus( HS_LEFT );
+		}
+		else if( key == m_controls->GetControlKey( CO_JUMP ) )
+		{
+			m_gameDude->SetVerticalStatus( VS_JUMPING );
+		}
+		else if( key == m_controls->GetControlKey( CO_CROUCH ) )
+		{
+			m_gameDude->SetCrouching( true );
+		}
+		else if( m_currentGameState == GS_GAME_PLAYING && key == m_controls->GetControlKey( CO_PAUSE ) )
+		{
+			m_currentGameState = GS_PAUSE_MENU;
+		}
 	}
 }
 
 void GameBase::KeyReleased( unsigned int key )
 {
-	if( key == m_controls->GetControlKey( CO_RIGHT ) )
+	if( m_currentGameState == GS_GAME_PLAYING )
 	{
-		if( m_currentGameState == GS_GAME_PLAYING && m_gameDude->GetHorizontalStatus() == HS_RIGHT )
+		if( key == m_controls->GetControlKey( CO_RIGHT ) && m_gameDude->GetHorizontalStatus() == HS_RIGHT )
 		{
 			m_gameDude->SetHoriztonalStatus( HS_NONE );
 		}
-	}
-	if( key == m_controls->GetControlKey( CO_LEFT ) )
-	{
-		if( m_currentGameState == GS_GAME_PLAYING && m_gameDude->GetHorizontalStatus() == HS_LEFT )
+		if( key == m_controls->GetControlKey( CO_LEFT ) && m_gameDude->GetHorizontalStatus() == HS_LEFT )
 		{
 			m_gameDude->SetHoriztonalStatus( HS_NONE );
 		}
-	}
-	if( key == m_controls->GetControlKey( CO_CROUCH ) )
-	{
-		m_gameDude->SetCrouching( false );
+		if( key == m_controls->GetControlKey( CO_CROUCH ) )
+		{
+			m_gameDude->SetCrouching( false );
+		}
 	}
 }
 
@@ -116,14 +122,74 @@ void GameBase::PerformUpdate( int currentTick )
 			break;
 		}
 		case GS_GAME_CREDITS:
+		{
+			if( true )
+			{
+				m_currentGameState = GS_STARTING_MENU;
+			}
+			break;
+		}
 		case GS_STARTING_MENU:
+		{
+			if( !m_menu )
+			{
+				m_menu = new Menu( m_hudTextBase );
+				m_menu->AddMenuItem( L"New Game" , SMI_NEW_GAME , Square( 5 , 3 , -2 , 2 ) );
+				//m_menu->AddMenuItem( L"Load Game" , SMI_LOAD_GAME , Square( 5 , 3 , -2 , 2 ) );
+				m_menu->AddMenuItem( L"Options" , SMI_OPTIONS , Square( 2 , 0 , -2 , 2 ) );
+				m_menu->AddMenuItem( L"Quit" , SMI_QUIT , Square( -1 , -3 , -2 , 2 ) );
+				m_objectList.push_back( m_menu );
+			}
+			if( m_menu->GetSelectedItemId() != SMI_INVALID )
+			{
+				switch( m_menu->GetSelectedItemId() )
+				{
+					case SMI_NEW_GAME:
+					{
+						m_currentGameState = GS_GAME_PLAYING;
+						PlayGame();
+						break;
+					}
+					case SMI_QUIT:
+					{
+						m_applicationRunning = false;
+						m_currentGameState = GS_QUITING;
+						break;
+					}
+					case SMI_OPTIONS:
+					{
+						m_currentGameState = GS_OPTIONS_MENU;
+						break;
+					}
+				};
+				if( m_currentGameState != GS_STARTING_MENU )
+				{
+					m_objectList.remove( m_menu );
+					delete m_menu;
+					m_menu = NULL;
+				}
+			}
+			break;
+		}
+		case GS_OPTIONS_MENU:
+		{
+			m_currentGameState = GS_STARTING_MENU;
+			break;
+		}
 		case GS_PAUSE_MENU:
 		{
 			m_currentGameState = GS_GAME_PLAYING;
-			PlayGame();
 			break;
 		}
 	};
+}
+
+void GameBase::LeftMouseClick( Point & clickedPoint )
+{
+	if( m_menu )
+	{
+		m_menu->Click( clickedPoint );
+	}
 }
 
 void GameBase::PlayGame()
