@@ -99,7 +99,7 @@ int GlApplication::Main( HINSTANCE hInstance , HINSTANCE prevInstance , LPSTR lp
 				m_window.SwapBuffers();							// Swap the drawing buffers
 			}
 
-			if( m_keys.GetPressed( VK_ESCAPE ) )				// If the escape key if pressed, exit
+			if( m_keys.GetPressed( VK_ESCAPE ) && m_keys.GetPressed( 'Q' ) )	// If the escape key if pressed, exit
 			{
 				m_applicationRunning = false;					// Stop the app
 			}

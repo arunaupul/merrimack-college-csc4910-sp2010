@@ -8,6 +8,7 @@
 #include "GameDude.h"
 #include "GameEnums.h"
 #include "ControlObject.h"
+#include "Menu.h"
 
 class GameBase : public GlApplication
 {
@@ -22,6 +23,7 @@ public:
 	void BuildHUDFont();
 	void KillHudFont();
 	void Draw();
+	virtual void LeftMouseClick( Point & clickedPoint );
 private:
 	std::list<WorldObject *> m_worldList;
 	std::list<WorldObject *>::iterator m_currentWorld;
@@ -30,6 +32,7 @@ private:
 	unsigned int m_hudTextBase;
 	GLYPHMETRICSFLOAT m_hudTextGmf[256];
 	ControlObject * m_controls;
+	Menu * m_menu;
 };
 
 #endif /* _GAME_BASE_H_ */
