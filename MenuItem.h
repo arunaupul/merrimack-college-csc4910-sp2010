@@ -12,11 +12,13 @@ public:
 	bool ContainPoint( const Point & point );
 	int GetId();
 	void Draw();
+	void SetSelectStatus( bool status );
 protected:
 	Square m_position;
 	std::wstring m_text;
 	int m_menuId;
 	unsigned int m_textBase;
+	bool m_selected;
 };
 
 

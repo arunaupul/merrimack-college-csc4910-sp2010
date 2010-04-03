@@ -10,7 +10,8 @@
 
 Menu::Menu( unsigned int textBase )
 :	m_textBase( textBase ),
-	m_clickedId( INVALID_ID )
+	m_clickedId( INVALID_ID ),
+	m_selectedItem( m_items.begin() )
 {
 }
 
@@ -43,6 +44,7 @@ void Menu::Draw()
 void Menu::AddMenuItem( const std::wstring text , int id , const Square & pos )
 {
 	m_items.push_back( new MenuItem( text , pos , id , m_textBase ) );
+	m_selectedItem = m_items.begin();
 }
 
 int Menu::GetSelectedItemId()
@@ -61,4 +63,36 @@ void Menu::Click( const Point & point )
 			break;
 		}
 	}
+}
+
+void Menu::HandleKey( unsigned int key )
+{
+	switch( key )
+	{
+		case VK_UP:
+		{
+			( *m_selectedItem )->SetSelectStatus( false );
+			if( m_selectedItem == m_items.begin() )
+			{
+				m_selectedItem = m_items.end();
+			}
+			( *( --m_selectedItem ) )->SetSelectStatus( true );
+			break;
+		}
+		case VK_DOWN:
+		{
+			( *m_selectedItem )->SetSelectStatus( false );
+			if( ++m_selectedItem == m_items.end() )
+			{
+				m_selectedItem = m_items.begin();
+			}
+			( *m_selectedItem )->SetSelectStatus( true );
+			break;
+		}
+		case VK_RETURN:
+		{
+			m_clickedId = ( *m_selectedItem )->GetId();
+			break;
+		}
+	};
 }
