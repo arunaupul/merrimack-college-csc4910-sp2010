@@ -62,6 +62,13 @@ void GameBase::KeyPressed( unsigned int key )
 	{
 		m_menu->HandleKey( key );
 	}
+	else if( m_currentGameState == GS_PAUSE_MENU )
+	{
+		if( key == m_controls->GetControlKey( CO_PAUSE ) )
+		{
+			m_currentGameState = GS_GAME_PLAYING;
+		}
+	}
 }
 
 void GameBase::KeyReleased( unsigned int key )
@@ -183,7 +190,7 @@ void GameBase::PerformUpdate( int currentTick )
 		}
 		case GS_PAUSE_MENU:
 		{
-			m_currentGameState = GS_GAME_PLAYING;
+			//m_currentGameState = GS_GAME_PLAYING;
 			break;
 		}
 	};
