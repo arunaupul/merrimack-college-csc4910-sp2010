@@ -58,6 +58,10 @@ void GameBase::KeyPressed( unsigned int key )
 			m_currentGameState = GS_PAUSE_MENU;
 		}
 	}
+	else if( m_currentGameState == GS_STARTING_MENU && m_menu )
+	{
+		m_menu->HandleKey( key );
+	}
 }
 
 void GameBase::KeyReleased( unsigned int key )

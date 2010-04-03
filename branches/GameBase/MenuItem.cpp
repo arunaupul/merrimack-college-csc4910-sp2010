@@ -7,7 +7,8 @@ MenuItem::MenuItem( const std::wstring & text , Square pos , int id , unsigned i
 :	m_position( pos ),
 	m_menuId( id ),
 	m_text( text ),
-	m_textBase( textBase )
+	m_textBase( textBase ),
+	m_selected( false )
 {
 }
 
@@ -41,10 +42,22 @@ void MenuItem::Draw()
 		glVertex3d( m_position.right , m_position.top , 0.0 );
 		glVertex3d( m_position.right , m_position.bottom , 0.0 );	
 	glEnd();
-	glColor3d( 1.0 , 1.0 , 1.0 );
+	if( m_selected )
+	{
+		glColor3d( 1.0 , 1.0 , 0.0 );
+	}
+	else
+	{
+		glColor3d( 1.0 , 1.0 , 1.0 );
+	}
 	glTranslated( leftX , bottomY , 0.0 );
 	glPushAttrib( GL_LIST_BIT );
 	glListBase( m_textBase );
 	glCallLists( m_text.length() , GL_UNSIGNED_SHORT , m_text.c_str() );
 	glPopAttrib();
+}
+
+void MenuItem::SetSelectStatus( bool status )
+{
+	m_selected = status;
 }
