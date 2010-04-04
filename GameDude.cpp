@@ -152,6 +152,7 @@ void GameDude::Update( int ticks )
 
 bool GameDude::Collide( CollisionSideEnum side , int damage )
 {
+	VerticalStatus oldVStatus = m_vStatus;
 	if( CS_BOTTOM == side && damage == -1 && m_vStatus != VS_JUMPING )
 	{
 		m_vStatus = VS_NONE;
@@ -185,7 +186,7 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 			SetDudeStatus( m_gameDudeStatus );
 		}
 	}
-	return true;
+	return ( oldVStatus == VS_JUMPING );
 }
 
 void GameDude::Draw()
