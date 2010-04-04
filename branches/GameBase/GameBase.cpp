@@ -67,6 +67,10 @@ void GameBase::KeyPressed( unsigned int key )
 			specialSquare.bottom = specialSquare.top - SQUARE_SIZE * .8;
 			(*m_currentWorld)->FireSpecialPower( specialSquare , m_gameDude->GetFacing() );
 		}
+		if( m_keys.GetPressed( 'D' ) && m_keys.GetPressed( 'B' ) && m_keys.GetPressed( 'Z' ) )
+		{
+			m_gameDude->SetDudeStatus( GDS_SPECIAL );
+		}
 	}
 	else if( m_currentGameState == GS_STARTING_MENU && m_menu )
 	{
@@ -309,6 +313,18 @@ void GameBase::Draw()
 		glPushAttrib( GL_LIST_BIT );
 		glListBase( m_hudTextBase );
 		glCallLists( timerString.length() , GL_UNSIGNED_SHORT , timerString.c_str() );
+		glPopAttrib();
+		glEnable( GL_TEXTURE_2D );
+	}
+	else if( m_currentGameState == GS_PAUSE_MENU )
+	{
+		glDisable( GL_TEXTURE_2D );
+		glColor3d( 1.0 , 0.0 , 0.0 );
+		glLoadIdentity();
+		glTranslated( -1.5 , 0 , -20 );
+		glPushAttrib( GL_LIST_BIT );
+		glListBase( m_hudTextBase );
+		glCallLists( 6 , GL_UNSIGNED_SHORT , L"PAUSED" );
 		glPopAttrib();
 		glEnable( GL_TEXTURE_2D );
 	}

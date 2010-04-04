@@ -52,13 +52,14 @@ bool PowerObject::CheckCollision( CollisionObject * object )
 	if( m_active && ( currentPiece = dynamic_cast<GamePiece *>( object ) ) )
 	{
 		Square objectPos = currentPiece->GetCurrentPosition();
-		if( ( ( objectPos.bottom >= m_currentLocation.bottom && objectPos.bottom <= m_currentLocation.top ) ||
-			( objectPos.top >= m_currentLocation.bottom && objectPos.top <= m_currentLocation.top ) ) &&
-			( ( objectPos.left >= m_currentLocation.left && objectPos.left <= m_currentLocation.right ) ||
-			( objectPos.right >= m_currentLocation.left && objectPos.right <= m_currentLocation.right ) ) )
+		if( ( ( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) ||
+			( m_currentLocation.top >= objectPos.bottom && m_currentLocation.top <= objectPos.top ) ) &&
+			( ( m_currentLocation.left >= objectPos.left && m_currentLocation.left <= objectPos.right ) ||
+			( m_currentLocation.right >= objectPos.left && m_currentLocation.right <= objectPos.right ) ) )
 		{
 			currentPiece->Collide( CS_LEFT , 1 );
 			Collide( CS_LEFT , 1 );
+			return true;
 		}
 	}
 	return false;
@@ -66,6 +67,13 @@ bool PowerObject::CheckCollision( CollisionObject * object )
 
 bool PowerObject::Collide( CollisionSideEnum side , int damage )
 {
-	m_active = false;
+	if( damage >= 0 )
+	{
+		m_active = false;
+	}
+	else if( damage == -1 && ( side == CS_LEFT || side == CS_RIGHT ) )
+	{
+		m_active = false;
+	}
 	return false;
 }
