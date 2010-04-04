@@ -1,9 +1,26 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * This file contains the majority of the structs
+ * used throught the game
+ *
+ */
+
 #ifndef _GAME_STRUCTS_H_
 #define _GAME_STRUCTS_H_
 
-//#define SQUARE_SIZE		5.0
+/**
+ * @def SQUARE_SIZE
+ * This value represents the size of each game block
+ */
 #define SQUARE_SIZE		10.0
 
+/**
+ * @struct Square
+ * Struct used to represent a regtangle within the game
+ */
 struct Square
 {
 	Square( double top , double bottom , double left , double right )

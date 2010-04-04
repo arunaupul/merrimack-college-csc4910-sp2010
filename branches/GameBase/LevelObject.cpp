@@ -308,7 +308,9 @@ bool LevelObject::Load()
 // did not. It was found that Load would be best off using the code from
 // Reload and reload was made no more. Think of reload now as the Red Headed
 // Step child
-// ToDo: Refactor to remove calls to this method
+/**
+ * @todo: Refactor to remove calls to this method
+ */
 bool LevelObject::Reload()
 {
 	ScoreManager::Instance()->ResetLevel();
