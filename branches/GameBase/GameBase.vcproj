@@ -245,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PowerObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PowerUpBlock.cpp"
 				>
 			</File>
@@ -368,6 +372,10 @@
 			</File>
 			<File
 				RelativePath=".\Point.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PowerObject.h"
 				>
 			</File>
 			<File

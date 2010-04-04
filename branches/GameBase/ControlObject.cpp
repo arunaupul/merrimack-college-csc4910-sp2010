@@ -12,6 +12,7 @@ ControlObject::ControlObject()
 	m_controlKeys[ CO_JUMP ] = VK_UP;
 	m_controlKeys[ CO_CROUCH ] = VK_DOWN;
 	m_controlKeys[ CO_PAUSE ] = VK_ESCAPE;
+	m_controlKeys[ CO_USE_SPECIAL ] = VK_SPACE;
 }
 
 ControlObject::~ControlObject()
@@ -66,6 +67,10 @@ void ControlObject::LoadControls( const std::wstring & fileName )
 			else if( !tokens->at(0)->compare( "PAUSE" ) )
 			{
 				SetControlKey( CO_PAUSE , StringToKey( tokens->at(1) ) );
+			}
+			else if( !tokens->at(0)->compare( "SPECIAL" ) )
+			{
+				SetControlKey( CO_USE_SPECIAL , StringToKey( tokens->at(1) ) );
 			}
 		}
 		UtilFunctions::DestroyStringTokens( tokens );

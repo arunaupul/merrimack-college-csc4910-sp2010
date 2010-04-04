@@ -9,10 +9,13 @@
 #include "ScoreManager.h"
 #include "Menu.h"
 
+#define FIRE_DELAY	1000
+
 GameBase::GameBase()
 :	m_currentGameState( GS_STARTING_MENU ),
 	m_gameDude( NULL ),
-	m_menu( NULL )
+	m_menu( NULL ),
+	m_delayTimer( 0 )
 {
 	m_controls = new ControlObject();
 	m_controls->LoadControls( L"GamePackFiles\\controls.ini" );
@@ -53,9 +56,16 @@ void GameBase::KeyPressed( unsigned int key )
 		{
 			m_gameDude->SetCrouching( true );
 		}
-		else if( m_currentGameState == GS_GAME_PLAYING && key == m_controls->GetControlKey( CO_PAUSE ) )
+		else if( key == m_controls->GetControlKey( CO_PAUSE ) )
 		{
 			m_currentGameState = GS_PAUSE_MENU;
+		}
+		else if( key == m_controls->GetControlKey( CO_USE_SPECIAL ) && m_gameDude->GetDudeStatus() == GDS_SPECIAL && m_delayTimer == 0 )
+		{
+			m_delayTimer = 1;
+			Square specialSquare = m_gameDude->GetCurrentPosition();
+			specialSquare.bottom = specialSquare.top - SQUARE_SIZE * .8;
+			(*m_currentWorld)->FireSpecialPower( specialSquare , m_gameDude->GetFacing() );
 		}
 	}
 	else if( m_currentGameState == GS_STARTING_MENU && m_menu )
@@ -92,6 +102,14 @@ void GameBase::KeyReleased( unsigned int key )
 
 void GameBase::PerformUpdate( int currentTick )
 {
+	if( m_delayTimer > 0 )
+	{
+		m_delayTimer += currentTick - m_lastTickCount;
+	}
+	if( m_delayTimer >= FIRE_DELAY )
+	{
+		m_delayTimer = 0;
+	}
 	switch( m_currentGameState )
 	{
 		case GS_GAME_PLAYING:
@@ -190,7 +208,6 @@ void GameBase::PerformUpdate( int currentTick )
 		}
 		case GS_PAUSE_MENU:
 		{
-			//m_currentGameState = GS_GAME_PLAYING;
 			break;
 		}
 	};

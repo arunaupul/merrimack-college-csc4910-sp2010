@@ -9,6 +9,7 @@
 #include "BackGroundManager.h"
 #include "GameDude.h"
 #include "LevelEndObject.h"
+#include "PowerObject.h"
 
 class LevelObject
 {
@@ -28,6 +29,8 @@ public:
 	bool Load();
 	bool Reload();
 	std::wstring GetTimerString();
+	void FireSpecialPower( Square startingPos , bool direction );
+	void SetSpecialImages( int leftTextureId , int rightTextureId );
 protected:
 	std::list<GamePiece *> m_levelObjects;
 	std::list<AIObject *> m_passiveAIList;
@@ -40,10 +43,12 @@ private:
 	std::list<AIObject *> m_activeAIList;
 	std::list<GamePiece *>::iterator m_screenEndIter;
 	std::list<GamePiece *>::iterator m_screenStartIter;
+	std::list<PowerObject *> m_powerList;
 	LevelEndObject * m_levelEndObject;
 	std::wstring m_levelFileName;
 	std::wstring m_imageFolder;
 	int m_timer;
+	int m_specialTextureIds[2];
 };
 
 #endif /* _LEVL_OBJECT_H_ */

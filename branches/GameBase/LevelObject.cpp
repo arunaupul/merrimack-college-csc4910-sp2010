@@ -3,6 +3,7 @@
 #include "GameLoader.h"
 #include "ScoreManager.h"
 #include "Converter.h"
+#include "PowerObject.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -24,6 +25,8 @@ LevelObject::LevelObject( const std::wstring & levelName)
 {
 	m_screenStartIter = m_levelObjects.begin();
 	m_screenEndIter = m_levelObjects.end();
+	m_specialTextureIds[0] = -1;
+	m_specialTextureIds[1] = -1;
 }
 
 LevelObject::~LevelObject()
@@ -54,6 +57,10 @@ void LevelObject::Draw()
 	{
 		(*iter)->Draw();
 	}
+	for( std::list<PowerObject *>::iterator iter = m_powerList.begin() ; iter != m_powerList.end() ; ++iter )
+	{
+		(*iter)->Draw();
+	}
 	glTranslated( m_xOffset , 0 , 0 );
 }
 
@@ -81,18 +88,6 @@ double LevelObject::Move( double distance )
 		while( m_screenEndIter != m_levelObjects.end() && (*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
 		{
 			++m_screenEndIter;
-		}
-		for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; )
-		{
-			if( ( *iter )->Trigger( m_xOffset +  m_screenWidth ) )
-			{
-				m_activeAIList.push_back( *iter );
-				iter = m_passiveAIList.erase( iter );
-			}
-			else
-			{
-				++iter;
-			}
 		}
 	}
 	// Left movement
@@ -140,6 +135,18 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 	{
 		(*current)->CheckCollision( gameDude );
 	}
+	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; )
+	{
+		if( ( *iter )->Trigger( m_xOffset +  m_screenWidth ) )
+		{
+			m_activeAIList.push_back( *iter );
+			iter = m_passiveAIList.erase( iter );
+		}
+		else
+		{
+			++iter;
+		}
+	}
 	for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI )
 	{
 		( *currentAI )->SetVerticalStatus( VS_FALLING );
@@ -148,10 +155,30 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 			(*current)->CheckCollision( ( *currentAI ) );
 		}
 	}
-	// TODO: Clean up the active AI list
 	for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI)
 	{
 		(*currentAI)->CheckCollision( gameDude );
+	}
+	for( std::list<PowerObject *>::iterator iter = m_powerList.begin() ; iter != m_powerList.end(); ++iter)
+	{
+		for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI)
+		{
+			if( (*currentAI)->GetActiveStatus() && (*iter)->CheckCollision( *currentAI ) )
+			{
+				break;
+			}
+		}
+	}
+	for( std::list<AIObject *>::iterator iter = m_activeAIList.begin() ; iter != m_activeAIList.end() ; )
+	{
+		if( !( *iter )->GetActiveStatus() )
+		{
+			iter = m_activeAIList.erase( iter );
+		}
+		else
+		{
+			++iter;
+		}
 	}
 	if( gameDude->GetHorizontalStatus() == HS_RIGHT )
 	{
@@ -168,6 +195,10 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 		}
 	}
 	for( std::list<AIObject *>::iterator current = m_activeAIList.begin() ; current != m_activeAIList.end() ; ++current )
+	{
+		(*current)->Update( ticks );
+	}
+	for( std::list<PowerObject *>::iterator current = m_powerList.begin() ; current != m_powerList.end() ; ++current )
 	{
 		(*current)->Update( ticks );
 	}
@@ -281,4 +312,15 @@ void LevelObject::SetImageFolder( const std::wstring & imageFolder )
 std::wstring LevelObject::GetImageFolder()
 {
 	return m_imageFolder;
+}
+
+void LevelObject::SetSpecialImages( int leftTextureId , int rightTextureId )
+{
+	m_specialTextureIds[0] = leftTextureId;
+	m_specialTextureIds[1] = rightTextureId;
+}
+
+void LevelObject::FireSpecialPower( Square startingPos , bool direction )
+{
+	m_powerList.push_back( new PowerObject( startingPos , direction , m_specialTextureIds[0] , m_specialTextureIds[1] ) );
 }
