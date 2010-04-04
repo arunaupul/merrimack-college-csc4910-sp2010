@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 
-//#define _ENABLE_BREAKABLE_BLOCKS_
+#define _ENABLE_BREAKABLE_BLOCKS_
 
 GamePiece::GamePiece( const Square & startingPos , unsigned int textureId )
 :	m_currentLocation( startingPos ),
@@ -76,8 +76,8 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 		// Right collision
 		if( m_currentLocation.left - objectPos.right <= 0.4 &&
 			m_currentLocation.left - objectPos.right >= -0.4 &&
-			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
-			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
+			( ( objectPos.top <= m_currentLocation.top && objectPos.top >= m_currentLocation.bottom ) ||
+			( objectPos.bottom >= m_currentLocation.bottom && objectPos.bottom <= m_currentLocation.top ) )
 			)
 		{
 			currentPiece->Collide( CS_RIGHT , -1 );
@@ -87,8 +87,8 @@ bool GamePiece::CheckCollision( CollisionObject * object )
 		// Left collision
 		if( m_currentLocation.right - objectPos.left <= 0.4 &&
 			m_currentLocation.right - objectPos.left >= -0.4 &&
-			( ( m_currentLocation.top <= objectPos.top && m_currentLocation.top >= objectPos.bottom ) ||
-			( m_currentLocation.bottom >= objectPos.bottom && m_currentLocation.bottom <= objectPos.top ) )
+			( ( objectPos.top <= m_currentLocation.top && objectPos.top >= m_currentLocation.bottom ) ||
+			( objectPos.bottom >= m_currentLocation.bottom && objectPos.bottom <= m_currentLocation.top ) )
 			)
 		{
 			currentPiece->Collide( CS_LEFT , -1 );
