@@ -95,6 +95,8 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::TextureIdentifier powerUpBlockTexture1 = -1;
 	GraphicLoaders::TextureIdentifier powerUpBlockUsedTexture = -1;
 	GraphicLoaders::TextureIdentifier powerUpTexture = -1;
+	GraphicLoaders::TextureIdentifier specialPowerLeftTextureId = -1;
+	GraphicLoaders::TextureIdentifier specialPowerRightTextureId = -1;
 
 	GraphicLoaders::LoadTga( imageFolder + L"\\GroundBlock.tga" , brickTextureId );
 	GraphicLoaders::LoadTga( imageFolder + L"\\flag.tga" , levelEndTextureId );
@@ -105,6 +107,10 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::LoadTga( imageFolder + L"\\SpecialBlock.tga" , powerUpBlockTexture1 );
 	GraphicLoaders::LoadTga( imageFolder + L"\\SpecialBlockUsed.tga" , powerUpBlockUsedTexture );
 	GraphicLoaders::LoadTga( imageFolder + L"\\PowerUp1.tga" , powerUpTexture );
+	GraphicLoaders::LoadTga( imageFolder + L"\\BlastLeft.tga" , specialPowerLeftTextureId );
+	GraphicLoaders::LoadTga( imageFolder + L"\\BlastRight.tga" , specialPowerRightTextureId );
+
+	level->SetSpecialImages( specialPowerLeftTextureId , specialPowerRightTextureId );
 
 	while( !levelFile.eof() )
 	{

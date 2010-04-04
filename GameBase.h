@@ -33,6 +33,7 @@ private:
 	GLYPHMETRICSFLOAT m_hudTextGmf[256];
 	ControlObject * m_controls;
 	Menu * m_menu;
+	int m_delayTimer;
 };
 
 #endif /* _GAME_BASE_H_ */

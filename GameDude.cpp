@@ -16,7 +16,8 @@ GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned 
 	m_jumpHeight( 0.0 ),
 	m_startingPos( startingPos ),
 	m_crouching( false ),
-	m_invincible( 0 )
+	m_invincible( 0 ),
+	m_lastDirection( true )
 {
 	m_textureIds[0] = smallTextureId;
 	m_textureIds[1] = largeTextureId;
@@ -99,6 +100,10 @@ void GameDude::SetHoriztonalStatus( HoriztonalStatus newStatus )
 {
 	//if( m_vStatus == VS_NONE )
 	{
+		if( newStatus != HS_NONE )
+		{
+			m_lastDirection = ( newStatus == HS_LEFT ? false : true );
+		}
 		m_hStatus = newStatus;
 	}
 }
@@ -228,4 +233,9 @@ void GameDude::SetCrouching( bool status )
 	{
 		m_currentLocation.top = m_currentLocation.bottom + ( ( m_startingPos.top - m_startingPos.bottom ) * ( m_crouching ? 1 : 2 ) );
 	}
+}
+
+bool GameDude::GetFacing()
+{
+	return m_lastDirection;
 }

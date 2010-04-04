@@ -69,7 +69,7 @@ bool AIType1::Collide( CollisionSideEnum side , int damage )
 	{
 		SwitchDirections( RIGHT );
 	}
-	else if( side == CS_TOP && damage > 0 && !m_killed )
+	else if( damage > 0 && !m_killed )
 	{
 		m_killed = true;
 		ScoreManager::Instance()->AddToScore( 15 , SO_AI_TYPE_1 );

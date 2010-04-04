@@ -9,6 +9,7 @@ enum Controls {
 	CO_JUMP = 2,
 	CO_CROUCH = 3,
 	CO_PAUSE = 4,
+	CO_USE_SPECIAL = 5,
 	CO_MAX_CONTROL
 };
 

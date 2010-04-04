@@ -21,6 +21,7 @@ public:
 	bool WorldDone();
 	bool RestartCurrentLevel();
 	std::wstring GetTimerString();
+	void FireSpecialPower( Square startingPos , bool direction );
 protected:
 	std::wstring m_worldName;
 	std::list<LevelObject *> m_levelList;

@@ -24,6 +24,7 @@ public:
 	void SetLeftBound( double newLeftX );
 	void Reset( bool resetDudeStatus = true );
 	void SetCrouching( bool status );
+	bool GetFacing();
 private:
 	double m_xOffset;
 	double m_jumpHeight;
@@ -35,6 +36,7 @@ private:
 	unsigned int m_textureIds[3];
 	bool m_crouching;
 	int m_invincible;
+	bool m_lastDirection;
 };
 
 #endif /* _GAME_DUDE_H_ */

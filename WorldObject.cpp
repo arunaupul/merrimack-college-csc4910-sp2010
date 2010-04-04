@@ -75,3 +75,8 @@ std::wstring WorldObject::GetTimerString()
 {
 	return ( *m_currentLevel )->GetTimerString();
 }
+
+void WorldObject::FireSpecialPower( Square startingPos , bool direction )
+{
+	( *m_currentLevel )->FireSpecialPower( startingPos , direction );
+}
