@@ -1,8 +1,20 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Base class for all AI controled objects
+ *
+ */
 #ifndef _AI_OBJECT_H_
 #define _AI_OBJECT_H_
 
 #include "GamePiece.h"
 
+/**
+ * @class AIObject
+ * Base class for all AI controled objects
+ */
 class AIObject : public GamePiece {
 public:
 	AIObject( const Square & startingPos , unsigned int textureId );
