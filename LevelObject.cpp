@@ -159,14 +159,33 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 	{
 		(*currentAI)->CheckCollision( gameDude );
 	}
-	for( std::list<PowerObject *>::iterator iter = m_powerList.begin() ; iter != m_powerList.end(); ++iter)
+	for( std::list<PowerObject *>::iterator iter = m_powerList.begin() ; iter != m_powerList.end(); )
 	{
+		bool collide = false;
 		for( std::list<AIObject *>::iterator currentAI = m_activeAIList.begin() ; currentAI != m_activeAIList.end(); ++currentAI)
 		{
 			if( (*currentAI)->GetActiveStatus() && (*iter)->CheckCollision( *currentAI ) )
 			{
+				iter = m_powerList.erase( iter );
+				collide = true;
 				break;
 			}
+		}
+		if( !collide )
+		{
+			for( std::list<GamePiece *>::iterator current = m_screenStartIter ; current != m_screenEndIter && current != m_levelObjects.end(); ++current )
+			{
+				if( (*iter)->CheckCollision( *current ) )
+				{
+					iter = m_powerList.erase( iter );
+					collide = true;
+					break;
+				}
+			}
+		}
+		if( !collide )
+		{
+			++iter;
 		}
 	}
 	for( std::list<AIObject *>::iterator iter = m_activeAIList.begin() ; iter != m_activeAIList.end() ; )

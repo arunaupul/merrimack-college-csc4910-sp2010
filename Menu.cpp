@@ -45,6 +45,7 @@ void Menu::AddMenuItem( const std::wstring text , int id , const Square & pos )
 {
 	m_items.push_back( new MenuItem( text , pos , id , m_textBase ) );
 	m_selectedItem = m_items.begin();
+	(*m_selectedItem)->SetSelectStatus( true );
 }
 
 int Menu::GetSelectedItemId()
