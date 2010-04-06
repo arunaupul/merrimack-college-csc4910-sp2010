@@ -15,7 +15,7 @@
 LevelObject::LevelObject( const std::wstring & levelName)
 :	m_levelName( levelName ),
 	m_xOffset( 0.0 ),
-	m_maxXOffset( 260.0 ),
+	m_maxXOffset( 10000.0 ),
 	m_screenWidth( 800 ),
 	m_levelEndObject( NULL ),
 	m_levelFileName( L"" ),
