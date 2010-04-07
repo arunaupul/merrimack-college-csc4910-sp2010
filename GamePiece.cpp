@@ -1,5 +1,6 @@
 #include "GamePiece.h"
 #include "GameStructs.h"
+#include "AudioManager.h"
 
 #include <windows.h>
 #include <gl/gl.h>
@@ -105,6 +106,7 @@ bool GamePiece::Collide( CollisionSideEnum side , int damage )
 	if( side == CS_BOTTOM && damage >= 1 )
 	{
 		m_broken = true;
+		AudioManager::Instance()->PlayALSource( SL_HITBRICK );
 	}
 #endif
 	return false;
