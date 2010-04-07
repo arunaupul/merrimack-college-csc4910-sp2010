@@ -4,6 +4,7 @@
 #include "ScoreManager.h"
 #include "Converter.h"
 #include "PowerObject.h"
+#include "AudioManager.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -221,6 +222,10 @@ bool LevelObject::Update( int ticks , GameDude * gameDude )
 	{
 		(*current)->Update( ticks );
 	}
+	if( m_levelEndObject->LevelDone() )
+	{
+		AudioManager::Instance()->StopALSource( SL_SONG1 );
+	}
 	return m_levelEndObject->LevelDone();
 }
 
@@ -265,6 +270,8 @@ void LevelObject::Start()
 	}
 	m_timer = 1000 * 5 * 60;
 	ScoreManager::Instance()->NewLevel();
+	AudioManager::Instance()->StopALSource( SL_SONG1 );
+	AudioManager::Instance()->PlayALSource( SL_SONG1 );
 }
 
 void LevelObject::SetLevelEndObject( LevelEndObject * object )

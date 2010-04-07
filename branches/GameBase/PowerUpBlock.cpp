@@ -1,4 +1,5 @@
 #include "PowerUpBlock.h"
+#include "AudioManager.h"
 
 PowerUpBlock::PowerUpBlock( const Square & startingPos , PowerUpItem * item , unsigned int unusedTextureId , unsigned int usedTextureId )
 :	GamePiece( startingPos , unusedTextureId ),
@@ -20,6 +21,7 @@ bool PowerUpBlock::Collide( CollisionSideEnum side , int damage )
 		m_blockUsed = true;
 		m_textureId = m_textureIds[1];
 		m_item->Activate();
+		AudioManager::Instance()->PlayALSource( SL_HITBRICK );
 	}
 	return false;
 }

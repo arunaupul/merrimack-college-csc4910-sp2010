@@ -18,9 +18,14 @@
 #include "AIType2.h"
 #include "PowerUpBlock.h"
 #include "PowerUpItem.h"
+#include "AudioManager.h"
 
 bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<WorldObject *> & worldList , GameDude * dude )
 {
+	AudioManager::Instance()->LoadSound( SL_PWRUP , "GamePackFiles\\Music\\mushroom.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_CHCKPT , "GamePackFiles\\Music\\checkpoint.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_HITBRICK , "GamePackFiles\\Music\\hitbrick.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_SONG1 , "GamePackFiles\\Music\\song1.wav" , true );
 	std::ifstream worldFile( worldsFileName.c_str() );
 	if( !worldFile.is_open() )
 	{

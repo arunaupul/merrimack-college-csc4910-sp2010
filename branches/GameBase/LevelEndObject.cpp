@@ -2,6 +2,7 @@
 #include "GameDude.h"
 #include "ScoreManager.h"
 #include "GameEnums.h"
+#include "AudioManager.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -34,6 +35,7 @@ bool LevelEndObject::CheckCollision( CollisionObject * object )
 		{
 			m_levelDone = true;
 			ScoreManager::Instance()->AddToScore( 100 , SO_LEVEL_END );
+			AudioManager::Instance()->PlayALSource( SL_CHCKPT );
 			return true;
 		}
 	}

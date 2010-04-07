@@ -2,6 +2,7 @@
 #include "GameStructs.h"
 #include "GameDude.h"
 #include "GameEnums.h"
+#include "AudioManager.h"
 
 #define VERTICAL_RATE	0.01
 #define MOVE_RATE		0.01
@@ -87,6 +88,7 @@ bool PowerUpItem::CheckCollision( CollisionObject * object )
 			if( status < GDS_SPECIAL )
 			{
 				dude->SetDudeStatus( (GameDudeStatus)( status + 1 ) );
+				AudioManager::Instance()->PlayALSource( SL_PWRUP );
 			}
 			return true;
 		}
