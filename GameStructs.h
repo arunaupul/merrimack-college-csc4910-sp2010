@@ -19,6 +19,8 @@
 
 /**
  * @struct Square
+ * @brief I'm a square
+ *
  * Struct used to represent a regtangle within the game
  */
 struct Square

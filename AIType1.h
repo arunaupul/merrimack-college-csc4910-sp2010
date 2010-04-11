@@ -49,17 +49,17 @@ public:
 	virtual bool Trigger( double xOffset );
 	
 	/**
-	 * Checks to see if object has collided with the current object
-	 * @param object Object to check a collision against
-	 * @return true if the object collided
-	 */
-	virtual bool Collide( CollisionSideEnum side , int damage );
-	
-	/**
 	 * Handles the event of another object colliding with the current one
 	 * @param side Side of the current object that has been hit
 	 * @param damage Amount of damage to attempt to inflict upon the current object
 	 * @return true if the current object wishes to return damage
+	 */
+	virtual bool Collide( CollisionSideEnum side , int damage );
+	
+	/**
+	 * Checks to see if object has collided with the current object
+	 * @param object Object to check a collision against
+	 * @return true if the object collided
 	 */
 	virtual bool CheckCollision( CollisionObject * object );
 protected:

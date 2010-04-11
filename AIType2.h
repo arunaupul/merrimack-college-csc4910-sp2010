@@ -43,10 +43,10 @@ public:
 	virtual void Update( int ticks );
 
 	/**
-	 * Checks to see if object has collided with the current object
-	 * Calls AIType1::Collide. Keeps count of the number of collides per update
-	 * @param object Object to check a collision against
-	 * @return true if the object collided
+	 * Handles the event of another object colliding with the current one
+	 * @param side Side of the current object that has been hit
+	 * @param damage Amount of damage to attempt to inflict upon the current object
+	 * @return true if the current object wishes to return damage
 	 */
 	virtual bool Collide( CollisionSideEnum side , int damage );
 protected:

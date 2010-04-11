@@ -16,6 +16,8 @@
 
 /**
  * @namespace Converter
+ * @brief Conversion Functions
+ *
  * This is the converter utility functions
  * This namespace supplies funtions to perform
  * basic string conversions
