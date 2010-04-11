@@ -260,6 +260,7 @@ void GameBase::PlayGame()
 
 void GameBase::BuildHUDFont()
 {
+	AddFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );			//uses windows library to add the font digital-7
 	HFONT font;
 	m_hudTextBase = glGenLists( 256 );
 
