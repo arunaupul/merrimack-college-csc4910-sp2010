@@ -67,7 +67,7 @@ public:
 
 	/**
 	 * Adds a general AIObject to the level
-	 * @param piece AIObject to add to the level
+	 * @param object AIObject to add to the level
 	 */
 	void AddAIObject( AIObject * object );
 

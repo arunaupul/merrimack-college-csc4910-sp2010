@@ -16,6 +16,7 @@
 
 /**
  * @namespace UtilFunctions
+ * @brief Utility Functions
  * Contains several useful functions that fail to fit elsewhere
  */
 namespace UtilFunctions

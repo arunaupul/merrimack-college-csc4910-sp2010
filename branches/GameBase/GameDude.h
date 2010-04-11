@@ -113,7 +113,7 @@ public:
 
 	/**
 	 * Resets the dude to his starting position
-	 * @param resetDudeStats If the dude status should be reset
+	 * @param resetDudeStatus If the dude status should be reset
 	 */
 	void Reset( bool resetDudeStatus = true );
 

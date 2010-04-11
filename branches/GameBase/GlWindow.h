@@ -35,7 +35,7 @@ public:
 	 * Method to create the window
 	 * @param className String to unqiuely ID the class
 	 * @param windowTitle Title of the window
-	 * @param hInstace Handle to the instance of the object
+	 * @param hInstance Handle to the instance of the object
 	 * @param windowPosX X coord to place the window at
 	 * @param windowPosY Y coord to place the window at
 	 * @param windowWidth Width of the window

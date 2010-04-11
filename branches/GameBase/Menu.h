@@ -61,7 +61,7 @@ public:
 
 	/**
 	 * Handles on click on the menu
-	 * @param click Point clicked
+	 * @param point Point clicked
 	 */
 	void Click( const Point & point );
 

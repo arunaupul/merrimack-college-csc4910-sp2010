@@ -12,6 +12,8 @@
 
 /**
  * @struct RgbaColor
+ * @brief OpenGL Color
+ *
  * Struct represents the 4 values of an openGL using 
  * 4 unsigned bytes
  */
