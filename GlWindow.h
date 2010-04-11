@@ -1,15 +1,10 @@
-/*
- *************************
- **   Ryan Fleming      **
- **   GlWindow          **
- **   Jan 27, 2010      **
- **         ,,,         **
- **        (0 0)        **
- **  ---ooO-(_)-Ooo---  **
- *************************
- * Version 1
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
  *
  * Class to handle window create and management
+ *
  */
 
 #ifndef _GL_WINDOW_H_

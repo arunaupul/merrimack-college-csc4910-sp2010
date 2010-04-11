@@ -1,15 +1,10 @@
-/*
- *************************
- **   Ryan Fleming      **
- **   GlFrameworkObject **
- **   Jan 27, 2010      **
- **         ,,,         **
- **        (0 0)        **
- **  ---ooO-(_)-Ooo---  **
- *************************
- * Version 1
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
  *
  * Base class for the Framework Objects
+ *
  */
 
 #ifndef _GL_FRAMEWORK_OBJECT_H_

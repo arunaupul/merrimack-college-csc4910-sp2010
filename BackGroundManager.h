@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Class to manage which section of the background image
+ * to display to the user.
+ *
+ */
 #ifndef _BACK_GROUND_MANAGER_H_
 #define _BACK_GROUND_MANAGER_H_
 

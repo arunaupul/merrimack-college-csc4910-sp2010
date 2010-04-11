@@ -3,7 +3,7 @@
  * @author	Ryan Fleming <rfleming71@gmail.com>
  * @version 1.0
  *
- * Base class for all AI controled objects
+ * Base class for all AI controlled objects
  *
  */
 #ifndef _AI_OBJECT_H_

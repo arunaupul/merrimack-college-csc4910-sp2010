@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Special Power Block. Upon hitting, it triggers the PowerUpItem
+ *
+ */
 #ifndef _POWER_UP_BLOCK_H_
 #define _POWER_UP_BLOCK_H_
 

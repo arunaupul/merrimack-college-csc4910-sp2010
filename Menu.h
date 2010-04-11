@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * General Menu Class
+ *
+ */
 #ifndef _MENU_H_
 #define _MENU_H_
 
