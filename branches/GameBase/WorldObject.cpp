@@ -43,7 +43,6 @@ void WorldObject::AddLevel( LevelObject * level )
 		m_levelList.push_back( level );
 	}
 }
-
 void WorldObject::Start()
 {
 	m_currentLevel = m_levelList.begin();

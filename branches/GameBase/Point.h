@@ -13,6 +13,7 @@
 
 /**
  * @struct Point
+ * @brief A single point
  * Represents a single point in openGL space
  */
 struct Point
