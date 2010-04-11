@@ -64,7 +64,7 @@ int GlApplication::Main( HINSTANCE hInstance , HINSTANCE prevInstance , LPSTR lp
 	}
 
 	// Create the window
-	if( !m_window.CreateGlWindow( CLASS_NAME , L"Test Window" , hInstance , 0 , 60 , 800 , 600 , false , 32 , this ) )
+	if( !m_window.CreateGlWindow( CLASS_NAME , L"Super EastGate" , hInstance , 0 , 60 , 800 , 600 , false , 32 , this ) )
 	{
 		return -1;
 	}

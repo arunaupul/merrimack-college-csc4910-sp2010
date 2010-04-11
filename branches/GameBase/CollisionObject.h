@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file CollisionObject.h
  * @author	Ryan Fleming <rfleming71@gmail.com>
  * @version 1.0
  *
@@ -13,6 +13,8 @@
 
 /**
  * @class CollisionObject
+ * @brief Basic Collision Detection Object
+ *
  * This class provides the proper interface needed to perfrom the
  * collision detection used throughout the game
  */
