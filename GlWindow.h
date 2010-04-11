@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file GlWindow.h
  * @author	Ryan Fleming <rfleming71@gmail.com>
  * @version 1.0
  *
@@ -13,35 +13,119 @@
 #include <string>
 #include <windows.h>
 
-class GlWindow
-{
+/**
+ * @class GlWindow
+ * @brief Window in Windows
+ *
+ * Class to handle window create and management
+ */
+class GlWindow {
 public:
-	GlWindow();										// Constructor
-	~GlWindow();									// Destructor
+	/**
+	 * Constructor
+	 */
+	GlWindow();
 
-	// Create the window
+	/**
+	 * Destructor
+	 */
+	~GlWindow();
+
+	/**
+	 * Method to create the window
+	 * @param className String to unqiuely ID the class
+	 * @param windowTitle Title of the window
+	 * @param hInstace Handle to the instance of the object
+	 * @param windowPosX X coord to place the window at
+	 * @param windowPosY Y coord to place the window at
+	 * @param windowWidth Width of the window
+	 * @param windowHeight Height of the window
+	 * @param fullScreen True if the window should be fullscreen
+	 * @param bitsPerPixel Bits per pixel
+	 * @param application Pointer to the application running the window
+	 * @return True on success
+	 */
 	bool CreateGlWindow( const std::wstring & className , const std::wstring & windowTitle , HINSTANCE hInstance , int windowPosX , int windowPosY , int windowWidth , int windowHeight , const bool & fullScreen , int bitsPerPixel , LPVOID application );
 
-	void KillWindow();								// Destory and clean up the window
-	void SwapBuffers();								// Swaps the buffers of the window
-	void ResizeGlScene( int width , int height );	// Reshape the gl scene
-	int GetWindowHeight();							// Get The Window Height
-	int GetWindowWidth();							// Get The Window Width
-	operator HWND() { return m_hWnd; }				// Overload to allow the GlWindow to act as a HWND
+	/**
+	 * Destory and clean up the window
+	 */
+	void KillWindow();
+
+	/**
+	 * Swaps the buffers of the window
+	 */
+	void SwapBuffers();
+
+	/**
+	 * Reshape the gl scene
+	 * @param width New window width
+	 * @param height New window height
+	 */
+	void ResizeGlScene( int width , int height );
+
+	/**
+	 * Get The Window Height
+	 */
+	int GetWindowHeight();
+
+	/**
+	 * Get The Window Width
+	 */
+	int GetWindowWidth();
+
+	/**
+	 * Overload to allow the GlWindow to act as a HWND
+	 * @return The window's Handle
+	 */
+	operator HWND() { return m_hWnd; }
+
+	/**
+	 * Overload to allow the GlWindow to act as a HDC
+	 * @return The window's DC
+	 */
 	operator HDC() { return m_hDc; }
 
 protected:
 
-	// Set the window to run in full screen mode
+	/**
+	 * Set the window to run in full screen mode
+	 * @param windowWidth Width of the window
+	 * @param windowHeight Height of the window
+	 * @param bitsPerPixel Bits per pixel
+	 */
 	void EnableFullScreen( const int & windowWidth , const int & windowHeight , const int & bitsPerPixel );
 
 private:
-	HWND m_hWnd;									// Window Handle
-	HGLRC m_hRc;									// Rendering Context
-	HDC m_hDc;										// Device Context
-	bool m_isFullScreen;							// Is the window in full screen mode
-	int m_windowWidth;								// Window Height
-	int m_windowHeight;								// Window Width
+	/**
+	 * Window Handle
+	 */
+	HWND m_hWnd;
+
+	/**
+	 * Rendering Context
+	 */
+	HGLRC m_hRc;
+
+	/**
+	 * Device Context
+	 */
+	HDC m_hDc;
+
+	/**
+	 * Is the window in full screen mode
+	 */
+	bool m_isFullScreen;
+
+	/**
+	 * Window Height
+	 */
+	int m_windowWidth;
+
+	/**
+	 * Window Width
+	 */
+	int m_windowHeight;
 };
 
 #endif /* _GL_WINDOW_H_ */

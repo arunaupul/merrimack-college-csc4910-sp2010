@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file GameEnums.h
  * @author	Ryan Fleming <rfleming71@gmail.com>
  * @version 1.0
  *

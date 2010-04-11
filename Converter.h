@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file Converter.h
  * @author	Ryan Fleming <rfleming71@gmail.com>
  * @version 1.0
  *
@@ -23,10 +23,12 @@
 namespace Converter
 {
 	/**
+	 * @class ConverterException
+	 * @brief Converter Exception
+	 * 
 	 * Class used to represent an error in the conversion process
 	 */
-	class ConverterException : public std::exception
-	{
+	class ConverterException : public std::exception 	{
 	public:
 		ConverterException( const char * msg ) { m_msg = msg; }
 		const char * what() { return m_msg; }
