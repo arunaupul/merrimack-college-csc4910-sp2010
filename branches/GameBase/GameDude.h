@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Game Dude object represents the players avatar in the game
+ * In maintians the states of the player
+ *
+ */
 #ifndef _GAME_DUDE_H_
 #define _GAME_DUDE_H_
 

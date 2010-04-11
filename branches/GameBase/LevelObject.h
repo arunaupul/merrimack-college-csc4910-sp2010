@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Represents a level within the game. Handles all AI objects,
+ * Special Powers and block collisions
+ *
+ */
 #ifndef _LEVEL_OBJECT_H_
 #define _LEVEL_OBJECT_H_
 

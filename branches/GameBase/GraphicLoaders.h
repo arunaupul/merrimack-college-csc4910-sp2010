@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Namespace to load different graphic formats into openGL textures
+ *
+ */
 #ifndef _GRAPHIC_LOADERS_H_
 #define _GRAPHIC_LOADERS_H_
 

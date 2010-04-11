@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Items that appear within a menu
+ *
+ */
 #ifndef _MENU_ITEM_H_
 #define _MENU_ITEM_H_
 

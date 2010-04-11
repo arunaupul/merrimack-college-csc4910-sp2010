@@ -1,15 +1,10 @@
-/*
- *************************
- **   Ryan Fleming      **
- **   KeyHandler        **
- **   Jan 27, 2010      **
- **         ,,,         **
- **        (0 0)        **
- **  ---ooO-(_)-Ooo---  **
- *************************
- * Version 1
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
  *
  * Class manage which keys are currently being pressed
+ *
  */
 
 #ifndef _KEY_HANDLER_H_

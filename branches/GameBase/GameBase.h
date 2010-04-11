@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Primary class for the game.
+ * This is the primary class to control the program
+ *
+ */
 #ifndef _GAME_BASE_H_
 #define _GAME_BASE_H_
 

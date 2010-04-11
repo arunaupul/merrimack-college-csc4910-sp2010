@@ -1,3 +1,13 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Utility Object to manage user configured controls
+ * for the game
+ *
+ */
+
 #ifndef _CONTROL_OBJECT_H_
 #define _CONTROL_OBJECT_H_
 

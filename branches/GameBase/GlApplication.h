@@ -1,16 +1,11 @@
-/*
- *************************
- **   Ryan Fleming      **
- **   GlApplication     **
- **   Jan 27, 2010      **
- **         ,,,         **
- **        (0 0)        **
- **  ---ooO-(_)-Ooo---  **
- *************************
- * Version 1
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
  *
  * Base Class for OpenGl Applications
  * Class handles window setup and message handling
+ *
  */
 
 #ifndef _GL_APPLICATION_H_

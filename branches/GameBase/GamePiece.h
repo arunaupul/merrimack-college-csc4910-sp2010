@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Base class for all objects the player can see on the screen
+ * and the GameDude can interact with.
+ *
+ */
 #ifndef _GAME_PIECE_H_
 #define _GAME_PIECE_H_
 

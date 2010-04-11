@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Class to keep trace of the current playes score.
+ * Singleton Object
+ *
+ */
 #ifndef _SCORE_MANAGER_H_
 #define _SCORE_MANAGER_H_
 

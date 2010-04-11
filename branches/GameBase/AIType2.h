@@ -1,3 +1,12 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Style 1 AI Controlled Enemy
+ * AI will bounce of blocks and will not walk of cliffs
+ *
+ */
 #ifndef _AI_OBJECT_TYPE_2_H_
 #define _AI_OBJECT_TYPE_2_H_
 

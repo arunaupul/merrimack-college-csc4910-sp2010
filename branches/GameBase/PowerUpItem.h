@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Power up item, upon touching the game dude status is increased by 1
+ *
+ */
 #ifndef _POWER_UP_ITEM_H_
 #define _POWER_UP_ITEM_H_
 
@@ -5,7 +13,6 @@
 #include "AIType1.h"
 #include "GameEnums.h"
 
-//class PowerUpItem :	public AIObject {
 class PowerUpItem :	public AIType1 {
 public:
 	PowerUpItem( const Square & startingPos , unsigned int textureId );

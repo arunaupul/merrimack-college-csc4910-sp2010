@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @author	Ryan Fleming <rfleming71@gmail.com>
+ * @version 1.0
+ *
+ * Represents a current world within the game. Handles level loading and management
+ *
+ */
 #ifndef _WORLD_OBJECT_H_
 #define _WORLD_OBJECT_H_
 
