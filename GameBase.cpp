@@ -260,7 +260,8 @@ void GameBase::PlayGame()
 
 void GameBase::BuildHUDFont()
 {
-	AddFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );			//uses windows library to add the font digital-7
+	//AddFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );			//uses windows library to add the font digital-7
+	SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
 	HFONT font;
 	m_hudTextBase = glGenLists( 256 );
 
@@ -291,6 +292,8 @@ void GameBase::BuildHUDFont()
 void GameBase::KillHudFont()
 {
 	glDeleteLists( m_hudTextBase , 256 );
+	RemoveFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );		//removes the font when done
+	SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);					//alert other windows of the change
 }
 
 void GameBase::Draw()
