@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <gl\gl.h>
 
-#define JUMP_HEIGHT SQUARE_SIZE * 1.5
+#define JUMP_HEIGHT SQUARE_SIZE * 2.5
 #define JUMP_RATE	0.03
 
 GameDude::GameDude( Square startingPos , unsigned int smallTextureId , unsigned int largeTextureId , unsigned int specialTextureId )
