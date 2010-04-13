@@ -30,7 +30,11 @@ enum SoundLookup{
 	SL_PWRUP = 4,
 	SL_CHCKPT = 5,
 	SL_COINS = 6,
-	SL_HITBRICK = 7
+	SL_HITBRICK = 7,
+	SL_DEATH = 8,
+	SL_JUMP = 9,
+	SL_PWRDOWN = 10,
+	SL_SPECIAL = 11
 }; //end enum
 
 
@@ -105,20 +109,28 @@ private:
 	ALuint m_Song1Buff;			//first song buffer
 	ALuint m_Song2Buff;			//second song buffer
 	ALuint m_Song3Buff;			//third song buffer
-	//ALuint m_Song4Buff;		//fourth song buffer
+	ALuint m_Song4Buff;			//fourth song buffer
 	ALuint m_PowerupBuff;		//powerup buffer
 	ALuint m_CheckpointBuff;	//checkpoint buffer
 	ALuint m_CoinBuff;			//coin buffer
 	ALuint m_HitBrickBuff;		//hit brick buffer
+	ALuint m_DeathBuff;			//death buffer
+	ALuint m_JumpBuff;			//jump buffer
+	ALuint m_PowerdwnBuff;		//powerdown buffer
+	ALuint m_SpecialBuff;		//special weapon buffer
 	
 	ALuint m_Song1Src;			//first song source
 	ALuint m_Song2Src;			//second song source
 	ALuint m_Song3Src;			//third song source
-	//ALuint m_Song4Src;			//fourth song source
+	ALuint m_Song4Src;			//fourth song source
 	ALuint m_PowerupSrc;		//powerup source
 	ALuint m_CheckpointSrc;		//checkpoint source
 	ALuint m_CoinSrc;			//coin source 
 	ALuint m_HitBrickSrc;		//hit brick source
+	ALuint m_DeathSrc;			//death source
+	ALuint m_JumpSrc;			//jump source
+	ALuint m_PowerdwnSrc;		//powerdown source
+	ALuint m_SpecialSrc;		//special weapon source
 
 	ALfloat SourcePos[3];		//set the position of the source
 	ALfloat SourceVel[3];		//set the velocity of the source

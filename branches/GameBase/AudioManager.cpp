@@ -44,19 +44,31 @@ AudioManager::~AudioManager()
 	alDeleteBuffers(1, &m_Song1Buff);		//deleting song 1 buffer
 	alDeleteBuffers(1, &m_Song2Buff);		//deleting song 2 buffer
 	alDeleteBuffers(1, &m_Song3Buff);		//deleting song 3 buffer
+	alDeleteBuffers(1, &m_Song4Buff);		//deleting song 4 buffer
 	alDeleteBuffers(1, &m_PowerupBuff);		//deleting powerup buffer
 	alDeleteBuffers(1, &m_CheckpointBuff);	//deleting checkpoint buffer
 	alDeleteBuffers(1, &m_CoinBuff);		//deleting coin buffer
 	alDeleteBuffers(1, &m_HitBrickBuff);	//deleting hit brick buffer
+	alDeleteBuffers(1, &m_DeathBuff);		//deleting death buffer
+	alDeleteBuffers(1, &m_JumpBuff);		//deleting jump buffer
+	alDeleteBuffers(1, &m_PowerdwnBuff);	//deleting powerdown buffer
+	alDeleteBuffers(1, &m_SpecialBuff);		//deleting special buffer
+
+
 
 	/* Delete the sources */
 	alDeleteSources(1, &m_Song1Src);		//deleting song 1 source
 	alDeleteSources(1, &m_Song2Src);		//deleting song 2 source
 	alDeleteSources(1, &m_Song3Src);		//deleting song 3 source
+	alDeleteSources(1, &m_Song4Src);		//deleting song 4 source
 	alDeleteSources(1, &m_PowerupSrc);		//deleting powerup source
 	alDeleteSources(1, &m_CheckpointSrc);	//deleting checkpoint source
 	alDeleteSources(1, &m_CoinSrc);			//deleting coin source
 	alDeleteSources(1, &m_HitBrickSrc);		//deleting hit brick source
+	alDeleteSources(1, &m_DeathSrc);		//deleting death source
+	alDeleteSources(1, &m_JumpSrc);			//deleting jump source
+	alDeleteSources(1, &m_PowerdwnSrc);		//deleting powerdown source
+	alDeleteSources(1, &m_SpecialSrc);		//deleting special source
 
 	alutExit();
 }//end of destructor
@@ -166,6 +178,35 @@ void AudioManager::LoadSound(SoundLookup loadSound, char * soundFilePath , bool 
 			alSourcefv(m_Song3Src, AL_POSITION, SourcePos);
 			alSourcefv(m_Song3Src, AL_VELOCITY, SourceVel);
 			alSourcei (m_Song3Src, AL_LOOPING,  loop  );
+		}//end of else
+		alGetError();
+		break;
+	case SL_SONG4:
+		alGenBuffers(1, &m_Song4Buff);		//attatching song 4 buffer
+		alGetError();
+		/*background sound 4*/
+		alutLoadWAVFile(soundFilePath, &format, &data, &size, &freq, &loop);
+		alBufferData(m_Song4Buff, format, data, size, freq);
+		alutUnloadWAV(format, data, size, freq);
+		alGenSources(1, &m_Song4Src);			//song 4 source
+		alGetError();
+		if(isLoop == true)
+		{
+			alSourcei (m_Song4Src, AL_BUFFER,   m_Song4Buff );		/*Song 4*/
+			alSourcef (m_Song4Src, AL_PITCH,    1.0f     );
+			alSourcef (m_Song4Src, AL_GAIN,     1.0f     );
+			alSourcefv(m_Song4Src, AL_POSITION, SourcePos);
+			alSourcefv(m_Song4Src, AL_VELOCITY, SourceVel);
+			alSourcei (m_Song4Src, AL_LOOPING,  AL_TRUE  );
+		}//end of if
+		else
+		{
+			alSourcei (m_Song4Src, AL_BUFFER,   m_Song4Buff );		/*Song 4*/
+			alSourcef (m_Song4Src, AL_PITCH,    1.0f     );
+			alSourcef (m_Song4Src, AL_GAIN,     1.0f     );
+			alSourcefv(m_Song4Src, AL_POSITION, SourcePos);
+			alSourcefv(m_Song4Src, AL_VELOCITY, SourceVel);
+			alSourcei (m_Song4Src, AL_LOOPING,  loop  );
 		}//end of else
 		alGetError();
 		break;
@@ -285,6 +326,122 @@ void AudioManager::LoadSound(SoundLookup loadSound, char * soundFilePath , bool 
 		}//end of else
 		alGetError();
 		break;
+	case SL_DEATH:
+		alGenBuffers(1, &m_DeathBuff);		//attatching death buffer
+		alGetError();
+		/*Death sound*/
+		alutLoadWAVFile(soundFilePath, &format, &data, &size, &freq, &loop);
+		alBufferData(m_DeathBuff, format, data, size, freq);
+		alutUnloadWAV(format, data, size, freq);
+		alGenSources(1, &m_DeathSrc);			//Death source
+		alGetError();
+		if(isLoop == true)
+		{
+			alSourcei (m_DeathSrc, AL_BUFFER,   m_DeathBuff );		/*Death Sound*/
+			alSourcef (m_DeathSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_DeathSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_DeathSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_DeathSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_DeathSrc, AL_LOOPING,  AL_TRUE  );
+		}//end of if
+		else
+		{
+			alSourcei (m_DeathSrc, AL_BUFFER,   m_DeathBuff );		/*Death Sound*/
+			alSourcef (m_DeathSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_DeathSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_DeathSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_DeathSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_DeathSrc, AL_LOOPING,  loop  );
+		}//end of else
+		alGetError();
+		break;
+	case SL_JUMP:
+		alGenBuffers(1, &m_JumpBuff);		//attatching Jump buffer
+		alGetError();
+		/*Jump sound*/
+		alutLoadWAVFile(soundFilePath, &format, &data, &size, &freq, &loop);
+		alBufferData(m_JumpBuff, format, data, size, freq);
+		alutUnloadWAV(format, data, size, freq);
+		alGenSources(1, &m_JumpSrc);			//Jump source
+		alGetError();
+		if(isLoop == true)
+		{
+			alSourcei (m_JumpSrc, AL_BUFFER,   m_JumpBuff );		/*Jump Sound*/
+			alSourcef (m_JumpSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_JumpSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_JumpSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_JumpSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_JumpSrc, AL_LOOPING,  AL_TRUE  );
+		}//end of if
+		else
+		{
+			alSourcei (m_JumpSrc, AL_BUFFER,   m_JumpBuff );		/*Jump Sound*/
+			alSourcef (m_JumpSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_JumpSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_JumpSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_JumpSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_JumpSrc, AL_LOOPING,  loop  );
+		}//end of else
+		alGetError();
+		break;
+	case SL_PWRDOWN:
+		alGenBuffers(1, &m_PowerdwnBuff);		//attatching Powerdown buffer
+		alGetError();
+		/*Powerdown sound*/
+		alutLoadWAVFile(soundFilePath, &format, &data, &size, &freq, &loop);
+		alBufferData(m_PowerdwnBuff, format, data, size, freq);
+		alutUnloadWAV(format, data, size, freq);
+		alGenSources(1, &m_PowerdwnSrc);			//Powerdown source
+		alGetError();
+		if(isLoop == true)
+		{
+			alSourcei (m_PowerdwnSrc, AL_BUFFER,   m_PowerdwnBuff );		/*Powerdown Sound*/
+			alSourcef (m_PowerdwnSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_PowerdwnSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_PowerdwnSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_PowerdwnSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_PowerdwnSrc, AL_LOOPING,  AL_TRUE  );
+		}//end of if
+		else
+		{
+			alSourcei (m_PowerdwnSrc, AL_BUFFER,   m_PowerdwnBuff );		/*Powerdown Sound*/
+			alSourcef (m_PowerdwnSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_PowerdwnSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_PowerdwnSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_PowerdwnSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_PowerdwnSrc, AL_LOOPING,  loop  );
+		}//end of else
+		alGetError();
+		break;
+	case SL_SPECIAL:
+		alGenBuffers(1, &m_SpecialBuff);		//attatching Special buffer
+		alGetError();
+		/*Special sound*/
+		alutLoadWAVFile(soundFilePath, &format, &data, &size, &freq, &loop);
+		alBufferData(m_SpecialBuff, format, data, size, freq);
+		alutUnloadWAV(format, data, size, freq);
+		alGenSources(1, &m_SpecialSrc);			//Special source
+		alGetError();
+		if(isLoop == true)
+		{
+			alSourcei (m_SpecialSrc, AL_BUFFER,   m_SpecialBuff );		/*Special Sound*/
+			alSourcef (m_SpecialSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_SpecialSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_SpecialSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_SpecialSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_SpecialSrc, AL_LOOPING,  AL_TRUE  );
+		}//end of if
+		else
+		{
+			alSourcei (m_SpecialSrc, AL_BUFFER,   m_SpecialBuff );		/*Special Sound*/
+			alSourcef (m_SpecialSrc, AL_PITCH,    1.0f     );
+			alSourcef (m_SpecialSrc, AL_GAIN,     1.0f     );
+			alSourcefv(m_SpecialSrc, AL_POSITION, SourcePos);
+			alSourcefv(m_SpecialSrc, AL_VELOCITY, SourceVel);
+			alSourcei (m_SpecialSrc, AL_LOOPING,  loop  );
+		}//end of else
+		alGetError();
+		break;
 	};//end of switch
 }//end of LoadSound
 
@@ -303,6 +460,9 @@ void AudioManager::PlayALSource(SoundLookup playSound)
 	case SL_SONG3:
 		alSourcePlay(m_Song3Src);
 		break;
+	case SL_SONG4:
+		alSourcePlay(m_Song4Src);
+		break;
 	case SL_PWRUP:
 		alSourcePlay(m_PowerupSrc);
 		break;
@@ -314,6 +474,18 @@ void AudioManager::PlayALSource(SoundLookup playSound)
 		break;
 	case SL_HITBRICK:
 		alSourcePlay(m_HitBrickSrc);
+		break;
+	case SL_DEATH:
+		alSourcePlay(m_DeathSrc);
+		break;
+	case SL_JUMP:
+		alSourcePlay(m_JumpSrc);
+		break;
+	case SL_PWRDOWN:
+		alSourcePlay(m_PowerdwnSrc);
+		break;
+	case SL_SPECIAL:
+		alSourcePlay(m_SpecialSrc);
 		break;
 	};//end of swich statement
 }//end of PlayALSource
@@ -333,6 +505,9 @@ void AudioManager::StopALSource(SoundLookup stopSound)
 	case SL_SONG3:
 		alSourceStop(m_Song3Src);
 		break;
+	case SL_SONG4:
+		alSourceStop(m_Song4Src);
+		break;
 	case SL_PWRUP:
 		alSourceStop(m_PowerupSrc);
 		break;
@@ -344,6 +519,18 @@ void AudioManager::StopALSource(SoundLookup stopSound)
 		break;
 	case SL_HITBRICK:
 		alSourceStop(m_HitBrickSrc);
+		break;
+	case SL_DEATH:
+		alSourceStop(m_DeathSrc);
+		break;
+	case SL_JUMP:
+		alSourceStop(m_JumpSrc);
+		break;
+	case SL_PWRDOWN:
+		alSourceStop(m_PowerdwnSrc);
+		break;
+	case SL_SPECIAL:
+		alSourceStop(m_SpecialSrc);
 		break;
 	};//end of swich statement
 }//end of StopALSource
@@ -363,6 +550,9 @@ void AudioManager::HoldALSource(SoundLookup holdSound)
 	case SL_SONG3:
 		alSourcePause(m_Song3Src);
 		break;
+	case SL_SONG4:
+		alSourcePause(m_Song4Src);
+		break;
 	case SL_PWRUP:
 		alSourcePause(m_PowerupSrc);
 		break;
@@ -374,6 +564,18 @@ void AudioManager::HoldALSource(SoundLookup holdSound)
 		break;
 	case SL_HITBRICK:
 		alSourcePause(m_HitBrickSrc);
+		break;
+	case SL_DEATH:
+		alSourcePause(m_DeathSrc);
+		break;
+	case SL_JUMP:
+		alSourcePause(m_JumpSrc);
+		break;
+	case SL_PWRDOWN:
+		alSourcePause(m_PowerdwnSrc);
+		break;
+	case SL_SPECIAL:
+		alSourcePause(m_SpecialSrc);
 		break;
 	};//end of swich statement
 }//end of HoldALSource
