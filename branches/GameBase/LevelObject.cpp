@@ -291,7 +291,7 @@ bool LevelObject::Load()
 		delete m_backGroundManager;
 		m_backGroundManager = NULL;
 	}
-	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.bmp", 240, 168 , 0.20 );
+	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.tga", 240, 168 , 0.20 );
 	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
 	{
 		delete (*iter);

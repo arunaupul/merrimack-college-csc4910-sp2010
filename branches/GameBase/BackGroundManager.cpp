@@ -9,7 +9,7 @@ BackGroundManager::BackGroundManager( const std::wstring & backgroundPath , doub
 	m_screenHeight( screenHeight ),
 	m_cameraPercent( backgroundCameraPercent )
 {
-	GraphicLoaders::LoadNewBitmap( backgroundPath , m_background );
+	GraphicLoaders::LoadTga( backgroundPath , m_background );
 }
 
 BackGroundManager::~BackGroundManager()
