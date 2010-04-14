@@ -141,3 +141,8 @@ bool WorldObject::IsLoading()
 {
 	return m_loadingLevel;
 }
+
+std::wstring WorldObject::GetNameString()
+{
+	return m_worldName + L" - " + ( *m_currentLevel )->GetLevelName();
+}

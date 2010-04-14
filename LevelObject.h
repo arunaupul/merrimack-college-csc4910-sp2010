@@ -134,6 +134,12 @@ public:
 	 * @param rightTextureId Image of a right moving PowerObject
 	 */
 	void SetSpecialImages( int leftTextureId , int rightTextureId );
+
+	/**
+	 * Gets the level name
+	 * @return Level name
+	 */
+	std::wstring GetLevelName();
 protected:
 	/**
 	 * All objects in the level
