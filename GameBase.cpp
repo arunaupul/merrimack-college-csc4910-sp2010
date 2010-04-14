@@ -8,6 +8,7 @@
 #include "Converter.h"
 #include "ScoreManager.h"
 #include "Menu.h"
+#include "AudioManager.h"
 
 #define FIRE_DELAY	1000
 
@@ -59,6 +60,7 @@ void GameBase::KeyPressed( unsigned int key )
 		else if( key == m_controls->GetControlKey( CO_PAUSE ) )
 		{
 			m_currentGameState = GS_PAUSE_MENU;
+			AudioManager::Instance()->HoldALSource( SL_SONG1 );
 		}
 		else if( key == m_controls->GetControlKey( CO_USE_SPECIAL ) && m_gameDude->GetDudeStatus() == GDS_SPECIAL && m_delayTimer == 0 )
 		{
@@ -81,6 +83,7 @@ void GameBase::KeyPressed( unsigned int key )
 		if( key == m_controls->GetControlKey( CO_PAUSE ) )
 		{
 			m_currentGameState = GS_GAME_PLAYING;
+			AudioManager::Instance()->PlayALSource( SL_SONG1 );
 			// Prevent the controls from sticking on unpause
 			if( m_keys.GetPressed( m_controls->GetControlKey( CO_LEFT ) ) )
 			{
