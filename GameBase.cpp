@@ -81,6 +81,19 @@ void GameBase::KeyPressed( unsigned int key )
 		if( key == m_controls->GetControlKey( CO_PAUSE ) )
 		{
 			m_currentGameState = GS_GAME_PLAYING;
+			// Prevent the controls from sticking on unpause
+			if( m_keys.GetPressed( m_controls->GetControlKey( CO_LEFT ) ) )
+			{
+				m_gameDude->SetHoriztonalStatus( HS_LEFT );
+			}
+			else if( m_keys.GetPressed( m_controls->GetControlKey( CO_RIGHT ) ) )
+			{
+				m_gameDude->SetHoriztonalStatus( HS_RIGHT );
+			}
+			else
+			{
+				m_gameDude->SetHoriztonalStatus( HS_NONE );
+			}
 		}
 	}
 }
