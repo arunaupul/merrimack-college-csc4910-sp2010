@@ -96,6 +96,12 @@ public:
 	 * @param direction Direction to fire
 	 */
 	void FireSpecialPower( Square startingPos , bool direction );
+
+	/**
+	 * Gets the current loading status
+	 * @return True if the current level is loading
+	 */
+	bool IsLoading();
 protected:
 	/**
 	 * The world's name
@@ -116,6 +122,31 @@ protected:
 	 * The current game dude
 	 */
 	GameDude * m_gameDude;
+
+	/**
+	 * Indicates that on the next update, the new level will load
+	 */
+	bool m_loadingLevel;
+
+	/**
+	 * Image to use as a loading screen
+	 */
+	unsigned int m_loadingScreenTextureId;
+
+	/**
+	 * Image to use as a reloading screen
+	 */
+	unsigned int m_reloadingScreenTextureId;
+
+	/**
+	 * Track if this is the first load
+	 */
+	bool m_firstLoad;
+
+	/**
+	 * Track if the world is reloading a level
+	 */
+	bool m_reloading;
 
 };
 

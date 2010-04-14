@@ -241,7 +241,6 @@ void GlApplication::Draw()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );		// Clear Screen And Depth Buffer
 	glLoadIdentity();											// Reset The Current Modelview Matrix
-	//glTranslated( -60.0 , -42.0 , -100.0 );
 	glTranslated( -120.0 , -84.0 , -200 );
 
 	// Iterate through the objectList and call draw on each one
