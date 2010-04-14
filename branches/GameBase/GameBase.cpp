@@ -318,9 +318,17 @@ void GameBase::Draw()
 
 	if( m_currentGameState == GS_GAME_PLAYING && !( *m_currentWorld )->IsLoading() )
 	{
+		double centerOffset = 0;
 		glDisable( GL_TEXTURE_2D );
 		std::string score = Converter::IntToString( ScoreManager::Instance()->GetCurrentScore() );
 		std::wstring timerString = ( *m_currentWorld )->GetTimerString();
+		std::wstring worldString = ( *m_currentWorld )->GetNameString();
+
+		for( unsigned int x = 0 ; x < worldString.length() / 2 ; x++ )
+		{
+			centerOffset += m_hudTextGmf[worldString[x]].gmfCellIncX;
+		}
+
 		glLoadIdentity();
 		glColor3d( 1.0 , 0.0 , 0.0 );
 		glTranslated( -10 , 7 , -20 );
@@ -333,6 +341,12 @@ void GameBase::Draw()
 		glPushAttrib( GL_LIST_BIT );
 		glListBase( m_hudTextBase );
 		glCallLists( timerString.length() , GL_UNSIGNED_SHORT , timerString.c_str() );
+		glPopAttrib();
+		glLoadIdentity();
+		glTranslated( -1 * centerOffset , 7 , -20 );
+		glPushAttrib( GL_LIST_BIT );
+		glListBase( m_hudTextBase );
+		glCallLists( worldString.length() , GL_UNSIGNED_SHORT , worldString.c_str() );
 		glPopAttrib();
 		glEnable( GL_TEXTURE_2D );
 	}

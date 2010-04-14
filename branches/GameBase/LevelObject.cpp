@@ -357,3 +357,8 @@ void LevelObject::UnLoad()
 	m_screenEndIter = m_levelObjects.end();
 	m_xOffset = 0.0;
 }
+
+std::wstring LevelObject::GetLevelName()
+{
+	return m_levelName;
+}

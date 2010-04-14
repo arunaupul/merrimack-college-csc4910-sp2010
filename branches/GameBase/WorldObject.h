@@ -102,6 +102,13 @@ public:
 	 * @return True if the current level is loading
 	 */
 	bool IsLoading();
+
+	/**
+	 * Gets the world-level string
+	 * @return Level String
+	 */
+	std::wstring GetNameString();
+
 protected:
 	/**
 	 * The world's name
