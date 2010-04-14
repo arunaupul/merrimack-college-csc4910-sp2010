@@ -106,6 +106,11 @@ public:
 	bool Load();
 
 	/**
+	 * Unloads the level
+	 */
+	void UnLoad();
+
+	/**
 	 * Reloads the level from the begining
 	 */
 	bool Reload();
@@ -209,6 +214,8 @@ private:
 	 * The images used for the special powers
 	 */
 	int m_specialTextureIds[2];
+
+	GraphicLoaders::TextureIdentifier * m_textureList;
 };
 
 #endif /* _LEVL_OBJECT_H_ */

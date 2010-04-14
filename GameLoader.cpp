@@ -86,7 +86,7 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 	return true;
 }
 
-bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * level )
+bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * level , GraphicLoaders::TextureIdentifier * textureList )
 {
 	std::ifstream levelFile( levelFileName.c_str() );
 	if( !levelFile.is_open() )
@@ -118,6 +118,18 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 	GraphicLoaders::LoadTga( imageFolder + L"\\PowerUp1.tga" , powerUpTexture );
 	GraphicLoaders::LoadTga( imageFolder + L"\\BlastLeft.tga" , specialPowerLeftTextureId );
 	GraphicLoaders::LoadTga( imageFolder + L"\\BlastRight.tga" , specialPowerRightTextureId );
+
+	textureList[0] = brickTextureId;
+	textureList[1] = levelEndTextureId;
+	textureList[2] = ai1LeftTextureId;
+	textureList[3] = ai1RightTextureId;
+	textureList[4] = ai2LeftTextureId;
+	textureList[5] = ai2RightTextureId;
+	textureList[6] = powerUpBlockTexture1;
+	textureList[7] = powerUpBlockUsedTexture;
+	textureList[8] = powerUpTexture;
+	textureList[9] = specialPowerLeftTextureId;
+	textureList[10] = specialPowerRightTextureId;
 
 	level->SetSpecialImages( specialPowerLeftTextureId , specialPowerRightTextureId );
 

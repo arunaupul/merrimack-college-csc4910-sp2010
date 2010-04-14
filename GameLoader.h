@@ -40,7 +40,7 @@ namespace GameLoader {
 	 * @param level LevelObject to load
 	 * @return True on success
 	 */
-	bool LoadLevel( const std::wstring & levelFileName , LevelObject * level );
+	bool LoadLevel( const std::wstring & levelFileName , LevelObject * level , GraphicLoaders::TextureIdentifier * textureList );
 
 	/**
 	 * Method to convert from the game grid to openGL coords
