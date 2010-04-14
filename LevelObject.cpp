@@ -286,6 +286,7 @@ void LevelObject::SetLevelFileName( const std::wstring & levelFileName )
 
 bool LevelObject::Load()
 {
+	AudioManager::Instance()->StopALSource( SL_SONG1 );
 	if( m_backGroundManager )
 	{
 		delete m_backGroundManager;
@@ -309,15 +310,6 @@ bool LevelObject::Load()
 	return GameLoader::LoadLevel( m_levelFileName , this );
 }
 
-// Once upon a time this did something more than just the load method
-// That was when men were men and a t-rex still scared the crap out of ya
-// It cleared out all the existing level setup information, were load
-// did not. It was found that Load would be best off using the code from
-// Reload and reload was made no more. Think of reload now as the Red Headed
-// Step child
-/**
- * @todo: Refactor to remove calls to this method
- */
 bool LevelObject::Reload()
 {
 	ScoreManager::Instance()->ResetLevel();

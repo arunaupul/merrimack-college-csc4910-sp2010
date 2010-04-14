@@ -163,8 +163,8 @@ void GameBase::PerformUpdate( int currentTick )
 		}
 		case GS_PLAYER_DEAD:
 		{
-			( *m_currentWorld )->RestartCurrentLevel();
 			m_gameDude->Reset( true );
+			( *m_currentWorld )->RestartCurrentLevel();
 			m_currentGameState = GS_GAME_PLAYING;
 			break;
 		}
@@ -273,8 +273,8 @@ void GameBase::PlayGame()
 
 void GameBase::BuildHUDFont()
 {
-	//AddFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );			//uses windows library to add the font digital-7
-	SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+	AddFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );			//uses windows library to add the font digital-7
+	//SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
 	HFONT font;
 	m_hudTextBase = glGenLists( 256 );
 
@@ -306,14 +306,14 @@ void GameBase::KillHudFont()
 {
 	glDeleteLists( m_hudTextBase , 256 );
 	RemoveFontResource( L"GamePackFiles\\Fonts\\digital-7.ttf" );		//removes the font when done
-	SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);					//alert other windows of the change
+	//SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);					//alert other windows of the change
 }
 
 void GameBase::Draw()
 {
 	GlApplication::Draw();
 
-	if( m_currentGameState == GS_GAME_PLAYING )
+	if( m_currentGameState == GS_GAME_PLAYING && !( *m_currentWorld )->IsLoading() )
 	{
 		glDisable( GL_TEXTURE_2D );
 		std::string score = Converter::IntToString( ScoreManager::Instance()->GetCurrentScore() );
