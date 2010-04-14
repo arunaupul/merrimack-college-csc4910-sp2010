@@ -22,7 +22,8 @@ LevelObject::LevelObject( const std::wstring & levelName)
 	m_levelFileName( L"" ),
 	m_backGroundManager( NULL ),
 	m_timer( 0 ),
-	m_imageFolder( L"Images" )
+	m_imageFolder( L"Images" ),
+	m_textureList( NULL )
 {
 	m_screenStartIter = m_levelObjects.begin();
 	m_screenEndIter = m_levelObjects.end();
@@ -287,27 +288,10 @@ void LevelObject::SetLevelFileName( const std::wstring & levelFileName )
 bool LevelObject::Load()
 {
 	AudioManager::Instance()->StopALSource( SL_SONG1 );
-	if( m_backGroundManager )
-	{
-		delete m_backGroundManager;
-		m_backGroundManager = NULL;
-	}
+	UnLoad();
 	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.tga", 240, 168 , 0.20 );
-	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
-	{
-		delete (*iter);
-	}
-	m_levelObjects.clear();
-	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
-	{
-		delete (*iter);
-	}
-	m_passiveAIList.clear();
-	m_activeAIList.clear();
-	m_screenStartIter = m_levelObjects.begin();
-	m_screenEndIter = m_levelObjects.end();
-	m_xOffset = 0.0;
-	return GameLoader::LoadLevel( m_levelFileName , this );
+	m_textureList = new GraphicLoaders::TextureIdentifier[11];
+	return GameLoader::LoadLevel( m_levelFileName , this , m_textureList );
 }
 
 bool LevelObject::Reload()
@@ -343,4 +327,33 @@ void LevelObject::SetSpecialImages( int leftTextureId , int rightTextureId )
 void LevelObject::FireSpecialPower( Square startingPos , bool direction )
 {
 	m_powerList.push_back( new PowerObject( startingPos , direction , m_specialTextureIds[0] , m_specialTextureIds[1] ) );
+}
+
+void LevelObject::UnLoad()
+{
+	if( m_backGroundManager )
+	{
+		delete m_backGroundManager;
+		m_backGroundManager = NULL;
+	}
+	for( std::list<GamePiece *>::iterator iter = m_levelObjects.begin() ; iter != m_levelObjects.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	m_levelObjects.clear();
+	for( std::list<AIObject *>::iterator iter = m_passiveAIList.begin() ; iter != m_passiveAIList.end() ; ++iter )
+	{
+		delete (*iter);
+	}
+	if( m_textureList )
+	{
+		glDeleteTextures( sizeof( m_textureList ) , m_textureList );
+		delete m_textureList;
+		m_textureList = NULL;
+	}
+	m_passiveAIList.clear();
+	m_activeAIList.clear();
+	m_screenStartIter = m_levelObjects.begin();
+	m_screenEndIter = m_levelObjects.end();
+	m_xOffset = 0.0;
 }
