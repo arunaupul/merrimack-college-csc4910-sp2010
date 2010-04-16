@@ -2,6 +2,7 @@
 #include "GameStructs.h"
 #include <windows.h>
 #include <gl\gl.h>
+#include "AudioManager.h"
 
 #define JUMP_HEIGHT SQUARE_SIZE * 2.5
 #define JUMP_RATE	0.03
@@ -113,7 +114,7 @@ void GameDude::Update( int ticks )
 	if( m_invincible > 0 )
 	{
 		m_invincible += ticks;
-		if( m_invincible >= 5000 )
+		if( m_invincible >= 2000 )
 		{
 			m_invincible = 0;
 		}
@@ -184,6 +185,7 @@ bool GameDude::Collide( CollisionSideEnum side , int damage )
 			m_gameDudeStatus = (GameDudeStatus)( m_gameDudeStatus - damage );
 			m_invincible += 1;
 			SetDudeStatus( m_gameDudeStatus );
+			AudioManager::Instance()->PlayALSource(SL_PWRDOWN);
 		}
 	}
 	return ( oldVStatus == VS_JUMPING );

@@ -52,6 +52,7 @@ void GameBase::KeyPressed( unsigned int key )
 		else if( key == m_controls->GetControlKey( CO_JUMP ) )
 		{
 			m_gameDude->SetVerticalStatus( VS_JUMPING );
+			AudioManager::Instance()->PlayALSource(SL_JUMP);
 		}
 		else if( key == m_controls->GetControlKey( CO_CROUCH ) )
 		{
@@ -64,6 +65,7 @@ void GameBase::KeyPressed( unsigned int key )
 		}
 		else if( key == m_controls->GetControlKey( CO_USE_SPECIAL ) && m_gameDude->GetDudeStatus() == GDS_SPECIAL && m_delayTimer == 0 )
 		{
+			AudioManager::Instance()->PlayALSource(SL_SPECIAL);
 			m_delayTimer = 1;
 			Square specialSquare = m_gameDude->GetCurrentPosition();
 			specialSquare.bottom = specialSquare.top - SQUARE_SIZE * .8;
@@ -138,6 +140,8 @@ void GameBase::PerformUpdate( int currentTick )
 			( *m_currentWorld )->Update( currentTick - m_lastTickCount );
 			if( m_gameDude->GetDudeStatus() == GDS_DEAD )
 			{
+				AudioManager::Instance()->StopALSource(SL_PWRDOWN);
+				AudioManager::Instance()->PlayALSource(SL_DEATH);
 				m_currentGameState = GS_PLAYER_DEAD;
 				break;
 			}
