@@ -13,6 +13,8 @@
 #define LEFT_MOVE_DISTANCE		-RIGHT_MOVE_DISTANCE
 #define CLIP_DISTANCE			5.0
 
+bool SortLevelObject( GamePiece * left , GamePiece * right );
+
 LevelObject::LevelObject( const std::wstring & levelName)
 :	m_levelName( levelName ),
 	m_xOffset( 0.0 ),
@@ -295,10 +297,12 @@ bool LevelObject::Load()
 	UnLoad();
 	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.tga", 240, 168 , 0.20 );
 	m_textureList = new GraphicLoaders::TextureIdentifier[11];
-	for( int z = 0 ; z > 0 ; z++ )
-		for( unsigned int x = 0 ; x > 0 ; x++ )
-			;
-	return GameLoader::LoadLevel( m_levelFileName , this , m_textureList );
+	if( !GameLoader::LoadLevel( m_levelFileName , this , m_textureList ) )
+	{
+		return false;
+	}
+	m_levelObjects.sort(SortLevelObject);
+	return true;
 }
 
 bool LevelObject::Reload()
@@ -378,4 +382,9 @@ void LevelObject::UnLoad()
 std::wstring LevelObject::GetLevelName()
 {
 	return m_levelName;
+}
+
+bool SortLevelObject( GamePiece * left , GamePiece * right )
+{
+	return left->GetCurrentPosition().left > right->GetCurrentPosition().left;
 }
