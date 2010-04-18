@@ -64,6 +64,10 @@ bool PowerUpItem::Collide( CollisionSideEnum side , int damage )
 	{
 		m_vStatus = VS_NONE;
 	}
+	else
+	{
+		AIType1::Collide( side , damage );
+	}
 	return false;
 }
 

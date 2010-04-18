@@ -14,6 +14,7 @@
 #include "GameEnums.h"
 #include "GameStructs.h"
 #include "GlFrameworkObject.h"
+#include "GraphicLoaders.h"
 
 /**
  * @class GameDude
@@ -128,6 +129,13 @@ public:
 	 * @return 0 for left 1 for right
 	 */
 	bool GetFacing();
+
+	/**
+	 * Sets the new game dude images
+	 * @param statusId Game dude image status to set
+	 * @param textureId The new id to use
+	 */
+	void SetGameDudeImages( const GameDudeStatus statusId , GraphicLoaders::TextureIdentifier textureId );
 private:
 	/**
 	 * Distance the game dude is from the start of the level

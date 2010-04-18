@@ -247,10 +247,6 @@ void GameBase::LeftMouseClick( Point & clickedPoint )
 
 void GameBase::PlayGame()
 {
-	unsigned int dudeTextureId = -1;
-	unsigned int bigDudeTextureId = -1;
-	unsigned int specialDudeTextureId = -1;
-
 	/* Clean up current game if needed */
 	if( m_gameDude )
 	{
@@ -266,10 +262,7 @@ void GameBase::PlayGame()
 	m_objectList.clear();
 
 	/* Start Game Setup */
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\dude.tga" , dudeTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\BigDude.tga" , bigDudeTextureId );
-	GraphicLoaders::LoadTga( "GamePackFiles\\Images\\BigDude2.tga" , specialDudeTextureId );
-	m_gameDude = new GameDude( Square( SQUARE_SIZE * 2.8 , SQUARE_SIZE * 2 , 120 - ( SQUARE_SIZE * .4 ) , 120.0 + SQUARE_SIZE * .4 ) , dudeTextureId , bigDudeTextureId , specialDudeTextureId );
+	m_gameDude = new GameDude( Square( SQUARE_SIZE * 2.8 , SQUARE_SIZE * 2 , 120 - ( SQUARE_SIZE * .4 ) , 120.0 + SQUARE_SIZE * .4 ) , -1 , -1 , -1 );
 	GameLoader::RunLoader( L"GamePackFiles\\worlds.ini" , m_worldList , m_gameDude );
 	m_currentWorld = m_worldList.begin();
 	( *m_currentWorld )->Start();

@@ -48,7 +48,16 @@ void WorldObject::Update( int ticks )
 			}
 			else
 			{
+				GraphicLoaders::TextureIdentifier smallDudeId = -1;
+				GraphicLoaders::TextureIdentifier bigDudeId = -1;
+				GraphicLoaders::TextureIdentifier specialDudeId = -1;
 				( *m_currentLevel )->Load();
+				GraphicLoaders::LoadTga( ( *m_currentLevel )->GetImageFolder() + L"\\dude.tga" , smallDudeId );
+				GraphicLoaders::LoadTga( ( *m_currentLevel )->GetImageFolder() + L"\\BigDude.tga" , bigDudeId );
+				GraphicLoaders::LoadTga( ( *m_currentLevel )->GetImageFolder() + L"\\BigDude2.tga" , specialDudeId );
+				m_gameDude->SetGameDudeImages( GDS_SMALL , smallDudeId );
+				m_gameDude->SetGameDudeImages( GDS_BIG , bigDudeId );
+				m_gameDude->SetGameDudeImages( GDS_SPECIAL , specialDudeId );
 			}
 			( *m_currentLevel )->Start();
 			m_gameDude->Reset( m_reloading );

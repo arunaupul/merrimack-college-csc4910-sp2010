@@ -18,9 +18,11 @@
 #include<conio.h>
 #include<cstdlib>
 #include<iostream>
+#include<string>
 
 /*Constructor Method*/
 AudioManager::AudioManager()
+:	m_playSoundStatus( true )
 {
 	int refZero = 0;				//used in the init method
 	char * refArgv = "";			//used in the init method
@@ -52,7 +54,7 @@ void AudioManager::SetListenerValues()
 }//end of SetListenerValues
 
 /*LoadSound Method*/
-void AudioManager::LoadSound( SoundLookup loadSound , char * soundFilePath , bool isLoop )
+void AudioManager::LoadSound( SoundLookup loadSound , const std::string soundFilePath , bool isLoop )
 {
 	// Confirm the sound id is valid
 	if( loadSound >= SL_MAX_SOUND )
@@ -68,7 +70,7 @@ void AudioManager::LoadSound( SoundLookup loadSound , char * soundFilePath , boo
 
 	// Load the sound into memory 
 	alGenBuffers( 1 , &m_soundBuffers[loadSound] );
-	alutLoadWAVFile( soundFilePath , &format , &data , &size , &freq , &loop );
+	alutLoadWAVFile( (char *)soundFilePath.c_str() , &format , &data , &size , &freq , &loop );
 	alBufferData( m_soundBuffers[loadSound] , format , data , size , freq );
 	alutUnloadWAV( format , data , size , freq );
 
@@ -90,7 +92,7 @@ void AudioManager::LoadSound( SoundLookup loadSound , char * soundFilePath , boo
 void AudioManager::PlayALSource(SoundLookup playSound)
 {
 	// Confirm the sound id is valid
-	if( playSound >= SL_MAX_SOUND )
+	if( playSound >= SL_MAX_SOUND || !m_playSoundStatus )
 	{
 		return ;
 	}
@@ -118,6 +120,11 @@ void AudioManager::HoldALSource(SoundLookup holdSound)
 	}
 	alSourcePause( m_soundSrc[holdSound] );
 }//end of HoldALSource
+
+void AudioManager::SetPlaySoundStatus( const bool status )
+{
+	m_playSoundStatus = status;
+}
 
 AudioManager * AudioManager::m_instance = 0;
 

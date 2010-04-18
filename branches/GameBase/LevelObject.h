@@ -101,6 +101,18 @@ public:
 	std::wstring GetImageFolder();
 
 	/**
+	 * Sets the dudio folder for the level. Audio files will be loaded from this folder.
+	 * @param audioFolder Folder name where the audio files are located
+	 */
+	void SetAudioFolder( const std::wstring & audioFolder );
+
+	/**
+	 * Get the Audio Folder
+	 * @return The folder name where the audio files are located
+	 */
+	std::wstring GetAudioFolder();
+
+	/**
 	 * Loads the level from the fileName
 	 */
 	bool Load();
@@ -210,6 +222,11 @@ private:
 	 * Level image file folder path
 	 */
 	std::wstring m_imageFolder;
+
+	/**
+	 * Level audio file folder path
+	 */
+	std::wstring m_audioFolder;
 
 	/**
 	 * The current timer for the level

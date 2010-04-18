@@ -99,14 +99,11 @@ void GameDude::SetVerticalStatus( VerticalStatus newStatus )
 
 void GameDude::SetHoriztonalStatus( HoriztonalStatus newStatus )
 {
-	//if( m_vStatus == VS_NONE )
+	if( newStatus != HS_NONE )
 	{
-		if( newStatus != HS_NONE )
-		{
-			m_lastDirection = ( newStatus == HS_LEFT ? false : true );
-		}
-		m_hStatus = newStatus;
+		m_lastDirection = ( newStatus == HS_LEFT ? false : true );
 	}
+	m_hStatus = newStatus;
 }
 
 void GameDude::Update( int ticks )
@@ -241,4 +238,23 @@ void GameDude::SetCrouching( bool status )
 bool GameDude::GetFacing()
 {
 	return m_lastDirection;
+}
+
+/**
+ * Sets the new game dude images
+ */
+void GameDude::SetGameDudeImages( const GameDudeStatus statusId , GraphicLoaders::TextureIdentifier textureId )
+{
+	switch( statusId )
+	{
+		case GDS_SMALL:
+			m_textureIds[0] = textureId;
+			break;
+		case GDS_BIG:
+			m_textureIds[1] = textureId;
+			break;
+		case GDS_SPECIAL:
+			m_textureIds[2] = textureId;
+			break;
+	}
 }
