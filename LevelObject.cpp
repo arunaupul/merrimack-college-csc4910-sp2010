@@ -124,6 +124,10 @@ double LevelObject::Move( double distance )
 
 bool LevelObject::Update( int ticks , GameDude * gameDude )
 {
+	if( m_levelEndObject->LevelDone() )
+	{
+		return true;
+	}
 	m_timer -= ticks;
 	if( m_timer <= 0 )
 	{
@@ -291,6 +295,9 @@ bool LevelObject::Load()
 	UnLoad();
 	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.tga", 240, 168 , 0.20 );
 	m_textureList = new GraphicLoaders::TextureIdentifier[11];
+	for( int z = 0 ; z > 0 ; z++ )
+		for( unsigned int x = 0 ; x > 0 ; x++ )
+			;
 	return GameLoader::LoadLevel( m_levelFileName , this , m_textureList );
 }
 
@@ -316,6 +323,16 @@ void LevelObject::SetImageFolder( const std::wstring & imageFolder )
 std::wstring LevelObject::GetImageFolder()
 {
 	return m_imageFolder;
+}
+
+void LevelObject::SetAudioFolder( const std::wstring & audioFolder )
+{
+	m_audioFolder = audioFolder;
+}
+
+std::wstring LevelObject::GetAudioFolder()
+{
+	return m_audioFolder;
 }
 
 void LevelObject::SetSpecialImages( int leftTextureId , int rightTextureId )

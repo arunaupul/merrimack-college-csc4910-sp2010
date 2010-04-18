@@ -63,7 +63,7 @@ public:
 	 * @param soundFilePath Path to the wav file to load
 	 * @param isLoop Should the sound loop once started
 	 */
-	void LoadSound(SoundLookup loadSound, char * soundFilePath , bool isLoop);
+	void LoadSound(SoundLookup loadSound, const std::string soundFilePath , bool isLoop);
 
 	/**
 	 * PlayALSource method that will play an imputted source
@@ -82,6 +82,12 @@ public:
 	 * @param holdSound Sound ID for the buffer to pause
 	 */
 	void HoldALSource(SoundLookup holdSound);
+
+	/**
+	 * Set the status if sounds are able to
+	 * @param status New sound status
+	 */
+	void SetPlaySoundStatus( const bool status );
 
 	/**
 	 * Method to obtain the instance of this singleton object
@@ -111,6 +117,7 @@ private:
 	ALuint m_soundSrc[SL_MAX_SOUND];
 
 	ALfloat m_zeroArray[3];
+	bool m_playSoundStatus;
 };//end of AudioManager.h
 
 #endif /* _AUDIO_MANAGER_ */

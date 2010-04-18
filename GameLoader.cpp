@@ -22,14 +22,6 @@
 
 bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<WorldObject *> & worldList , GameDude * dude )
 {
-	AudioManager::Instance()->LoadSound( SL_PWRUP , "GamePackFiles\\Music\\mushroom.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_CHCKPT , "GamePackFiles\\Music\\checkpoint.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_HITBRICK , "GamePackFiles\\Music\\hitbrick.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_DEATH , "GamePackFiles\\Music\\death2.wav", false );
-	AudioManager::Instance()->LoadSound( SL_JUMP , "GamePackFiles\\Music\\jump.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_PWRDOWN , "GamePackFiles\\Music\\powerdown.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_SPECIAL , "GamePackFiles\\Music\\special.wav" , false );
-	AudioManager::Instance()->LoadSound( SL_SONG1 , "GamePackFiles\\Music\\song1.wav" , true );
 	std::ifstream worldFile( worldsFileName.c_str() );
 	if( !worldFile.is_open() )
 	{
@@ -37,6 +29,7 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 	}
 	std::string readline;
 	std::wstring currentImageFolder( L"" );
+	std::wstring currentAudioFolder( L"" );
 	WorldObject * currentLoadingWorld( NULL );
 	LevelObject * levelToLoad( NULL );
 	while( !worldFile.eof() )
@@ -73,11 +66,16 @@ bool GameLoader::RunLoader( const std::wstring & worldsFileName , std::list<Worl
 		{
 			currentImageFolder = Converter::StringToWString( *( tokens->at(1) ) );
 		}
+		else if( !tokens->at(0)->compare( "AUDIO_FOLDER" ) )
+		{
+			currentAudioFolder = Converter::StringToWString( *( tokens->at(1) ) );
+		}
 		else
 		{
 			levelToLoad = new LevelObject( Converter::StringToWString( *( tokens->at(0) ) ) );
 			levelToLoad->SetLevelFileName( Converter::StringToWString( *( tokens->at(1) ) ) );
 			levelToLoad->SetImageFolder( currentImageFolder );
+			levelToLoad->SetAudioFolder( currentAudioFolder );
 			currentLoadingWorld->AddLevel( levelToLoad );
 		}
 
@@ -217,6 +215,16 @@ bool GameLoader::LoadLevel( const std::wstring & levelFileName , LevelObject * l
 		};
 
 	}
+	std::string audioFilePath( Converter::WStringToString( level->GetAudioFolder() ) );
+	audioFilePath.append( "\\" );
+	AudioManager::Instance()->LoadSound( SL_PWRUP , audioFilePath + "mushroom.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_CHCKPT , audioFilePath + "checkpoint.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_HITBRICK , audioFilePath + "hitbrick.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_DEATH , audioFilePath + "death2.wav", false );
+	AudioManager::Instance()->LoadSound( SL_JUMP , audioFilePath + "jump.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_PWRDOWN , audioFilePath + "powerdown.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_SPECIAL , audioFilePath + "special.wav" , false );
+	AudioManager::Instance()->LoadSound( SL_SONG1 , audioFilePath + "song1.wav" , true );
 	return true;
 }
 
