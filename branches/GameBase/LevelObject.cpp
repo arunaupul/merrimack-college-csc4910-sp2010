@@ -295,7 +295,7 @@ bool LevelObject::Load()
 {
 	AudioManager::Instance()->StopALSource( SL_SONG1 );
 	UnLoad();
-	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.tga", 240, 168 , 0.20 );
+	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.bmp", 240, 168 , 0.20 );
 	m_textureList = new GraphicLoaders::TextureIdentifier[11];
 	if( !GameLoader::LoadLevel( m_levelFileName , this , m_textureList ) )
 	{
