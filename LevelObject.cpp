@@ -85,11 +85,16 @@ double LevelObject::Move( double distance )
 	// Right movement
 	if( distance >= 0 )
 	{
+		// TODO: Fix this, hack here
+		// The below code should work off the existing iterators verse
+		// restarting from the begining.
+		m_screenStartIter = m_levelObjects.begin();
 		while( m_screenStartIter != m_levelObjects.end() && !(*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
 		{
 			++m_screenStartIter;
 		}
-		while( m_screenEndIter != m_levelObjects.end() && (*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
+		m_screenEndIter = m_screenStartIter;
+		while( m_screenEndIter != m_levelObjects.end() && (*m_screenEndIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
 		{
 			++m_screenEndIter;
 		}
@@ -264,7 +269,7 @@ void LevelObject::Start()
 	{
 		++m_screenStartIter;
 	}
-	while( m_screenEndIter != m_levelObjects.end() && (*m_screenStartIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
+	while( m_screenEndIter != m_levelObjects.end() && (*m_screenEndIter)->OnScreen( m_xOffset - CLIP_DISTANCE , m_xOffset + m_screenWidth + CLIP_DISTANCE ) )
 	{
 		++m_screenEndIter;
 	}
