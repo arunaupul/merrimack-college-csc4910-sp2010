@@ -299,7 +299,10 @@ void LevelObject::SetLevelFileName( const std::wstring & levelFileName )
 bool LevelObject::Load()
 {
 	AudioManager::Instance()->StopALSource( SL_SONG1 );
+	int startTime = GetTickCount();
 	UnLoad();
+	while( GetTickCount() - startTime < 2000 )
+		;
 	m_backGroundManager = new BackGroundManager( m_imageFolder + L"\\bg.bmp", 240, 168 , 0.20 );
 	m_textureList = new GraphicLoaders::TextureIdentifier[11];
 	if( !GameLoader::LoadLevel( m_levelFileName , this , m_textureList ) )

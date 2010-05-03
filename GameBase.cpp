@@ -147,6 +147,7 @@ void GameBase::PerformUpdate( int currentTick )
 			}
 			if( ( *m_currentWorld )->WorldDone() )
 			{
+				m_objectList.remove( *m_currentWorld );
 				++m_currentWorld;
 				if( m_currentWorld == m_worldList.end() )
 				{
@@ -164,6 +165,7 @@ void GameBase::PerformUpdate( int currentTick )
 				else
 				{
 					( *m_currentWorld )->Start();
+					m_objectList.push_front( ( *m_currentWorld ) );
 				}
 			}
 			break;
